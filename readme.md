@@ -8,4 +8,10 @@ Sau khi bản này hoàn thiện các version sẽ được phân chia theo các
 
 ## Chú ý
 
-Khi các bạn muốn tham gia đóng góp Việt hoá một page trên tài liệu Laravel tiếng anh mà trong repo Việt hoá này chưa có, các bạn [tạo một issue mới](https://github.com/petehouston/laravel-docs-vn/issues) và nêu tên page mà bạn đang làm nhé.
+### Dịch một page mới
+
+Khi các bạn muốn tham gia đóng góp Việt hoá một page trên tài liệu Laravel tiếng anh mà trong repo Việt hoá này chưa có, các bạn [tạo một issue mới](https://github.com/petehouston/laravel-docs-vn/issues) và nêu tên page mà bạn đang làm. Hoặc page trong danh sách bạn muốn tham gia dịch mà chưa có ai nhận, bạn [tìm page đó trong danh sách issue](https://github.com/petehouston/laravel-docs-vn/issues) rồi comment muốn nhận dịch, để tránh bị dịch trùng lặp.
+
+### Chỉnh sửa câu từ, ngữ nghĩa
+
+Để chỉnh sửa câu từ, ngữ nghĩa của các page đang có sắn, đơn thuẩn cứ fork về và gửi pull request lên là được.
