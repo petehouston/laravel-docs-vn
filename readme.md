@@ -1,10 +1,37 @@
 # Tài liệu Laravel
 
+Đây là bản dịch tiếng Việt của tài liệu chuẩn của Laravel.
+
+## Mục lục
+
+* [Artisan](artisan.md)
+* [Blade](blade.md)
+* [Service Container](container.md)
+* [Contracts](contracts.md)
+* [Encryption](encryption.md)
+* [Laravel Envoy](envoy.md)
+* [Errors](errors.md)
+* [Facades](facades.md)
+* [Hashing](hashing.md)
+* [Installation](installation.md)
+* [Lifecycle](lifecycle.md)
+* [Localization](localization.md)
+* [Pagination](pagination.md)
+* [Service Providers](providers.md)
+* [Requests](requests.md)
+* [Routing](routing.md)
+* [Scheduling](scheduling.md)
+* [Database Seeding](seeding.md)
+* [Sessions](session.md)
+* [Application Structure](structure.md)
+* [Views](views.md)
+
 ## Hướng dẫn đóng góp
 
 Hiện tại documentation này đang dịch dựa trên bản [Laravel 5.2](https://github.com/laravel/docs/tree/5.2). Vì thế các bạn muốn đóng góp hãy sử dụng version này nhé.
 
 Sau khi bản này hoàn thiện các version sẽ được phân chia theo các branch, với mỗi branch được ứng với một version của Laravel.
+
 
 ## Chú ý
 
