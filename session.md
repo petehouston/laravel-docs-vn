@@ -65,7 +65,7 @@ Nếu bạn muốn tất cả các dữ liệu Session của bạn được mã 
 
 #### Truy cập vào Session
 
-First, let's access the session. We can access the session instance via the HTTP request, which can be type-hinted on a controller method. Remember, controller method dependencies are injected via the Laravel [service container](/docs/{{version}}/container):
+Trước tiên, để truy cập session. Bạn cần phải truy cập ứng dụng thông qua các yêu cầu HTTP, đó là các phương thức Controller mà bạn muốn hướng đến. Hãy nhớ rằng, Các phương thức controller phụ thuộc vào Laravel [service container](/docs/{{version}}/container):
 
     <?php
 
@@ -91,7 +91,7 @@ First, let's access the session. We can access the session instance via the HTTP
         }
     }
 
-When you retrieve a value from the session, you may also pass a default value as the second argument to the `get` method. This default value will be returned if the specified key does not exist in the session. If you pass a `Closure` as the default value to the `get` method, the `Closure` will be executed and its result returned:
+Khi này bạn có thể nhận từ giá trị từ session, Bạn có thể thiết lập giá trị mặc định qua tham số thứ hai của phương thức `get`. Điều này có nghĩa là nếu như session này không có giá trị thì sẽ trả về giá trị mặc định. Nếu bạn truyền vào một `Closure`, thì `Closure` sẽ được thực thi và trả về giá trị `return`:
 
     $value = $request->session()->get('key', 'default');
 
@@ -99,11 +99,11 @@ When you retrieve a value from the session, you may also pass a default value as
         return 'default';
     });
 
-If you would like to retrieve all data from the session, you may use the `all` method:
+Nếu bạn muốn nhận tất cả các giá trong session, bạn hãy sử dụng phương thức `all`:
 
     $data = $request->session()->all();
 
-You may also use the global `session` PHP function to retrieve and store data in the session:
+Bạn cũng có thể sử dụng hàm `session` để truy suất hoặc lưu các session:
 
     Route::get('home', function () {
         // Retrieve a piece of data from the session...
@@ -113,63 +113,63 @@ You may also use the global `session` PHP function to retrieve and store data in
         session(['key' => 'value']);
     });
 
-#### Determining If An Item Exists In The Session
+#### Kiểm tra sự tồn tại của một Session
 
-The `has` method may be used to check if an item exists in the session. This method will return `true` if the item exists:
+Phương thức `has` cho phép bạn kiểm tra sự tồn tại của một session. Phương thức này sẽ trả về `true` nếu session đấy tồn tại:
 
     if ($request->session()->has('users')) {
         //
     }
 
-#### Storing Data In The Session
+#### Lưu giá trị và Session
 
-Once you have access to the session instance, you may call a variety of functions to interact with the underlying data. For example, the `put` method stores a new piece of data in the session:
+Một trong những cách khác, bạn có thể gọi phương thức `put` từ phương thức `session` đươc trỏ thông qua thuộc tính `request`. Ví dụ, dùng phương thức `put` để lưu giá trị mới vào session:
 
     $request->session()->put('key', 'value');
 
-#### Pushing To Array Session Values
+#### Đẩy giá trị vào mảng Session
 
-The `push` method may be used to push a new value onto a session value that is an array. For example, if the `user.teams` key contains an array of team names, you may push a new value onto the array like so:
+Với phương thức `push` bạn có thể đẩy một giá trị mới vào một biến mảng Session. Ví dụ, trong `user.teams` là một mảng chứa các tên nhóm, bạn có thể đẩy tên nhóm mới vào trong mảng theo cách như sau:
 
     $request->session()->push('user.teams', 'developers');
 
-#### Retrieving And Deleting An Item
+#### Truy xuất và xóa dữ liệu
 
-The `pull` method will retrieve and delete an item from the session:
+Dùng phương thức `pull` dùng để lấy và xóa ngay session:
 
     $value = $request->session()->pull('key', 'default');
 
-#### Deleting Items From The Session
+#### Xóa bỏ khỏi bộ nhớ Session
 
-The `forget` method will remove a piece of data from the session. If you would like to remove all data from the session, you may use the `flush` method:
+Phương thức `forget` sẽ xóa dữ liệu trong session. Mặc khác nếu bạn muốn xóa toàn bộ Session, bạn chỉ cần dùng phương thức `flush`:
 
     $request->session()->forget('key');
 
     $request->session()->flush();
 
-#### Regenerating The Session ID
+#### Khởi tạo Session ID
 
-If you need to regenerate the session ID, you may use the `regenerate` method:
+Nếu bạn muốn tạo ra một session ID, hãy dùng phương thức `regenerate`:
 
     $request->session()->regenerate();
 
 <a name="flash-data"></a>
 ### Flash Data
 
-Sometimes you may wish to store items in the session only for the next request. You may do so using the `flash` method. Data stored in the session using this method will only be available during the subsequent HTTP request, and then will be deleted. Flash data is primarily useful for short-lived status messages:
+Đôi khi có một vài dữ liệu mà bạn chỉ muốn nó lưu tại lần truy suất tiếp theo và sau đó xóa đi thì phương thức `flash` có thể giúp bạn. Dữ liệu sẽ được lưu lại và chỉ suất hiện một lần duy nhất trong lần phản hồi yêu cần tiếp theo, sau đó nó sẽ tự động xóa đi. Flash data thường dùng để biểu thị các trạng thái, thông báo, lời nhắn:
 
     $request->session()->flash('status', 'Task was successful!');
 
-If you need to keep your flash data around for even more requests, you may use the `reflash` method, which will keep all of the flash data around for an additional request. If you only need to keep specific flash data around, you may use the `keep` method:
+Nếu bạn muốn giữ dư liệu trong nhiều yêu cầu, bạn hãy sử dụng phương thức `reflash`, nó sẽ giữ lại các dữ liệu được thêm vào sau đó. Nếu bạn muốn giữ các nội dung `flash` cụ thể, thì lúc này hãy dùng phương thức `keep`:
 
     $request->session()->reflash();
 
     $request->session()->keep(['username', 'email']);
 
 <a name="adding-custom-session-drivers"></a>
-## Adding Custom Session Drivers
+## Thêm một Session Drivers riêng
 
-To add additional drivers to Laravel's session back-end, you may use the `extend` method on the `Session` [facade](/docs/{{version}}/facades). You can call the `extend` method from the `boot` method of a [service provider](/docs/{{version}}/providers):
+Để thêm một Laravel's session back-end driver, bạn hãy dùng phương thức `extend` từ `Session` [facade](/docs/{{version}}/facades). Bạn cần gọi phương thức `extend` từ phương thức `boot` thông qua một [service provider](/docs/{{version}}/providers):
 
     <?php
 
@@ -205,7 +205,7 @@ To add additional drivers to Laravel's session back-end, you may use the `extend
         }
     }
 
-Note that your custom session driver should implement the `SessionHandlerInterface`. This interface contains just a few simple methods we need to implement. A stubbed MongoDB implementation looks something like this:
+Chú ý Session Driver của bạn phải có cấu trúc kế thừa giao diện `SessionHandlerInterface`. Và đây là một mẫu ví dụ về kế thừa từ mẫu giao diện. Một driver sử dụng MongoDB cho Session:
 
     <?php
 
@@ -221,15 +221,15 @@ Note that your custom session driver should implement the `SessionHandlerInterfa
         public function gc($lifetime) {}
     }
 
-Since these methods are not as readily understandable as the cache `StoreInterface`, let's quickly cover what each of the methods do:
+Những phương thức này không hẳn khó hiểu và nó giống như `StoreInterface`, hãy tìm hiểu sơ về các phương thức nào:
 
 <div class="content-list" markdown="1">
-- The `open` method would typically be used in file based session store systems. Since Laravel ships with a `file` session driver, you will almost never need to put anything in this method. You can leave it as an empty stub. It is simply a fact of poor interface design (which we'll discuss later) that PHP requires us to implement this method.
-- The `close` method, like the `open` method, can also usually be disregarded. For most drivers, it is not needed.
-- The `read` method should return the string version of the session data associated with the given `$sessionId`. There is no need to do any serialization or other encoding when retrieving or storing session data in your driver, as Laravel will perform the serialization for you.
-- The `write` method should write the given `$data` string associated with the `$sessionId` to some persistent storage system, such as MongoDB, Dynamo, etc.
-- The `destroy` method should remove the data associated with the `$sessionId` from persistent storage.
-- The `gc` method should destroy all session data that is older than the given `$lifetime`, which is a UNIX timestamp. For self-expiring systems like Memcached and Redis, this method may be left empty.
+- Phương thức `open` thường sẽ được sử dụng trong các tập tin. Và bạn hầu như không cần dùng phương thức này (ta có thể tìm hiểu sau) .
+- Phương thức `close` , giống như phương thức `open`, nó cũng thường được bỏ qua. Hầu hết các Driver đều không cần sử dugj nó.
+- Phương thức `read`  trả về chuỗi các dữ liệu phiên liên quan đến kiểm soát của `$sessionId`. Bạn cần serialization hay các cách mã hóa khác khi lưu và nhận giá trị session, với Laravel thì sẽ dùng serialization.
+- Phương thức `write` là ghi các giá trị chuỗi `$data` được kiểm soát `$sessionId`, một số hệ thống ghi liên tục trong bộ nhớ, như MongoDB, Dynamo, khác nữa.
+- Phương thức `destroy` xóa các giá trị session với `$sessionId` từ bộ nhớ.
+- Phương thức `gc` Xóa các session cũng mà tồn tại lâu hơn `$lifetime` hoặc ó giá trị mới, Bằng mộ đoạn UNIX timestamp. Đối với hệ thống tự hết hạn như Memcached và Redis, phương thức này có thể được bỏ trống.
 </div>
 
-Once the session driver has been registered, you may use the `mongo` driver in your `config/session.php` configuration file.
+Một khi sessions driver được đăng ký, bạn có thể sử dụng `mongo` driver ở trong cấu cấu hình `config/session.php`.
