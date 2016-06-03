@@ -13,6 +13,7 @@
 * [Errors](errors.md)
 * [Facades](facades.md)
 * [Hashing](hashing.md)
+* [Homestead](homestead.md)
 * [Installation](installation.md)
 * [Lifecycle](lifecycle.md)
 * [Localization](localization.md)
