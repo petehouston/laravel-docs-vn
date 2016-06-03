@@ -4,28 +4,74 @@
 
 ## Mục lục
 
-* [Artisan](artisan.md)
-* [Blade](blade.md)
-* [Service Container](container.md)
-* [Contracts](contracts.md)
-* [Encryption](encryption.md)
-* [Laravel Envoy](envoy.md)
-* [Errors](errors.md)
-* [Facades](facades.md)
-* [Hashing](hashing.md)
-* [Homestead](homestead.md)
-* [Installation](installation.md)
-* [Lifecycle](lifecycle.md)
-* [Localization](localization.md)
-* [Pagination](pagination.md)
-* [Service Providers](providers.md)
-* [Requests](requests.md)
-* [Routing](routing.md)
-* [Scheduling](scheduling.md)
-* [Database Seeding](seeding.md)
-* [Sessions](session.md)
-* [Application Structure](structure.md)
-* [Views](views.md)
+Mục lục này tương ứng với [mục lục trên trang chủ](https://laravel.com/docs) của Laravel.
+
+* **Mở đầu**
+    * Release Notes
+    * Upgrade Guide
+    * Contribution Guide
+    * API Documentation
+
+* **Thiết lập**
+    * [Installation](installation.md)
+    * Configuration
+    * [Homestead](homestead.md)
+    * Valet
+
+* **Cơ bản**
+    * [Routing](routing.md)
+    * Middleware
+    * Controllers
+    * [Requests](requests.md)
+    * Responses
+    * [Views](views.md)
+    * [Blade Templates](blade.md)
+
+* **Nền tảng kiến trúc**
+    * [Request Lifecycle](lifecycle.md)
+    * [Application Structure](structure.md)
+    * [Service Providers](providers.md)
+    * [Service Container](container.md)
+    * [Contracts](contracts.md)
+    * [Facades](facades.md)
+
+* **Services**
+    * Authentication
+    * Authorization
+    * [Artisan Console](artisan.md)
+    * Billing
+    * Cache
+    * Collections
+    * Elixir
+    * [Encryption](encryption.md)
+    * [Errors & Logging](errors.md)
+    * Events
+    * Filesystem & Cloud Storage
+    * [Hashing](hashing.md)
+    * Helpers
+    * [Localization](localization.md)
+    * Mail
+    * Package Development
+    * [Pagination](pagination.md)
+    * Queues
+    * Redis
+    * [Envoy or SSH Tasks](envoy.md)
+    * [Task Scheduling](scheduling.md)
+    * Testing
+    * Validation
+
+* **Database**
+    * Getting Started
+    * Query Builder
+    * Migrations
+    * [Seeding](seeding.md)
+
+* **Eloquent ORM**
+    * Getting Started
+    * Relationships
+    * Collections
+    * Mutators
+    * Serialization
 
 ### Thuật ngữ
 
