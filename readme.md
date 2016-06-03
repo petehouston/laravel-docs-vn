@@ -49,7 +49,7 @@ Xin gửi lời cảm ơn tới tác giả của Laravel, [Taylor Otwell](https:
 
 Và cũng gửi lời cảm ơn tới các bạn tham gia đóng góp vào dự án Việt hoá này.
 
-* [Pete Houston](https://github.com/petehouston)
+* [Pete Houston](https://github.com/petehouston): **Tác giả dự án**
 * [phumaster](https://github.com/phumaster)
 * [Đinh Quốc Hân](https://github.com/dinhquochan)
 * [RioV](https://github.com/RioV)
