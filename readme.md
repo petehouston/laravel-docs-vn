@@ -18,6 +18,10 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Homestead](homestead.md)
     * Valet
 
+* **Hướng dẫn**
+    * Basic Task List
+    * Intermediate Task List
+
 * **Cơ bản**
     * [Routing](routing.md)
     * Middleware
