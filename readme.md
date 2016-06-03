@@ -42,3 +42,18 @@ Khi các bạn muốn tham gia đóng góp Việt hoá một page trên tài li�
 ### Chỉnh sửa câu từ, ngữ nghĩa
 
 Để chỉnh sửa câu từ, ngữ nghĩa của các page đang có sắn, đơn thuẩn cứ fork về và gửi pull request lên là được.
+
+## Credits
+
+Xin gửi lời cảm ơn tới tác giả của Laravel, [Taylor Otwell](https://github.com/taylorotwell) vì framework mã nguồn mở tuyệt vời này cho cộng đồng lập trình.
+
+Và cũng gửi lời cảm ơn tới các bạn tham gia đóng góp vào dự án Việt hoá này.
+
+* [Pete Houston](https://github.com/petehouston)
+* [phumaster](https://github.com/phumaster)
+* [Đinh Quốc Hân](https://github.com/dinhquochan)
+* [RioV](https://github.com/RioV)
+
+cùng tất cả các bạn khác đã gởi các lời ý kiến đóng góp tới dự án.
+
+Hi vọng sẽ nhận được nhiều ý kiến, và góp ý nữa của cộng đồng :)
