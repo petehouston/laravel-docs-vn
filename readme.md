@@ -27,6 +27,12 @@
 * [Application Structure](structure.md)
 * [Views](views.md)
 
+### Thuật ngữ
+
+Trong bản Việt hoá này, sẽ có khá nhiều thuật ngữ tiếng Anh mà khó có thể dịch sang tiếng Việt tương ứng nên sẽ để nguyên.
+
+Do đó, với các thuật ngữ mà bạn không hiểu, bạn có thể tra cứu thuật ngữ trong project [thuật ngữ Laravel](https://github.com/petehouston/thuat-ngu-laravel).
+
 ## Hướng dẫn đóng góp
 
 Hiện tại documentation này đang dịch dựa trên bản [Laravel 5.2](https://github.com/laravel/docs/tree/5.2). Vì thế các bạn muốn đóng góp hãy sử dụng version này nhé.
