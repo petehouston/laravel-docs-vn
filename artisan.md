@@ -137,7 +137,6 @@ Tuỳ chọn, như đối số, cũng là một kiểu nhập vào từ người
 
     php artisan email:send 1 --queue
 
-Bạn cũng có thể điều chỉnh sao cho tuỳ chọn phải được gán với một giá trị bởi người dùng thông qua việc sử dụng kí hiệu `=` để cho biết là cần yêu cầu có dữ liệu nhập vào:
 
     /**
      * The name and signature of the console command.
