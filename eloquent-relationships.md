@@ -31,19 +31,17 @@ Các bảng trong cơ sở dữ liệu thường có liên quan tới một bả
 <a name="defining-relationships"></a>
 ## Định nghĩa các quan hệ
 
-Eloquent relationships are defined as functions on your Eloquent model classes. Since, like Eloquent models themselves, relationships also serve as powerful [query builders](/docs/{{version}}/queries), defining relationships as functions provides powerful method chaining and querying capabilities. For example:
-
 Các quan hệ trong Eloquent được định nghĩa như các hàm trong class model. Từ đó, giống như là Eloquent mô tả chính mình, các quan hệ cũng phục vụ rất mạnh mẽ bởi [query builders](/docs/{{version}}/queries), định nghĩa các quan hệ như các hàm cũng cấp các ràng buộc mạnh mẽ và khả năng truy vấn. Ví dụ:
 
     $user->posts()->where('active', 1)->get();
 
-Nhưng trước khi đi sâu vào việc sử dụng các quan hệ, hãy học cách định nghĩa mỗi loại:
+Nhưng trước khi đi sâu vào việc sử dụng các mối quan hệ, hãy học cách định nghĩa mỗi loại:
 
 <a name="one-to-one"></a>
 ### Một - Một
 
 
-Một quan hệ một - một một quan hệ đơn giản. Ví dụ, một `User` model có thể liên quan với một `Phone`. Để định nghĩa mối quan hệ này, chúng ta tạo một method `phone` trong model `User`. Method `phone` sẽ trả về kết quả của method `hasOne` dựa trên lớp Eloquent model:
+Quan hệ một - một một quan hệ đơn giản. Ví dụ, một `User` model có thể liên quan với một `Phone`. Để định nghĩa mối quan hệ này, chúng ta tạo một phương thức `phone` trong model `User`. phương thức `phone` sẽ trả về kết quả của phương thức `hasOne` dựa trên lớp Eloquent model:
 
     <?php
 
@@ -70,7 +68,6 @@ Eloquent giả sử khóa ngoại của quan hệ dựa trên tên model. Trong 
 
     return $this->hasOne('App\Phone', 'foreign_key');
 
-Additionally, Eloquent assumes that the foreign key should have a value matching the `id` (or the custom `$primaryKey`) column of the parent. In other words, Eloquent will look for the value of the user's `id` column in the `user_id` column of the `Phone` record. If you would like the relationship to use a value other than `id`, you may pass a third argument to the `hasOne` method specifying your custom key:
 Thêm vào đó Eloquent giả sử rằng khóa ngoại có 1 giá trị tương ứng với cột `id` (hay khóa chính do bạn đặt) của bảng chứa khóa chính. Hay nói một cách khác, Eloquent sẽ tìm kiếm giá trị của user `id` trong cột `user_id` của bản ghi `Phone`. Nếu bạn muốn sử dụng một cột tên khác `id`, bạn sẽ phải truyền vào phương thức `hasOne` một tham số thứ 3 để chị định khóa chính này:
 
     return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
