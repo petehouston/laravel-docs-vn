@@ -1,10 +1,10 @@
 # Eloquent: Relationships
 
-- [Introduction](#introduction)
-- [Defining Relationships](#defining-relationships)
-    - [One To One](#one-to-one)
-    - [One To Many](#one-to-many)
-    - [Many To Many](#many-to-many)
+- [Giới thiệu](#introduction)
+- [Định nghĩa các quan hệ](#defining-relationships)
+    - [Một - Một](#one-to-one)
+    - [Một - Nhiều](#one-to-many)
+    - [Nhiều - Nhiều](#many-to-many)
     - [Has Many Through](#has-many-through)
     - [Polymorphic Relations](#polymorphic-relations)
     - [Many To Many Polymorphic Relations](#many-to-many-polymorphic-relations)
@@ -17,30 +17,33 @@
     - [Touching Parent Timestamps](#touching-parent-timestamps)
 
 <a name="introduction"></a>
-## Introduction
+## Giới thiệu
 
-Database tables are often related to one another. For example, a blog post may have many comments, or an order could be related to the user who placed it. Eloquent makes managing and working with these relationships easy, and supports several different types of relationships:
+Các bảng trong cơ sở dữ liệu thường có liên quan tới một bảng khác. Ví dụ một blog có thể có nhiều comment, hay một đơn hàng sẽ phải có thông tin liên quan của người dùng mà đã đặt nó. Eloquent giúp cho quản lý và làm việc với những quan hệ này một cách đơn giản và hỗ trợ nhiều kiểu quan hệ.
 
-- [One To One](#one-to-one)
-- [One To Many](#one-to-many)
-- [Many To Many](#many-to-many)
+- [Một - Một](#one-to-one)
+- [Một - Nhiều](#one-to-many)
+- [Nhiều - Nhiều](#many-to-many)
 - [Has Many Through](#has-many-through)
 - [Polymorphic Relations](#polymorphic-relations)
 - [Many To Many Polymorphic Relations](#many-to-many-polymorphic-relations)
 
 <a name="defining-relationships"></a>
-## Defining Relationships
+## Định nghĩa các quan hệ
 
 Eloquent relationships are defined as functions on your Eloquent model classes. Since, like Eloquent models themselves, relationships also serve as powerful [query builders](/docs/{{version}}/queries), defining relationships as functions provides powerful method chaining and querying capabilities. For example:
 
+Các quan hệ trong Eloquent được định nghĩa như các hàm trong class model. Từ đó, giống như là Eloquent mô tả chính mình, các quan hệ cũng phục vụ rất mạnh mẽ bởi [query builders](/docs/{{version}}/queries), định nghĩa các quan hệ như các hàm cũng cấp các ràng buộc mạnh mẽ và khả năng truy vấn. Ví dụ:
+
     $user->posts()->where('active', 1)->get();
 
-But, before diving too deep into using relationships, let's learn how to define each type:
+Nhưng trước khi đi sâu vào việc sử dụng các quan hệ, hãy học cách định nghĩa mỗi loại:
 
 <a name="one-to-one"></a>
-### One To One
+### Một - Một
 
-A one-to-one relationship is a very basic relation. For example, a `User` model might be associated with one `Phone`. To define this relationship, we place a `phone` method on the `User` model. The `phone` method should return the results of the `hasOne` method on the base Eloquent model class:
+
+Một quan hệ một - một một quan hệ đơn giản. Ví dụ, một `User` model có thể liên quan với một `Phone`. Để định nghĩa mối quan hệ này, chúng ta tạo một method `phone` trong model `User`. Method `phone` sẽ trả về kết quả của method `hasOne` dựa trên lớp Eloquent model:
 
     <?php
 
@@ -59,21 +62,22 @@ A one-to-one relationship is a very basic relation. For example, a `User` model 
         }
     }
 
-The first argument passed to the `hasOne` method is the name of the related model. Once the relationship is defined, we may retrieve the related record using Eloquent's dynamic properties. Dynamic properties allow you to access relationship functions as if they were properties defined on the model:
+Tham số đầu tiên truyền vào phương thức `hasOne` là tên của model liên quan. Một khi quan hệ đã được định nghĩa, chúng ta có thể truy xuất bản ghi liên quan bằng cách sử dụng các thuộc tính động của Eloquent. Các thuộc tính này cho phép bạn truy cập các hàm về mối quan hệ  như là các thuộc tính đã được định nghĩa trong model:
 
     $phone = User::find(1)->phone;
 
-Eloquent assumes the foreign key of the relationship based on the model name. In this case, the `Phone` model is automatically assumed to have a `user_id` foreign key. If you wish to override this convention, you may pass a second argument to the `hasOne` method:
+Eloquent giả sử khóa ngoại của quan hệ dựa trên tên model. Trong trường hợp này, `Phone` model sẽ tự động được giả sử có một khóa ngoại tên `user_id`. Nếu bạn muốn ghi đè quy tắc này, bạn có thể truyền vào một tham số thứ 2 vào phương thức `hasOne`:
 
     return $this->hasOne('App\Phone', 'foreign_key');
 
 Additionally, Eloquent assumes that the foreign key should have a value matching the `id` (or the custom `$primaryKey`) column of the parent. In other words, Eloquent will look for the value of the user's `id` column in the `user_id` column of the `Phone` record. If you would like the relationship to use a value other than `id`, you may pass a third argument to the `hasOne` method specifying your custom key:
+Thêm vào đó Eloquent giả sử rằng khóa ngoại có 1 giá trị tương ứng với cột `id` (hay khóa chính do bạn đặt) của bảng chứa khóa chính. Hay nói một cách khác, Eloquent sẽ tìm kiếm giá trị của user `id` trong cột `user_id` của bản ghi `Phone`. Nếu bạn muốn sử dụng một cột tên khác `id`, bạn sẽ phải truyền vào phương thức `hasOne` một tham số thứ 3 để chị định khóa chính này:
 
     return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
 
-#### Defining The Inverse Of The Relation
+#### Định nghĩa truy vấn ngược của quan  hệ
 
-So, we can access the `Phone` model from our `User`. Now, let's define a relationship on the `Phone` model that will let us access the `User` that owns the phone. We can define the inverse of a `hasOne` relationship using the `belongsTo` method:
+Chúng ta có thể truy cập model `Phone` từ model `User`. Bây giờ hãy định nghĩa một quan hệ trên model `Phone` để truy cập `User` có số điện thoại nào đó. Chúng ta có thể định nghĩa việc này bằng cách sử dụng phương thức `belongsTo` cho model `Phone`:
 
     <?php
 
@@ -92,7 +96,7 @@ So, we can access the `Phone` model from our `User`. Now, let's define a relatio
         }
     }
 
-In the example above, Eloquent will try to match the `user_id` from the `Phone` model to an `id` on the `User` model. Eloquent determines the default foreign key name by examining the name of the relationship method and suffixing the method name with `_id`. However, if the foreign key on the `Phone` model is not `user_id`, you may pass a custom key name as the second argument to the `belongsTo` method:
+Trong ví dụ trên, Eloquent sẽ có gắng so sánh `user_id` của model `Phone` với `id` ở model `User`. Eloquent xác định tên khóa ngoại mặc định bằng tên của bảng chứa khóa chính kèm theo sau là `_id`. Tuy nhiên nếu khóa ngoại model `Phone` không phải là `user_id`, bạn phải truyền tên khóa ngoại này như là tham số thứ 2 của phương thức `belongsTo`:
 
     /**
      * Get the user that owns the phone.
@@ -102,7 +106,7 @@ In the example above, Eloquent will try to match the `user_id` from the `Phone` 
         return $this->belongsTo('App\User', 'foreign_key');
     }
 
-If your parent model does not use `id` as its primary key, or you wish to join the child model to a different column, you may pass a third argument to the `belongsTo` method specifying your parent table's custom key:
+Nếu `User` model ông sử dụng `id` là khóa chính, hay bạn muốn join với một cột khác (câu lệnh JOIN), bạn phải truyền vào tham số thứ 3 để chỉ định khóa chính này:
 
     /**
      * Get the user that owns the phone.
