@@ -25,7 +25,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 * **Cơ bản**
     * [Routing](routing.md)
     * Middleware
-    * Controllers
+    * [Controllers](controllers.md)
     * [Requests](requests.md)
     * Responses
     * [Views](views.md)
@@ -55,7 +55,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Helpers
     * [Localization](localization.md)
     * Mail
-    * Package Development
+    * [Package Development](packages.md)
     * [Pagination](pagination.md)
     * Queues
     * Redis
