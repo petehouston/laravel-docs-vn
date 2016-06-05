@@ -72,7 +72,7 @@ Thêm vào đó Eloquent giả sử rằng khóa ngoại có 1 giá trị tươn
 
     return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
 
-#### Định nghĩa truy vấn ngược của quan  hệ
+#### Định nghĩa đảo ngược của quan hệ
 
 Chúng ta có thể truy cập model `Phone` từ model `User`. Bây giờ hãy định nghĩa một quan hệ trên model `Phone` để truy cập `User` có số điện thoại nào đó. Chúng ta có thể định nghĩa việc này bằng cách sử dụng phương thức `belongsTo` cho model `Phone`:
 
@@ -114,9 +114,9 @@ Nếu `User` model ông sử dụng `id` là khóa chính, hay bạn muốn join
     }
 
 <a name="one-to-many"></a>
-### One To Many
+### Một - Nhiều
 
-A "one-to-many" relationship is used to define relationships where a single model owns any amount of other models. For example, a blog post may have an infinite number of comments. Like all other Eloquent relationships, one-to-many relationships are defined by placing a function on your Eloquent model:
+Quan hệ "một - nhiều" là quan hệ mà một model có nhiều model khác. Ví dụ một bài viết có vố số các bình luận. Giống như các mối quan hệ khác trong Eloquent, quan hệ này được định nghĩa bằng một hàm trong model:
 
     <?php
 
@@ -135,9 +135,9 @@ A "one-to-many" relationship is used to define relationships where a single mode
         }
     }
 
-Remember, Eloquent will automatically determine the proper foreign key column on the `Comment` model. By convention, Eloquent will take the "snake case" name of the owning model and suffix it with `_id`. So, for this example, Eloquent will assume the foreign key on the `Comment` model is `post_id`.
+Hãy nhớ, Eloquent sẽ tự động xác định cột khóa ngoại trên model `Comment` với định dạng "snake case" là tên của model chứa khóa chính + `_id`, trong trường hợp này khóa ngoại sẽ là `post_id`
 
-Once the relationship has been defined, we can access the collection of comments by accessing the `comments` property. Remember, since Eloquent provides "dynamic properties", we can access relationship functions as if they were defined as properties on the model:
+Khi quan hệ đã được định nghĩa, chúng ta có thể truy cập danh sách comment bằng cách sử dụng thuộc tính `comments`. Hãy nhớ, Eloquent cung cấp các "thuộc tính động", chúng ta có thể truy cập các hàm quan hệ nếu như chúng được định nghĩa như thuộc tính của model:
 
     $comments = App\Post::find(1)->comments;
 
@@ -145,19 +145,19 @@ Once the relationship has been defined, we can access the collection of comments
         //
     }
 
-Of course, since all relationships also serve as query builders, you can add further constraints to which comments are retrieved by calling the `comments` method and continuing to chain conditions onto the query:
+Tất nhiên, tất cả các quan hệ cũng được dùng như query builders, bạn có thể thêm các ràng buộc khác cho những comments bằng cách gọi phương thức `comments` và tiếp tục thêm các điều kiện vào truy vấn:
 
     $comments = App\Post::find(1)->comments()->where('title', 'foo')->first();
 
-Like the `hasOne` method, you may also override the foreign and local keys by passing additional arguments to the `hasMany` method:
+Giống như phương thức `hasOne`, bạn cũng có thể định nghĩa khóa chính và khóa ngoại riêng cho mình bằng cách truyền tham số vào phương thức `hasMany`:
 
     return $this->hasMany('App\Comment', 'foreign_key');
 
     return $this->hasMany('App\Comment', 'foreign_key', 'local_key');
 
-#### Defining The Inverse Of The Relation
+#### Định nghĩa đảo ngược của quan hệ
 
-Now that we can access all of a post's comments, let's define a relationship to allow a comment to access its parent post. To define the inverse of a `hasMany` relationship, define a relationship function on the child model which calls the `belongsTo` method:
+Chúng ta bây giờ đã có thể truy cập toàn bộ comment của bài post trên blog, tiếp theo hãy định nghĩa một quan hệ để cho phép comment có thể truy cập vào bài viết, chúng ta sẽ dùng phương thức `belongsTo`:
 
     <?php
 
@@ -176,13 +176,14 @@ Now that we can access all of a post's comments, let's define a relationship to 
         }
     }
 
-Once the relationship has been defined, we can retrieve the `Post` model for a `Comment` by accessing the `post` "dynamic property":
+Khi quan hệ đã được định nghĩa, chúng ta có thể lấy thông tin model `Post` cho một `Comment` bằng cách truy cập vào thuộc tính động `post`
+
 
     $comment = App\Comment::find(1);
 
     echo $comment->post->title;
 
-In the example above, Eloquent will try to match the `post_id` from the `Comment` model to an `id` on the `Post` model. Eloquent determines the default foreign key name by examining the name of the relationship method and suffixing the method name with `_id`. However, if the foreign key on the `Comment` model is not `post_id`, you may pass a custom key name as the second argument to the `belongsTo` method:
+Trong ví dụ trên, Eloquent sẽ cố gắng đối chiếu `post_id` từ model `Comments` đến `id` của model `Post`. Eloquent mặc định định nghĩa tên khóa ngoại bằng tên của phương thức quan hệ với đuôi `_id`. Tuy nhiên nếu bạn muốn tùy chọn một tên khác, hãy truyền nó vào như là tham số thứ 2 vào phương thức `belongsTo`:
 
     /**
      * Get the post that owns the comment.
@@ -192,7 +193,7 @@ In the example above, Eloquent will try to match the `post_id` from the `Comment
         return $this->belongsTo('App\Post', 'foreign_key');
     }
 
-If your parent model does not use `id` as its primary key, or you wish to join the child model to a different column, you may pass a third argument to the `belongsTo` method specifying your parent table's custom key:
+Nếu model của bạn không sử dụng `id` làm khóa chính, hoặc bạn muốn join với model con ở một cột khác, bạn có thể truyền nó vào như là tham số thứ 3 trong phương thức `belongsTo` để chỉ định key của bảng cha
 
     /**
      * Get the post that owns the comment.
@@ -203,11 +204,12 @@ If your parent model does not use `id` as its primary key, or you wish to join t
     }
 
 <a name="many-to-many"></a>
-### Many To Many
+### Nhiều - Nhiều
 
-Many-to-many relations are slightly more complicated than `hasOne` and `hasMany` relationships. An example of such a relationship is a user with many roles, where the roles are also shared by other users. For example, many users may have the role of "Admin". To define this relationship, three database tables are needed: `users`, `roles`, and `role_user`. The `role_user` table is derived from the alphabetical order of the related model names, and contains the `user_id` and `role_id` columns.
+Quan hệ nhiều nhiều có hơi phức tạp hơn quan hệ `hasOne` và `hasMany` một chút. Ví dụ như là mối quan hệ của 1 user với nhiều "role" (vai trò, quyền, kiểu như admin, mod,...), khi mà các role cũng được đảm nhận bởi nhiều user. Cụ thể hơn, nhiều user có thể có cùng role "Admin". Để định nghĩa mối quan hệ này, cần đến 3 bảng: `users`, `roles`, `role_user`. Bảng `role_user` xuất phát từ tên của những bảng hay model liên quan, và bao gồm các cột `user_id` và `role_id`.
 
-Many-to-many relationships are defined by writing a method that calls the `belongsToMany` method on the base Eloquent class. For example, let's define the `roles` method on our `User` model:
+Quan hệ nhiều nhiều được định nghĩa bởi phương thức `belongsToMany`. Ví dụ sau sẽ định nghĩa phương thức `roles` trong model `User`:
+
 
     <?php
 
@@ -226,7 +228,7 @@ Many-to-many relationships are defined by writing a method that calls the `belon
         }
     }
 
-Once the relationship is defined, you may access the user's roles using the `roles` dynamic property:
+Khi quan hệ được định nghĩa, bạn có thể truy cập vào các role của user thông quan thuộc tính `roles`:
 
     $user = App\User::find(1);
 
@@ -234,21 +236,21 @@ Once the relationship is defined, you may access the user's roles using the `rol
         //
     }
 
-Of course, like all other relationship types, you may call the `roles` method to continue chaining query constraints onto the relationship:
+Tất nhiên cũng giống như tất cả các kiểu quan hệ khác, bạn cũng có thể gọi phương thức `roles` và thêm vào nó các ràng buộc:
 
     $roles = App\User::find(1)->roles()->orderBy('name')->get();
 
-As mentioned previously, to determine the table name of the relationship's joining table, Eloquent will join the two related model names in alphabetical order. However, you are free to override this convention. You may do so by passing a second argument to the `belongsToMany` method:
+Như đã nhắc đến từ trước, để xác định tên của table để join quan hệ này (ở đây là table `role_user`), Eloquent sẽ join 2 model tên liên quan theo thứ tự alphabetical. Tuy nhiên bạn có thể đặt tên tùy chọn bằng cách truyền vào tham số thứ 2 trong phương thức `belongsToMany`:
 
     return $this->belongsToMany('App\Role', 'role_user');
 
-In addition to customizing the name of the joining table, you may also customize the column names of the keys on the table by passing additional arguments to the `belongsToMany` method. The third argument is the foreign key name of the model on which you are defining the relationship, while the fourth argument is the foreign key name of the model that you are joining to:
+Để tùy chọn lựa chọn cột để join, bạn có thể truyền thêm tham số vào hàm `belongsToMany` với tham số thứ 3 là tên của khóa ngoại ứng với model định nghĩa quan hệ (ở đây là `User`) và tham số thứ 4 là tên cột của khóa ngoại ứng với model tham chiếu đến (ở đây là `Role`). 2 tham số `user_id` và `role_id` là 2 cột khóa ngoại của table `role_user`:
 
     return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
 
 #### Defining The Inverse Of The Relationship
 
-To define the inverse of a many-to-many relationship, you simply place another call to `belongsToMany` on your related model. To continue our user roles example, let's define the `users` method on the `Role` model:
+Để truy ngược lại của quan hệ nhiều nhiều, bạn chỉ đơn giản đặt hàm `belongsToMany` trong model được liên quan. Tiếp tục với ví dụ về user và role, hãy định nghĩa phương thức `users` trong model `Role`:
 
     <?php
 
@@ -267,11 +269,11 @@ To define the inverse of a many-to-many relationship, you simply place another c
         }
     }
 
-As you can see, the relationship is defined exactly the same as its `User` counterpart, with the exception of simply referencing the `App\User` model. Since we're reusing the `belongsToMany` method, all of the usual table and key customization options are available when defining the inverse of many-to-many relationships.
+Bạn có thể thấy, quan hệ được định nghĩa giống hết như bên `User`, với khác biệt duy nhất là chúng ta tham chiếu tới model `App\User`. Khi chúng ta sử dụng lại phương thức `belongsToMany`, tất cả các bảng và khóa tùy chọn đều có sẵn khi định nghĩa "the inverse" (có thể hiểu như truy xuất ngược) của quan hệ nhiều - nhiều
 
-#### Retrieving Intermediate Table Columns
+#### Lấy các cột của bảng trung gian
 
-As you have already learned, working with many-to-many relations requires the presence of an intermediate table. Eloquent provides some very helpful ways of interacting with this table. For example, let's assume our `User` object has many `Role` objects that it is related to. After accessing this relationship, we may access the intermediate table using the `pivot` attribute on the models:
+Như chúng ta đã biết, khi làm việc với quan hệ nhiều nhiều, ta cần tới 1 bảng trung gian. Eloquent cung cấp nhiều cách rất hữu ích để tương tác với bảng này. Ví dụ hãy giả sử đối tượng `User` có nhiều đối tượng `Role` mà nó liên quan đến. Sau khi truy cập vào quan hệ này, chúng ta có thể muốn lấy thông tin bảng trung gian bằng cách sử dụng thuộc tính `pivot` trên model:
 
     $user = App\User::find(1);
 
@@ -279,19 +281,19 @@ As you have already learned, working with many-to-many relations requires the pr
         echo $role->pivot->created_at;
     }
 
-Notice that each `Role` model we retrieve is automatically assigned a `pivot` attribute. This attribute contains a model representing the intermediate table, and may be used like any other Eloquent model.
+Chú ý rằng mỗi model `Role` chúng ta lấy ra sẽ được tự động gán cho một thuộc tính `pivot`. Thuộc tính này bao gồm 1 model đại diện cho bảng trung gian, và có thể được sử dụng dung như bất kì model Eloquent nào.
 
-By default, only the model keys will be present on the `pivot` object. If your pivot table contains extra attributes, you must specify them when defining the relationship:
+Mặc định, chỉ có các khóa của model tồn tại trong đối tượng `pivot`. Nếu bảng pivot của bạn có nhiều thuộc tính hơn, bạn phải chỉ định chúng khi định nghĩa quan hệ:
 
     return $this->belongsToMany('App\Role')->withPivot('column1', 'column2');
 
-If you want your pivot table to have automatically maintained `created_at` and `updated_at` timestamps, use the `withTimestamps` method on the relationship definition:
+Nếu bạn muốn bảng pivot này cũng có các automatically maintained `created-at` và `updated_at` timestamps (đây là 2 trường lưu lại thời gian khi thực hiện query trên 1 field), sử dụng phương thức `withTimestamps` khi định nghĩa quan hệ.
 
     return $this->belongsToMany('App\Role')->withTimestamps();
 
-#### Filtering Relationships Via Intermediate Table Columns
+#### Lọc quan hệ thông qua các cột của bảng trung gian
 
-You can also filter the results returned by `belongsToMany` using the `wherePivot` and `wherePivotIn` methods when defining the relationship:
+Bạn cũng có thể lọc các kết quả trả về bởi `belongsToMany` bằng cách sử dụng phương thức `wherePivot` và `wherePivotIn`:
 
     return $this->belongsToMany('App\Role')->wherePivot('approved', 1);
 
