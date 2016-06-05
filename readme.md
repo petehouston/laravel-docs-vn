@@ -9,7 +9,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 * **Mở đầu**
     * Release Notes
     * Upgrade Guide
-    * Contribution Guide
+    * [Contribution Guide](contributions.md)
     * API Documentation
 
 * **Thiết lập**
