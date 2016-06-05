@@ -44,7 +44,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Authorization
     * [Artisan Console](artisan.md)
     * Billing
-    * Cache
+    * [Cache](cache.md)
     * Collections
     * Elixir
     * [Encryption](encryption.md)
