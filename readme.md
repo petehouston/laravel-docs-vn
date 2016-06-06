@@ -72,7 +72,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 
 * **Eloquent ORM**
     * Getting Started
-    * Relationships
+    * [Relationships](eloquent-relationships.md)
     * [Collections](eloquent-collections.md)
     * [Mutators](eloquent-mutators.md)
     * [Serialization](eloquent-serialization.md)
