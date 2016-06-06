@@ -6,14 +6,14 @@
     - [Một - Nhiều](#one-to-many)
     - [Nhiều - Nhiều](#many-to-many)
     - [Has Many Through](#has-many-through)
-    - [Polymorphic Relations](#polymorphic-relations)
-    - [Many To Many Polymorphic Relations](#many-to-many-polymorphic-relations)
-- [Querying Relations](#querying-relations)
+    - [Quan hệ đa hình](#polymorphic-relations)
+    - [Quan hệ đa hình nhiều nhiều](#many-to-many-polymorphic-relations)
+- [Truy vấn quan hệ](#querying-relations)
     - [Eager Loading](#eager-loading)
     - [Constraining Eager Loads](#constraining-eager-loads)
     - [Lazy Eager Loading](#lazy-eager-loading)
-- [Inserting Related Models](#inserting-related-models)
-    - [Many To Many Relationships](#inserting-many-to-many-relationships)
+- [Chèn các model liên quan](#inserting-related-models)
+    - [Quan hệ nhiều nhiều](#inserting-many-to-many-relationships)
     - [Touching Parent Timestamps](#touching-parent-timestamps)
 
 <a name="introduction"></a>
@@ -25,8 +25,8 @@ Các bảng trong cơ sở dữ liệu thường có liên quan tới một bả
 - [Một - Nhiều](#one-to-many)
 - [Nhiều - Nhiều](#many-to-many)
 - [Has Many Through](#has-many-through)
-- [Polymorphic Relations](#polymorphic-relations)
-- [Many To Many Polymorphic Relations](#many-to-many-polymorphic-relations)
+- [Quan hệ đa hình](#polymorphic-relations)
+- [Quan hệ đa hình nhiều nhiều](#many-to-many-polymorphic-relations)
 
 <a name="defining-relationships"></a>
 ## Định nghĩa các quan hệ
