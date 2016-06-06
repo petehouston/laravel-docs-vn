@@ -54,7 +54,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Hashing](hashing.md)
     * [Helpers](helpers.md)
     * [Localization](localization.md)
-    * Mail
+    * [Mail](mail.md)
     * [Package Development](packages.md)
     * [Pagination](pagination.md)
     * Queues
