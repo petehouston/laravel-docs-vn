@@ -50,7 +50,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Encryption](encryption.md)
     * [Errors & Logging](errors.md)
     * Events
-    * Filesystem & Cloud Storage
+    * [Filesystem & Cloud Storage](filesystem.md)
     * [Hashing](hashing.md)
     * Helpers
     * [Localization](localization.md)
