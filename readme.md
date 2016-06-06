@@ -65,7 +65,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Validation
 
 * **Database**
-    * Getting Started
+    * [Getting Started](database.md)
     * Query Builder
     * Migrations
     * [Seeding](seeding.md)
