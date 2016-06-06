@@ -701,16 +701,16 @@ Với tính toán này chỉ có 2 truy vấn sẽ được thực thi:
     $books = App\Book::with('author.contacts')->get();
 
 <a name="constraining-eager-loads"></a>
-### Constraining Eager Loads
+### Ràng buộc các eager load
 
-Sometimes you may wish to eager load a relationship, but also specify additional query constraints for the eager loading query. Here's an example:
+Đôi khi bạn có thể muộn eager load một quan hệ, nhưng cũng muốn chỉ định những ràng buộc thêm vào trong truy vấn của eager load. Sau đây là 1 ví dụ:
 
     $users = App\User::with(['posts' => function ($query) {
         $query->where('title', 'like', '%first%');
 
     }])->get();
 
-In this example, Eloquent will only eager load posts where the post's `title` column contains the word `first`. Of course, you may call other [query builder](/docs/{{version}}/queries) methods to further customize the eager loading operation:
+Trong ví dụ này, Eloquent sẽ chỉ eager load các post mà có cột `title` chứa từ `first`. Tất nhiên, bạn có thể gọi các phương thức [query builder](/docs/{{version}}/queries) khác để làm truy vấn linh động hơn:
 
     $users = App\User::with(['posts' => function ($query) {
         $query->orderBy('created_at', 'desc');
@@ -720,7 +720,7 @@ In this example, Eloquent will only eager load posts where the post's `title` co
 <a name="lazy-eager-loading"></a>
 ### Lazy Eager Loading
 
-Sometimes you may need to eager load a relationship after the parent model has already been retrieved. For example, this may be useful if you need to dynamically decide whether to load related models:
+Đôi khi bạn muốn eager load một quan hệ sau khi model cha đã được lấy ra. Điều này có thể hữu ích nếu bạn muốn linh động quyết định sẽ load model liên quan nào:
 
     $books = App\Book::all();
 
@@ -728,18 +728,18 @@ Sometimes you may need to eager load a relationship after the parent model has a
         $books->load('author', 'publisher');
     }
 
-If you need to set additional query constraints on the eager loading query, you may pass a `Closure` to the `load` method:
+Nếu bạn muốn thêm các ràng buộc vào truy vấn của eager load, bạn có thể truyền một `Closure` vào phương thức `load`:
 
     $books->load(['author' => function ($query) {
         $query->orderBy('published_date', 'asc');
     }]);
 
 <a name="inserting-related-models"></a>
-## Inserting Related Models
+## Chèn các model liên quan
 
-#### The Save Method
+#### Phương thức save
 
-Eloquent provides convenient methods for adding new models to relationships. For example, perhaps you need to insert a new `Comment` for a `Post` model. Instead of manually setting the `post_id` attribute on the `Comment`, you may insert the `Comment` directly from the relationship's `save` method:
+Eloquent cung cấp nhiều phương thức tiện lợi cho việc thêm model vào quan hệ. Ví dụ, không chừng bạn muốn chèn một `Comment` mới cho model `Post`. Thay vì thủ công set thuộc tính `post_id` trên `Comment`, bạn có thể chèn `Comment` trực tiếp từ phương thức `save`:
 
     $comment = new App\Comment(['message' => 'A new comment.']);
 
@@ -747,9 +747,9 @@ Eloquent provides convenient methods for adding new models to relationships. For
 
     $post->comments()->save($comment);
 
-Notice that we did not access the `comments` relationship as a dynamic property. Instead, we called the `comments` method to obtain an instance of the relationship. The `save` method will automatically add the appropriate `post_id` value to the new `Comment` model.
+Chú ý rằng chúng ta không truy cập vào quan hệ `comments` như một thuộc tính động. Thay vào đó chúng ta gọi phương thức `comments` để có được một instance của quan hệ. Phương thức `save` sẽ tự động thêm giá trị `post_id` phù hợp vào model `Comment` mới.
 
-If you need to save multiple related models, you may use the `saveMany` method:
+Nếu bạn cần lưu nhiều model liên quan, bạn có thể sử dụng phương thức `saveMany`:
 
     $post = App\Post::find(1);
 
@@ -758,15 +758,15 @@ If you need to save multiple related models, you may use the `saveMany` method:
         new App\Comment(['message' => 'Another comment.']),
     ]);
 
-#### Save & Many To Many Relationships
+#### Phương thức save và quan hệ nhiều - nhiều
 
-When working with a many-to-many relationship, the `save` method accepts an array of additional intermediate table attributes as its second argument:
+Khi làm việc với quan hệ nhiều - nhiều, phương thức `save` chập nhận một mảng của các thuộc tính của bảng trung gian như là tham số thứ 2:
 
     App\User::find(1)->roles()->save($role, ['expires' => $expires]);
 
-#### The Create Method
+#### Phương thức create
 
-In addition to the `save` and `saveMany` methods, you may also use the `create` method, which accepts an array of attributes, creates a model, and inserts it into the database. Again, the difference between `save` and `create` is that `save` accepts a full Eloquent model instance while `create` accepts a plain PHP `array`:
+Ngoài phương thức `save` và `saveMany`, bạn cũng có thể sử dụng phương thức `create`, cái mà cho phép một mảng của các thuộc tính, tạo ra 1 model, và chèn nó vào trong database. Một lần nữa, sự khác nhau giữa `save` và `create` đó là `save` chấp nhận một Eloquent model instance (một biến đã được gán giá trị) trong khi `create` chấp nhận một PHP `array`:
 
     $post = App\Post::find(1);
 
@@ -775,11 +775,12 @@ In addition to the `save` and `saveMany` methods, you may also use the `create` 
     ]);
 
 Before using the `create` method, be sure to review the documentation on attribute [mass assignment](/docs/{{version}}/eloquent#mass-assignment).
+Trước khi sử dụng phương thức `create`, hãy chắc chắn bạn đã xem qua doc [mass assignment](/docs/{{version}}/eloquent#mass-assignment). 
 
 <a name="updating-belongs-to-relationships"></a>
-#### Updating "Belongs To" Relationships
+#### Cập nhật quan hệ "Belongs To"
 
-When updating a `belongsTo` relationship, you may use the `associate` method. This method will set the foreign key on the child model:
+Khi bạn cập nhật một quan hệ `belongsTo`, bạn có thể sử dụng phương thức `associate`. Phương thức này sẽ thiết lập khóa ngoại trên model con.
 
     $account = App\Account::find(10);
 
@@ -787,36 +788,37 @@ When updating a `belongsTo` relationship, you may use the `associate` method. Th
 
     $user->save();
 
-When removing a `belongsTo` relationship, you may use the `dissociate` method. This method will reset the foreign key as well as the relation on the child model:
+Khi xóa quan hệ `belongsTo`, bạn có thể sử dụng phương thức `dissociate`. Phương thức này sẽ thiết lập lại khóa ngoại cũng như quan hệ trên model con:
 
     $user->account()->dissociate();
 
     $user->save();
 
 <a name="inserting-many-to-many-relationships"></a>
-### Many To Many Relationships
+### Quan hệ nhiều - nhiều
 
-#### Attaching / Detaching
+#### Đính kèm / Gỡ bỏ
 
-When working with many-to-many relationships, Eloquent provides a few additional helper methods to make working with related models more convenient. For example, let's imagine a user can have many roles and a role can have many users. To attach a role to a user by inserting a record in the intermediate table that joins the models, use the `attach` method:
+Khi làm việc với quan hệ nhiều - nhiều, Eloquent cung cấp một số phương thức hữu ích để làm việc với các model có liên quan vô cùng tiện lợi. Ví dụ, tưởng tượng 1 user có thể có nhiều role và 1 role có thể có nhiều user. Để đính kèm 1 role cho 1 user bằng cách chèn thêm 1 bản ghi vào bảng trung gian cái mà join với model, sử dụng phương thức `attach`
 
     $user = App\User::find(1);
 
     $user->roles()->attach($roleId);
 
-When attaching a relationship to a model, you may also pass an array of additional data to be inserted into the intermediate table:
+Khi đính kèm 1 quan hệ vào model, bạn có thể truyền 1 mảng dữ liệu sẽ được chèn vào bảng trung gian:
 
     $user->roles()->attach($roleId, ['expires' => $expires]);
 
-Of course, sometimes it may be necessary to remove a role from a user. To remove a many-to-many relationship record, use the `detach` method. The `detach` method will remove the appropriate record out of the intermediate table; however, both models will remain in the database:
+Tất nhiên, đôi khi có thể là cần thiết khi xóa bỏ 1 role khỏi 1 user. Để xóa bỏ bản ghi quan hệ nhiều - nhiều, sử dụng phương thức `detach`. Phương thức này sẽ xóa bỏ bản ghi phù hợp khỏi bảng trung gian; tuy nhiên, cả hai model vẫn sẽ còn trong database:
 
-    // Detach a single role from the user...
+    // xóa 1 role khỏi 1 user...
     $user->roles()->detach($roleId);
 
-    // Detach all roles from the user...
+    // xóa toàn bộ role khỏi 1 user...
     $user->roles()->detach();
 
 For convenience, `attach` and `detach` also accept arrays of IDs as input:
+Cho thuận tiện hơn, `attach` và `detach` cũng chập nhận mảng các ID như là đầu vào:
 
     $user = App\User::find(1);
 
@@ -824,28 +826,29 @@ For convenience, `attach` and `detach` also accept arrays of IDs as input:
 
     $user->roles()->attach([1 => ['expires' => $expires], 2, 3]);
 
-#### Updating A Record On A Pivot Table
+#### Cập nhật bản ghi trên bảng trung gian
 
-If you need to update an existing row in your pivot table, you may use `updateExistingPivot` method:
+Nếu bạn cần cập nhật 1 hàng trên bảng trung gian, sử dụng phương thức `updateExistingPivot`:
 
     $user = App\User::find(1);
 
-	$user->roles()->updateExistingPivot($roleId, $attributes);
+    $user->roles()->updateExistingPivot($roleId, $attributes);
+	
 
 #### Syncing For Convenience
 
-You may also use the `sync` method to construct many-to-many associations. The `sync` method accepts an array of IDs to place on the intermediate table. Any IDs that are not in the given array will be removed from the intermediate table. So, after this operation is complete, only the IDs in the array will exist in the intermediate table:
+Bạn có thể cũng sử dụng phương thức `sync` để khởi tạo tập hợp nhiều - nhiều. Phương thức `sync` chấp nhận 1 mảng ID để đưa vào bảng trung gian. Bất kì ID nào không ở trong mảng này sẽ bị xóa khỏi bảng trung gian. Vì vậy sau khi tính toán hoàn thành, chỉ có những id trong mảng sẽ tồn tại trong bảng trung gian:
 
     $user->roles()->sync([1, 2, 3]);
 
-You may also pass additional intermediate table values with the IDs:
+Bạn cũng có thể truyền thêm các giá trị cho bảng trung gian cùng với ID:
 
     $user->roles()->sync([1 => ['expires' => true], 2, 3]);
 
 <a name="touching-parent-timestamps"></a>
 ### Touching Parent Timestamps
 
-When a model `belongsTo` or `belongsToMany` another model, such as a `Comment` which belongs to a `Post`, it is sometimes helpful to update the parent's timestamp when the child model is updated. For example, when a `Comment` model is updated, you may want to automatically "touch" the `updated_at` timestamp of the owning `Post`. Eloquent makes it easy. Just add a `touches` property containing the names of the relationships to the child model:
+Khi một model `belongsTo` hoặc `belongsToMany` những model khác, như là `Comment` sẽ thuộc về 1 `Post`, đôi khi rất hữu ích khi cập nhật lại timestamp của model cha khi model con được cập nhật. Ví dụ, khi 1 model `Comment` được cập nhật, bạn có thể muốn tự động "chạm" tới timestamp `update_at` của `Post`. Eloquent làm việc này dễ dàng. Chỉ cần thêm thuộc tính `touches` chứa tên của quan hệ đến model con:
 
     <?php
 
@@ -856,7 +859,7 @@ When a model `belongsTo` or `belongsToMany` another model, such as a `Comment` w
     class Comment extends Model
     {
         /**
-         * All of the relationships to be touched.
+         * Tất cả quan hệ sẽ được chạm tới :D.
          *
          * @var array
          */
@@ -871,7 +874,7 @@ When a model `belongsTo` or `belongsToMany` another model, such as a `Comment` w
         }
     }
 
-Now, when you update a `Comment`, the owning `Post` will have its `updated_at` column updated as well:
+Bây giờ, khi bạn cập nhật 1 `Comment`, model `Post` sở hữu nó sẽ được cập nhật tại cột `update_at`:
 
     $comment = App\Comment::find(1);
 
