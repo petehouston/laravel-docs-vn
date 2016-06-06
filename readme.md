@@ -75,7 +75,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Relationships
     * Collections
     * Mutators
-    * Serialization
+    * [Serialization](eloquent-serialization.md)
 
 ### Thuật ngữ
 
