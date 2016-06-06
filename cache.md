@@ -7,8 +7,8 @@
     - [Lưu các items vào trong cache](#storing-items-in-the-cache)
     - [Xoá các items ra khỏi cache](#removing-items-from-the-cache)
 - [Cache Tags](#cache-tags)
-    - [Storing Tagged Cache Items](#storing-tagged-cache-items)
-    - [Accessing Tagged Cache Items](#accessing-tagged-cache-items)
+    - [Lưu trữ các cache items được tag](#storing-tagged-cache-items)
+    - [Truy cập các cache items được tag](#accessing-tagged-cache-items)
 - [Thêm một cache driver tự chọn](#adding-custom-cache-drivers)
 - [Events](#events)
 
