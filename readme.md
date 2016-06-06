@@ -52,7 +52,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Events
     * [Filesystem & Cloud Storage](filesystem.md)
     * [Hashing](hashing.md)
-    * Helpers
+    * [Helpers](helpers.md)
     * [Localization](localization.md)
     * Mail
     * [Package Development](packages.md)
