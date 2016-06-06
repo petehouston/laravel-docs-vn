@@ -74,7 +74,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Getting Started
     * Relationships
     * [Collections](eloquent-collections.md)
-    * Mutators
+    * [Mutators](eloquent-mutators.md)
     * [Serialization](eloquent-serialization.md)
 
 ### Thuật ngữ
