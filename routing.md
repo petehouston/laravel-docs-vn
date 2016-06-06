@@ -25,7 +25,7 @@
 
 Tất cả các định tuyến Laravel được định nghĩa tại tập tin `app/Http/routes.php`, nó sẽ được Framework tự động tải. Định tuyến Laravel cơ bản nhất đơn giản chấp nhận một URI và một Closure (một hàm hay một tham chiếu đến một hàm cùng với môi trường tham chiếu), cung cấp một cách rất đơn giản và ý nghĩa cho việc định tuyến:
 
-```
+```php
 Route::get('foo', function () {
     return 'Hello World';
 });
@@ -36,7 +36,7 @@ Route::get('foo', function () {
 Tệp tin mặc đinh `routes.php` được tải bởi `RouteServiceProvider` và được tự động bao gồm nhóm middleware `web`, cung cấp truy cập đến trạng thái phiên làm việc và vào mật CSRF. Hầu hết các định tuyến trong ứng dụng của bạn đều được định nghĩa trong tệp tin này.
 
 #### Các phương thức định tuyến có sẵn
-```
+```php
 Route::get($uri, $callback);
 
 Route::post($uri, $callback);
@@ -50,7 +50,7 @@ Route::delete($uri, $callback);
 Route::options($uri, $callback);
 ```
 Đôi khi bạn có thể phải đăng ký nhiều định tuyến mà đáp ứng nhiều phương thức HTTP. Bạn có thể làm như vậy bằng cách sử dụng các phương thức `match`. Hoặc, bạn thậm chí có thể đăng ký một định tuyến mà đáp ứng tất cả các phương thức HTTP bằng cách sử dụng phương thức `any`:
-```
+```php
 Route::match(['get', 'post'], '/', function () {
     //
 });
@@ -66,13 +66,13 @@ Route::any('foo', function () {
 #### Tham số bắt buộc
 
 Tất nhiên, đôi khi bạn sẽ cần phải nắm bắt các phân đoạn trong URIs trong định tuyến của bạn. Ví dụ: bạn cần lấy được ID của người dùng từ các URL. Bạn có thể làm như vậy bằng cách định nghĩa các tham số như sau:
-```
+```php
 Route::get('user/{id}', function ($id) {
     return 'User '.$id;
 });
 ```
 Bạn có thể định nghĩa nhiều tham số theo yêu cầu:
-```
+```php
 Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
     //
 });
@@ -85,7 +85,7 @@ Các tham số định tuyến luôn được bao bọc bởi cặp dấu ngoặ
 #### Tham số tùy chọn
 
 Thỉnh thoảng, bạn có thể phải chỉ định một số định tuyến, nhưng làm cho nó bắt buộc phải có. Bạn có thể làm như vậy bằng cách đặt một dấu chấm hỏi "`?`" sau tên tham số. Hãy chắc chắn rằng cung cấp cho biến tương ứng một giá trị mặc định:
-```
+```php
 Route::get('user/{name?}', function ($name = null) {
     return $name;
 });
@@ -98,7 +98,7 @@ Route::get('user/{name?}', function ($name = 'John') {
 #### Hạn chế sử dụng biểu thức chính quy
 
 Bạn có thể hạn chế các định dạng của tham số định tuyến bằng cách sử dụng phương thức `where`. Phương thức `where` chấp nhận tên của tham số và một biểu thức chính quy quy định các tham số được hạn chế như thế nào:
-```
+```php
 Route::get('user/{name}', function ($name) {
     //
 })
@@ -117,7 +117,7 @@ Route::get('user/{id}/{name}', function ($id, $name) {
 #### Hạn chế toàn cục
 
 Nếu bạn muốn có một số định tuyến luôn bị hạn chế bởi một biểu thức chính quy, bạn có thể sử dụng phương thức `pattern`. Bạn nên xác định những quy định này trong phương thức `boot` của `RouteServiceProvider`:
-```
+```php
 /**
  * Define your route model bindings, pattern filters, etc.
  *
@@ -132,7 +132,7 @@ public function boot(Router $router)
 }
 ```
 Khi mô hình đã được xác định nó sẽ tự động áp dụng cho tất cả các định tuyến sử dụng tham số:
-```
+```php
 Route::get('user/{id}', function ($id) {
     // Only called if {id} is numeric.
 });
@@ -141,25 +141,25 @@ Route::get('user/{id}', function ($id) {
 ## Tên của định tuyến
 
 Các định tuyến cho phép đặt tên để thuận tiện cho các URL hoặc chuyển hướng cho các định tuyến cụ thể. Bạn có thể chỉ định một tên cho định tuyến bằng cách sử dụng khóa `as` khi tạo định tuyến:
-```
+```php
 Route::get('user/profile', ['as' => 'profile', function () {
     //
 }]);
 ```
 Bạn cũng có thể chỉ định tên cho hành động:
-```
+```php
 Route::get('user/profile', [
     'as' => 'profile', 'uses' => 'UserController@showProfile'
 ]);
 ```
 Ngoài ra, thay vì chỉ định tên trong mảng định nghĩa route, bạn cũng có thể thêm phương thức `name` vào cuối route:
-```
+```php
 Route::get('user/profile', 'UserController@showProfile')->name('profile');
 ```
 #### Nhóm định tuyến và đặt tên các định tuyến
 
 Nếu bạn sử dụng nhóm định tuyến (route groups) bạn có thể chỉ định một khóa bên trong mảng thuộc tính định tuyến, cho phép bạn thiết lập một tiền tố cho tất cả các định tuyến bên trong nhóm:
-```
+```php
 Route::group(['as' => 'admin::'], function () {
     Route::get('dashboard', ['as' => 'dashboard', function () {
         // Route named "admin::dashboard"
@@ -169,7 +169,7 @@ Route::group(['as' => 'admin::'], function () {
 #### Tạo URL từ định tuyến đã đặt tên
 
 Một khi bạn đã gán tên cho một định tuyến xác định, bạn có thể sử dụng tên của nó khi tạo URLs hoặc chuyển hướng thông qua hàm `route()`:
-```
+```php
 // Generating URLs...
 $url = route('profile');
 
@@ -177,7 +177,7 @@ $url = route('profile');
 return redirect()->route('profile');
 ```
 Nếu như tên đã được định nghĩa các tham số, bạn có thể xuyên qua nó như là một đối số thứ hai trong hàm `route()`. Các đối số sẽ được chèn vào vị trí chính xác trên URLs:
-```
+```php
 Route::get('user/{id}/profile', ['as' => 'profile', function ($id) {
     //
 }]);
@@ -194,7 +194,7 @@ Nhóm định tuyến cho phép bạn chia sẻ các thuộc tính như middlewa
 #### Middleware
 
 Để gán middleware cho một nhóm, bạn có thể sử dụng khóa `middleware` trong mảng thuộc tính. Middleware sẽ được thực hiện theo thứ tự bạn định nghĩa mảng này:
-```
+```php
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function ()    {
         // Uses Auth Middleware
@@ -209,7 +209,7 @@ Route::group(['middleware' => 'auth'], function () {
 #### namespaces
 
 Một trường hợp sử dụng chung cho nhóm định tuyến là namespaces được chỉ định với một nhóm của bộ điều khiển. Bạn có thể sử dụng tham số `namespace` trong mangr thuộc tính của bạn để chỉ định namespace cho tất cả bộ điều khiển bên trong nhóm:
-```
+```php
 Route::group(['namespace' => 'Admin'], function()
 {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
@@ -225,7 +225,7 @@ Hãy nhớ rằng, theo mặc định `RouteServiceProvider` bao gồm tệp tin
 #### Định tuyến tên miền phụ
 
 Nhóm định tuyến cũng có thể được sử dụng để định tuyến đại diện các tên miền phụ. Tên miền phụ có thể được gán tham số định tuyến như URIs, cho phép bạn lấy một phần của tên miền phụ để sử dụng bên trong định tuyến hoặc bộ điều khiển của bạn. Các tên miền phụ có thể được xác định bằng cách sử dụng khóa `domain` trong mảng thuộc tính:
-```
+```php
 Route::group(['domain' => '{account}.myapp.com'], function () {
     Route::get('user/{id}', function ($account, $id) {
         //
@@ -236,7 +236,7 @@ Route::group(['domain' => '{account}.myapp.com'], function () {
 #### Các tiền tố định tuyến
 
 Thuộc tính `prefix` có thể sử dụng để thêm tiền tố cho mỗi định tuyến trong một nhóm với một URI. Ví dụ, bạn có thể muốn tất cả các tiền tố trong nhóm là admin:
-```
+```php
 Route::group(['prefix' => 'admin'], function () {
     Route::get('users', function ()    {
         // Matches The "/admin/users" URL
@@ -253,7 +253,7 @@ Laravel làm cho nó dễ dàng để bảo vệ các ứng dụng của bạn t
 Laravel tự động tạo ra một CSRF "token" cho mỗi người dùng hoạt động quản lý bởi ứng dụng. Mã này dử dụng để xác minh rằng người dùng là một trong những người thực sự gửi yêu cầu với ứng dụng.
 
 Bất cứ khi nào bạn tạo một biểu mẫu HTML trong ứng dụng của bạn, bạn nên thêm một trường ẩn CSRF token để bảo mật CSRF có thể xác nhận yêu cầu. Để tạo ra `_token` bạn có thể sử dụng hàm `csrf_fiel` helper function:
-```
+```php
 // Vanilla PHP
 <?php echo csrf_field(); ?>
 
@@ -261,7 +261,7 @@ Bất cứ khi nào bạn tạo một biểu mẫu HTML trong ứng dụng của
 {{ csrf_field() }}
 ```
 `csrf_field` được tạo thông qua HTML:
-```
+```php
 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 ```
 Bạn không cần phải tự xác minh CSRF token trên các yêu cầu POST, PUT, DELETE. `VerifyCsrfToken` middleware, được bao gồm trong `web` middleware sẽ tự động xác minh token có phù hợp hay không.
@@ -272,7 +272,7 @@ Bạn không cần phải tự xác minh CSRF token trên các yêu cầu POST, 
 Đôi khi, bạn có thể muốn loại bỏ URIs khỏi bảo mật CSRF. Ví dụ, nếu bạn đang sử dụng Stripe để xử lý thanh toán và được sử dụng hệ thông  webhook của họ, bạn sẽ cần phải loại trừ đi các định tuyến xử lý của bạn khỏi bảo mật CSRF của Laravel.
 
 Bạn có thể loại bỏ các bảo mật CSRF bằng cách xác định tuyến đường bên ngoài middleware web bên trong tệp tin `routes.php` hoặc bằng cách thêm thuộc tính `$except` trong middleware `VerifyCsrfToken`:
-```
+```php
 <?php
 
 namespace App\Http\Middleware;
@@ -295,11 +295,11 @@ class VerifyCsrfToken extends BaseVerifier
 #### X-CSRF-TOKEN
 
 Ngoài việc kiểm tra CSRF như một tham số POST, middleware `VerifyCsrfToken` cũng sẽ kiểm tra các yêu cầu X-CSRF-TOKEN. Bạn có thể, ví dụ, lưu trữ token trong thẻ meta:
-```
+```php
 <meta name="csrf-token" content="{{ csrf_token() }}">
 ```
 Một khi bạn đã tạo ra các thẻ `meta`, bạn có thể chỉ định một thư viện như jQuery để thêm các thẻ cho tất cả các yêu cầu (request headers). Điều này cung cấp thật đơn giản, thuận tiện đẻ bảo vệ các ứng dụng AJAX của bạn:
-```
+```javascript
 $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -319,7 +319,7 @@ Laravel models binding cung cấp một cách thuận tiện đêr đẩy model 
 #### Ràng buộc ngầm định
 
 Laravel sẽ tự động giải quyết gợi ý Eloquent Model được xác định bên trong định tuyến hoặc bộ điều khiển có tên biến phù hợp với tên một phân đoạn route. Ví dụ:
-```
+```php
 Route::get('api/users/{user}', function (App\User $user) {
     return $user->email;
 });
@@ -331,7 +331,7 @@ Nếu không tìm thấy trong cơ sở dữ liệu, một phản hồi 404 HTTP
 #### Tùy biến tên khóa
 
 Nếu bạn muốn các mô hình ràng buộc ngầm định để sử dụng một cột cơ sở dữ liệu khác ID khi lấy dữ liệu, bạn có thể ghi đè lên phương thức `getRouteKeyName` trên Eloquent Model:
-```
+```php
 /**
  * Get the route key for the model.
  *
@@ -347,7 +347,7 @@ public function getRouteKeyName()
 Để đăng ký ràng buộc tường minh, sử dụng phương thức `model` của biến $router để xác định lớp cho một tham số. Bạn nên xác định các ràng buộc của bạn trong phương thức `RouteServiceProvider::boot`:
 
 **Ràng buộc một tham số cho một mô hình**
-```
+```php
 public function boot(Router $router)
 {
     parent::boot($router);
@@ -368,15 +368,15 @@ Nếu thể hiện model không được tìm thấy trong cơ sở dữ liệu,
 **Tùy chỉnh the revolution logic**
 
 Nếu bạn muốn sử dụng logic giải quyết của riêng bạn, bạn nên sử dụng phương thức `Route::bind`. Thuộc tính bao đóng truyền qua phương thức `bind` sẽ nhận được giá trị của tham biến trên URI, và sẽ trả về một thể hiện của lớp bạn muốn truyền vào route:
-
+```php
 $router->bind('user', function ($value) {
     return App\User::where('name', $value)->first();
 });
-
+```
 **Tùy chỉnh "Not found"**
 
 Nếu bạn muốn chỉ đinh hành vi "Not found" của bạn, qua một thuộc tính bao đóng `Closure` như một đối số thứ ba của phương thức `model`:
-```
+```php
 $router->model('user', 'App\User', function () {
     throw new NotFoundHttpException;
 });
@@ -385,24 +385,24 @@ $router->model('user', 'App\User', function () {
 ## Form Method Spoofing
 
 Biểu mẫu HTML không hỗ trợ phương thức `PUT`, 'DELETE', 'PATCH'. Vì vậy, khi xác định các phương thức trên được gọi từ HTML Form, bạn sẽ phải thêm một trường input ẩn `_method` vào biểu mẫu. Các giá trị được gửi với trường `_method` sẽ được sử dụng như các phương thức HTTP:
-```
+```php
 <form action="/foo/bar" method="POST">
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form>
 ```
 Để tạo ra trường ẩn `_method`, bạn cũng có thể sử dụng helper function:
-```
+```php
 <?php echo method_field('PUT'); ?>
 ```
 Hoặc sử dụng Blade template:
-```
+```php
 {{ method_field('PUT') }}
 ```
 ## Truy cập vào định tuyến hiện tại
 
 Phương thức `Route::current()` sẽ trả về xử lý các yêu cầu HTTP của định tuyến hiện tại, cho phép bạn xem đầy đủ trong `Illuminate\Routing\Route`:
-```
+```php
 $route = Route::current();
 
 $name = $route->getName();
@@ -410,7 +410,7 @@ $name = $route->getName();
 $actionName = $route->getActionName();
 ```
 Bạn cũng có thể sử dụng phương thức hỗ trợ `currentRouteName` và `currentRouteAction` trên class `Route` để truy cập:
-```
+```php
 $name = Route::currentRouteName();
 
 $action = Route::currentRouteAction();
