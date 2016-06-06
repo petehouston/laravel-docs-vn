@@ -16,7 +16,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Installation](installation.md)
     * Configuration
     * [Homestead](homestead.md)
-    * Valet
+    * [Valet](valet.md)
 
 * **Hướng dẫn**
     * Basic Task List
