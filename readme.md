@@ -14,7 +14,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 
 * **Thiết lập**
     * [Installation](installation.md)
-    * Configuration
+    * [Configuration](configuration.md)
     * [Homestead](homestead.md)
     * [Valet](valet.md)
 
