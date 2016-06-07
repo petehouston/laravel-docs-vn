@@ -24,7 +24,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 
 * **Cơ bản**
     * [Routing](routing.md)
-    * Middleware
+    * [Middleware](middleware.md)
     * [Controllers](controllers.md)
     * [Requests](requests.md)
     * Responses
