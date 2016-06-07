@@ -1,13 +1,13 @@
 # Collections
 
-- [Introduction](#introduction)
-- [Creating Collections](#creating-collections)
+- [Giới thiệu](#introduction)
+- [Tạo Collections](#creating-collections)
 - [Available Methods](#available-methods)
 
 <a name="introduction"></a>
-## Introduction
+## Giới thiệu
 
-The `Illuminate\Support\Collection` class provides a fluent, convenient wrapper for working with arrays of data. For example, check out the following code. We'll use the `collect` helper to create a new collection instance from the array, run the `strtoupper` function on each element, and then remove all empty elements:
+Lớp `Illuminate\Support\Collection` cung cấp một gói làm việc dễ dàng, thuận lợi với các mảng dữ liệu. Ví dụ, hãy xem qua đoạn code sau. Chúng ta sẽ sử dụng helper(helper là các hàm được viết và có thể gọi dùng lại nhiều lần) `collect` để tạo mới một collection instance(instance là một biến mang giá trị) từ mảng, chạy hàm `strtoupper` trên mỗi phần tử, và sau đó xóa tất cả các phần tử trống:
 
     $collection = collect(['taylor', 'abigail', null])->map(function ($name) {
         return strtoupper($name);
@@ -16,24 +16,23 @@ The `Illuminate\Support\Collection` class provides a fluent, convenient wrapper 
         return empty($name);
     });
 
-
-As you can see, the `Collection` class allows you to chain its methods to perform fluent mapping and reducing of the underlying array. In general, every `Collection` method returns an entirely new `Collection` instance.
+Như bạn có thể thấy, lớp `Collection` cho phép bạn đính kèm các phương thức để dễ dàng thực hiện xử lý và xóa phần từ mảng. Nói chung, mỗi phương thức `Collection` trả về một instance `Collection`.
 
 <a name="creating-collections"></a>
-## Creating Collections
+## Tạo Collections
 
-As mentioned above, the `collect` helper returns a new `Illuminate\Support\Collection` instance for the given array. So, creating a collection is as simple as:
+Như đã đề cập bên trên, helper `collect` trả về một instance `Illuminate\Support\Collection` mới cho một mảng. Do đó, tạo một collection đơn giản như sau:
 
     $collection = collect([1, 2, 3]);
 
-By default, collections of [Eloquent](/docs/{{version}}/eloquent) models are always returned as `Collection` instances; however, feel free to use the `Collection` class wherever it is convenient for your application.
+Mặc định, các collections của các model [Eloquent](/docs/{{version}}/eloquent) luôn luôn trả về instances `Collection`; tuy nhiên, hãy thoải mái sử dụng lớp `Collection` bất cứ nơi nào nếu nó thuận tiện cho ứng dụng của bạn.
 
 <a name="available-methods"></a>
-## Available Methods
+## Các phương thức có sẵn
 
-For the remainder of this documentation, we'll discuss each method available on the `Collection` class. Remember, all of these methods may be chained for fluently manipulating the underlying array. Furthermore, almost every method returns a new `Collection` instance, allowing you to preserve the original copy of the collection when necessary.
+Trong tài liệu này, chúng ta sẽ thảo luận về từng phương thức có sẵn trong lớp `Collection`. Nhớ rằng tất cả những phương thức có thể được liên kết cho việc xử lý mảng một cách thuận lợi nhất. Hơn nữa, hầu hết mỗi phương thức đều trả về một instance `Collection` mới, cho phép bạn giữ lại bản gốc của collection khi cần thiết. 
 
-You may select any method from this table to see an example of its usage:
+Bạn có thể lựa chọn bất kì phương thức từ bảng dưới đây và xem ví dụ sử dụng nó:
 
 <style>
     #collection-method-list > p {
@@ -114,7 +113,7 @@ You may select any method from this table to see an example of its usage:
 </div>
 
 <a name="method-listing"></a>
-## Method Listing
+## Danh sách phương thức
 
 <style>
     #collection-method code {
@@ -129,7 +128,7 @@ You may select any method from this table to see an example of its usage:
 <a name="method-all"></a>
 #### `all()` {#collection-method .first-collection-method}
 
-The `all` method simply returns the underlying array represented by the collection:
+Phương thức `all` đơn giản trả về mảng cơ bản được miêu tả bởi collection:
 
     collect([1, 2, 3])->all();
 
@@ -138,13 +137,13 @@ The `all` method simply returns the underlying array represented by the collecti
 <a name="method-avg"></a>
 #### `avg()` {#collection-method}
 
-The `avg` method returns the average of all items in the collection:
+Phương thức `avg` trả về trung bình cộng của tất cả phần tử trong collection:
 
     collect([1, 2, 3, 4, 5])->avg();
 
     // 3
 
-If the collection contains nested arrays or objects, you should pass a key to use for determining which values to calculate the average:
+Nếu collection bao gồm nhiều mảng hoặc đối tượng lồng nhau, bạn có thể truyền vào 1 key để phân biết giá trị nào dùng để tính trung bình:
 
     $collection = collect([
         ['name' => 'JavaScript: The Good Parts', 'pages' => 176],
@@ -158,7 +157,7 @@ If the collection contains nested arrays or objects, you should pass a key to us
 <a name="method-chunk"></a>
 #### `chunk()` {#collection-method}
 
-The `chunk` method breaks the collection into multiple, smaller collections of a given size:
+Phương thức `chunk` chia collection thành nhiều phần, các collection nhỏ hơn với kích thước đã cho:
 
     $collection = collect([1, 2, 3, 4, 5, 6, 7]);
 
@@ -168,7 +167,7 @@ The `chunk` method breaks the collection into multiple, smaller collections of a
 
     // [[1, 2, 3, 4], [5, 6, 7]]
 
-This method is especially useful in [views](/docs/{{version}}/views) when working with a grid system such as [Bootstrap](http://getbootstrap.com/css/#grid). Imagine you have a collection of [Eloquent](/docs/{{version}}/eloquent) models you want to display in a grid:
+Phương thức này đặc biệt hữu ích trong [views](/docs/{{version}}/views) khi làm việc với grid system như [Bootstrap](http://getbootstrap.com/css/#grid). Tưởng tượng bạn có 1 collectioni của các model [Eloquent](/docs/{{version}}/eloquent) mà bạn muốn hiển thị dạng lưới:
 
     @foreach ($products->chunk(3) as $chunk)
         <div class="row">
@@ -181,7 +180,7 @@ This method is especially useful in [views](/docs/{{version}}/views) when workin
 <a name="method-collapse"></a>
 #### `collapse()` {#collection-method}
 
-The `collapse` method collapses a collection of arrays into a flat collection:
+Phương thức `collapse` gộp một mảng collection thành một collection:
 
     $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
 
@@ -194,7 +193,7 @@ The `collapse` method collapses a collection of arrays into a flat collection:
 <a name="method-combine"></a>
 #### `combine()` {#collection-method}
 
-The `combine` method combines the keys of the collection with the values of another array or collection:
+Phương thức `combine` hợp nhất key của một collection với value của một mảng hoặc collection khác:
 
     $collection = collect(['name', 'age']);
 
@@ -207,7 +206,7 @@ The `combine` method combines the keys of the collection with the values of anot
 <a name="method-contains"></a>
 #### `contains()` {#collection-method}
 
-The `contains` method determines whether the collection contains a given item:
+Phương thức `contains` xác định xem colletion có bao gồm item đã cho hay không:
 
     $collection = collect(['name' => 'Desk', 'price' => 100]);
 
@@ -219,7 +218,7 @@ The `contains` method determines whether the collection contains a given item:
 
     // false
 
-You may also pass a key / value pair to the `contains` method, which will determine if the given pair exists in the collection:
+Bạn cũng có thể truyền 1 cặp key / value vào phương thức `contains`, nó sẽ xác định sự tồn tại cặp đó trong collection:
 
     $collection = collect([
         ['product' => 'Desk', 'price' => 200],
@@ -230,7 +229,7 @@ You may also pass a key / value pair to the `contains` method, which will determ
 
     // false
 
-Finally, you may also pass a callback to the `contains` method to perform your own truth test:
+Cuối cùng, bạn cũng có thể truyền vào một callback vào phương thức `contains` để thực hiện test kiểm tra:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -243,7 +242,7 @@ Finally, you may also pass a callback to the `contains` method to perform your o
 <a name="method-count"></a>
 #### `count()` {#collection-method}
 
-The `count` method returns the total number of items in the collection:
+Phương thức `count` trả về tổng số phần tử trong collection:
 
     $collection = collect([1, 2, 3, 4]);
 
@@ -254,7 +253,7 @@ The `count` method returns the total number of items in the collection:
 <a name="method-diff"></a>
 #### `diff()` {#collection-method}
 
-The `diff` method compares the collection against another collection or a plain PHP `array` based on its values:
+Phương thức `diff` so sánh collection với một collection khác hoặc một mảng php đơn giản dựa trên value của nó:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -267,7 +266,7 @@ The `diff` method compares the collection against another collection or a plain 
 <a name="method-diffkeys"></a>
 #### `diffKeys()` {#collection-method}
 
-The `diffKeys` method compares the collection against another collection or a plain PHP `array` based on its keys:
+Phương thức `diffKeys` so sánh collection với một collection khác hoặc mảng php đơn giản dựa trên key của nó:
 
     $collection = collect([
         'one' => 10,
