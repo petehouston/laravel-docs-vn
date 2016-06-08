@@ -290,13 +290,13 @@ Phương thức `diffKeys` so sánh collection với một collection khác ho�
 <a name="method-each"></a>
 #### `each()` {#collection-method}
 
-The `each` method iterates over the items in the collection and passes each item to a given callback:
+Phương thức `each` lặp qua các phần tử trong collection và truyền mỗi phần tử vào trong 1 callback:
 
     $collection = $collection->each(function ($item, $key) {
         //
     });
 
-Return `false` from your callback to break out of the loop:
+Return `false` trong callback để thoát khỏi vòng lặp:
 
     $collection = $collection->each(function ($item, $key) {
         if (/* some condition */) {
@@ -307,7 +307,7 @@ Return `false` from your callback to break out of the loop:
 <a name="method-every"></a>
 #### `every()` {#collection-method}
 
-The `every` method creates a new collection consisting of every n-th element:
+Phương thức `every` tạo ra 1 collection mới bao gồm mỗi phần tử thứ n:
 
     $collection = collect(['a', 'b', 'c', 'd', 'e', 'f']);
 
@@ -315,7 +315,7 @@ The `every` method creates a new collection consisting of every n-th element:
 
     // ['a', 'e']
 
-You may optionally pass offset as the second argument:
+Bạn có thể tùy chọn truyền offset(phần bỏ qua) như là tham số thứ 2:
 
     $collection->every(4, 1);
 
@@ -324,7 +324,7 @@ You may optionally pass offset as the second argument:
 <a name="method-except"></a>
 #### `except()` {#collection-method}
 
-The `except` method returns all items in the collection except for those with the specified keys:
+Phương thức `except` trả về toàn bộ phần tử trọng collection trừ những phần từ với key đã được chỉ định:
 
     $collection = collect(['product_id' => 1, 'name' => 'Desk', 'price' => 100, 'discount' => false]);
 
@@ -334,7 +334,7 @@ The `except` method returns all items in the collection except for those with th
 
     // ['product_id' => 1, 'name' => 'Desk']
 
-For the inverse of `except`, see the [only](#method-only) method.
+Trái ngược với `except`, xem phương thức [only](#method-only)
 
 <a name="method-filter"></a>
 #### `filter()` {#collection-method}
