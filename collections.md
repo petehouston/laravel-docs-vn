@@ -339,7 +339,7 @@ Trái ngược với `except`, xem phương thức [only](#method-only)
 <a name="method-filter"></a>
 #### `filter()` {#collection-method}
 
-The `filter` method filters the collection by a given callback, keeping only those items that pass a given truth test:
+Phương thức `filter` lọc qua collection bằng một callback, chỉ giữ lại những phần tử mà thông qua điều kiện đã cho:
 
     $collection = collect([1, 2, 3, 4]);
 
@@ -351,12 +351,12 @@ The `filter` method filters the collection by a given callback, keeping only tho
 
     // [3, 4]
 
-For the inverse of `filter`, see the [reject](#method-reject) method.
+Ngược lại của `filter`, xem phương thức [reject](#method-reject).
 
 <a name="method-first"></a>
 #### `first()` {#collection-method}
 
-The `first` method returns the first element in the collection that passes a given truth test:
+Phương thức `first` trả về phần từ đầu tiên trong collection mà thông qua điều kiện:
 
     collect([1, 2, 3, 4])->first(function ($key, $value) {
         return $value > 2;
@@ -364,7 +364,7 @@ The `first` method returns the first element in the collection that passes a giv
 
     // 3
 
-You may also call the `first` method with no arguments to get the first element in the collection. If the collection is empty, `null` is returned:
+Bạn cũng có thể gọi phương thức `first` không tham số để lấy về phần từ đầu tiên trong collection. Nếu collection rỗng, trả về `null`:
 
     collect([1, 2, 3, 4])->first();
 
@@ -374,6 +374,7 @@ You may also call the `first` method with no arguments to get the first element 
 #### `flatMap()` {#collection-method}
 
 The `flatMap` method iterates through the collection and passes each value to the given callback. The callback is free to modify the item and return it, thus forming a new collection of modified items. Then, the array is flattened by a level:
+Phương thức `flatMap` lặp qua collection và truyền từng value vào callback. Callback sẽ thay đổi và trả lại nó, do vậy tạo ra 1 collection mới từ các phần tử được thay đổi. Sau đó mảng sẽ bị flatten bởi 1 level (flatten là gì các bạn xem bên dưới nhé).
 
     $collection = collect(
         ['name' => 'Sally'],
@@ -392,7 +393,7 @@ The `flatMap` method iterates through the collection and passes each value to th
 <a name="method-flatten"></a>
 #### `flatten()` {#collection-method}
 
-The `flatten` method flattens a multi-dimensional collection into a single dimension:
+Phương thức `flatten` làm phẳng một collection nhiều chiều thành một chiều:
 
     $collection = collect(['name' => 'taylor', 'languages' => ['php', 'javascript']]);
 
@@ -403,6 +404,7 @@ The `flatten` method flattens a multi-dimensional collection into a single dimen
     // ['taylor', 'php', 'javascript'];
 
 You may optionally pass the function a "depth" argument:
+Bạn có thể tùy chọn truyền vào hàm một tham số "depth":
 
     $collection = collect([
         'Apple' => [
@@ -424,12 +426,12 @@ You may optionally pass the function a "depth" argument:
         ]
     */
 
-Here, calling `flatten` without providing the depth would have also flattened the nested arrays, resulting in `['iPhone 6S', 'Apple', 'Galaxy S7', 'Samsung']`. Providing a depth allows you to restrict the levels of nested arrays that will be flattened.
+Ở đây, nếu gọi `flatten` mà không cung cấp "depth" (độ sau) có thể cũng sẽ flatten cả những mảng lồng nhau, kết quả là `['iPhone 6S', 'Apple', 'Galaxy S7', 'Samsung']`. Cung cấp "depth" cho phép bạn hạn chế mức độ của các mảng lồng nhau mà sẽ bị flatten.
 
 <a name="method-flip"></a>
 #### `flip()` {#collection-method}
 
-The `flip` method swaps the collection's keys with their corresponding values:
+Phương thức `flip` đảo ngược vị trí key và value của collection:
 
     $collection = collect(['name' => 'taylor', 'framework' => 'laravel']);
 
@@ -442,7 +444,7 @@ The `flip` method swaps the collection's keys with their corresponding values:
 <a name="method-forget"></a>
 #### `forget()` {#collection-method}
 
-The `forget` method removes an item from the collection by its key:
+Phương thức `forget` xóa một phần từ từ collection bởi key:
 
     $collection = collect(['name' => 'taylor', 'framework' => 'laravel']);
 
@@ -452,12 +454,12 @@ The `forget` method removes an item from the collection by its key:
 
     // ['framework' => 'laravel']
 
-> **Note:** Unlike most other collection methods, `forget` does not return a new modified collection; it modifies the collection it is called on.
+> **Note:** Không như hầu hết các phương thức collection, `forget` không trả về một collection mới được mà đã được thay đổi, nó thay đổi chính collection mà nó được gọi tới.
 
 <a name="method-forpage"></a>
 #### `forPage()` {#collection-method}
 
-The `forPage` method returns a new collection containing the items that would be present on a given page number:
+Phương thức `forPage` trả về một collection mới bao gồm các phần tử mà sẽ được xuất hiện với số trang đa cho:
 
     $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
@@ -467,12 +469,12 @@ The `forPage` method returns a new collection containing the items that would be
 
     // [4, 5, 6]
 
-The method requires the page number and the number of items to show per page, respectively.
+Phương thức này yêu cầu số trang và số phần từ mỗi trang, tương ứng với các tham số truyền vào.
 
 <a name="method-get"></a>
 #### `get()` {#collection-method}
 
-The `get` method returns the item at a given key. If the key does not exist, `null` is returned:
+Phương thức `get` trả về phần tử tại key đã cho. Nếu key không tồn tại, trả về `null`:
 
     $collection = collect(['name' => 'taylor', 'framework' => 'laravel']);
 
@@ -480,7 +482,7 @@ The `get` method returns the item at a given key. If the key does not exist, `nu
 
     // taylor
 
-You may optionally pass a default value as the second argument:
+Bạn có thể tùy chọn truyền vào một giá trị mặc định như là tham số thứ 2:
 
     $collection = collect(['name' => 'taylor', 'framework' => 'laravel']);
 
@@ -488,7 +490,7 @@ You may optionally pass a default value as the second argument:
 
     // default-value
 
-You may even pass a callback as the default value. The result of the callback will be returned if the specified key does not exist:
+Bạn có thể truyền một callback như là giá trị mặc định. Giá trị của callback sẽ được trả về nếu key chỉ định không tồn tại:
 
     $collection->get('email', function () {
         return 'default-value';
@@ -499,7 +501,7 @@ You may even pass a callback as the default value. The result of the callback wi
 <a name="method-groupby"></a>
 #### `groupBy()` {#collection-method}
 
-The `groupBy` method groups the collection's items by a given key:
+Phương thức `groupBy` nhóm các phần tử của collection bởi một key:
 
     $collection = collect([
         ['account_id' => 'account-x10', 'product' => 'Chair'],
@@ -523,7 +525,7 @@ The `groupBy` method groups the collection's items by a given key:
         ]
     */
 
-In addition to passing a string `key`, you may also pass a callback. The callback should return the value you wish to key the group by:
+Thêm vào đó để truyền một `key` là chuỗi, bạn cũng có thể truyền vào một callback. Callback sẽ trả về giá trị bạn muốn làm key để nhóm:
 
     $grouped = $collection->groupBy(function ($item, $key) {
         return substr($item['account_id'], -3);
@@ -547,6 +549,7 @@ In addition to passing a string `key`, you may also pass a callback. The callbac
 #### `has()` {#collection-method}
 
 The `has` method determines if a given key exists in the collection:
+Phương thức `has` xác định nếu key đã cho tồn tại trong collection:
 
     $collection = collect(['account_id' => 1, 'product' => 'Desk']);
 
@@ -557,9 +560,9 @@ The `has` method determines if a given key exists in the collection:
 <a name="method-implode"></a>
 #### `implode()` {#collection-method}
 
-The `implode` method joins the items in a collection. Its arguments depend on the type of items in the collection.
+Phương thức `implode` nối các phần tử thành trong collection. Tham số của nó dựa trên kiểu của các phần tử trong collection.
 
-If the collection contains arrays or objects, you should pass the key of the attributes you wish to join, and the "glue" string you wish to place between the values:
+Nếu collection bào gồm các mảng hoặc object, bạn  phải truyền vào key hoặc thuộc tính bạn muốn join, và "glue" mà bạn muốn đặt giữa các giá trị:
 
     $collection = collect([
         ['account_id' => 1, 'product' => 'Desk'],
@@ -570,7 +573,7 @@ If the collection contains arrays or objects, you should pass the key of the att
 
     // Desk, Chair
 
-If the collection contains simple strings or numeric values, simply pass the "glue" as the only argument to the method:
+Nếu collection chỉ đơn giản  bao gồm các chuỗi hoặc giá trị số, chỉ cần truyền "glue" như là tham số duy nhất cho phương thức:
 
     collect([1, 2, 3, 4, 5])->implode('-');
 
@@ -579,7 +582,7 @@ If the collection contains simple strings or numeric values, simply pass the "gl
 <a name="method-intersect"></a>
 #### `intersect()` {#collection-method}
 
-The `intersect` method removes any values that are not present in the given `array` or collection:
+Phương thức `intersect` xóa các giá trị mà không xuất hiện trong `array` hoặc collection đã cho:
 
     $collection = collect(['Desk', 'Sofa', 'Chair']);
 
@@ -589,12 +592,12 @@ The `intersect` method removes any values that are not present in the given `arr
 
     // [0 => 'Desk', 2 => 'Chair']
 
-As you can see, the resulting collection will preserve the original collection's keys.
+Như bạn thấy, giá trị collection trả về sẽ giữ nguyên key của collection cũ.
 
 <a name="method-isempty"></a>
 #### `isEmpty()` {#collection-method}
 
-The `isEmpty` method returns `true` if the collection is empty; otherwise, `false` is returned:
+Phương thức `isEmpty` trả về `true` nếu collection là rỗng, ngược lại trả về `false`:
 
     collect([])->isEmpty();
 
@@ -604,6 +607,7 @@ The `isEmpty` method returns `true` if the collection is empty; otherwise, `fals
 #### `keyBy()` {#collection-method}
 
 Keys the collection by the given key:
+Tạo key cho collection bởi key đã cho (Keys the collection by the given key):
 
     $collection = collect([
         ['product_id' => 'prod-100', 'name' => 'desk'],
@@ -621,9 +625,9 @@ Keys the collection by the given key:
         ]
     */
 
-If multiple items have the same key, only the last one will appear in the new collection.
+Nếu nhiều phần từ có chung key, chỉ có phần từ cuối cùng sẽ xuất hiện trong collection mới.
 
-You may also pass your own callback, which should return the value to key the collection by:
+Bạn cũng có thể truyền vào một callback, cái mà sẽ trả về giá trị để làm khóa cho collection:
 
     $keyed = $collection->keyBy(function ($item) {
         return strtoupper($item['product_id']);
@@ -642,7 +646,7 @@ You may also pass your own callback, which should return the value to key the co
 <a name="method-keys"></a>
 #### `keys()` {#collection-method}
 
-The `keys` method returns all of the collection's keys:
+Phương thức `keys` trả về oàn bộ key của collection:
 
     $collection = collect([
         'prod-100' => ['product_id' => 'prod-100', 'name' => 'Desk'],
@@ -658,7 +662,7 @@ The `keys` method returns all of the collection's keys:
 <a name="method-last"></a>
 #### `last()` {#collection-method}
 
-The `last` method returns the last element in the collection that passes a given truth test:
+Phương thức `last` trả về phần thử cuối cùng trong collection mà thông qua điều kiện đã cho:
 
     collect([1, 2, 3, 4])->last(function ($key, $value) {
         return $value < 3;
@@ -666,7 +670,7 @@ The `last` method returns the last element in the collection that passes a given
 
     // 2
 
-You may also call the `last` method with no arguments to get the last element in the collection. If the collection is empty, `null` is returned:
+Bạn có thể gọi phương thức `last` không tham số để lấy phần tử cuối cùng trong collection. Nếu collection rỗng, trả về `null`:
 
     collect([1, 2, 3, 4])->last();
 
@@ -675,7 +679,7 @@ You may also call the `last` method with no arguments to get the last element in
 <a name="method-map"></a>
 #### `map()` {#collection-method}
 
-The `map` method iterates through the collection and passes each value to the given callback. The callback is free to modify the item and return it, thus forming a new collection of modified items:
+Phương thức `map` lặp qua collection và truyền từng giá trị vào callback. Callback thay đổi phần từ và trả về, do vậy hình thành một collection mới từ các phần tử đã được thay đổi:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -687,12 +691,12 @@ The `map` method iterates through the collection and passes each value to the gi
 
     // [2, 4, 6, 8, 10]
 
-> **Note:** Like most other collection methods, `map` returns a new collection instance; it does not modify the collection it is called on. If you want to transform the original collection, use the [`transform`](#method-transform) method.
+> **Ghi chú:** Giống như các phương thức khác, `map` trả về một instance collection mới; nó không thay đổi collection mà nó được gọi, Nếu bạn muốn thay đổi collection gốc, sử dụng phương thức [`transform](#method-transform).
 
 <a name="method-max"></a>
 #### `max()` {#collection-method}
 
-The `max` method return the maximum value of a given key:
+Phương thức `max` trả về giá trị lớn nhất của một key đã cho:
 
     $max = collect([['foo' => 10], ['foo' => 20]])->max('foo');
 
@@ -705,7 +709,7 @@ The `max` method return the maximum value of a given key:
 <a name="method-merge"></a>
 #### `merge()` {#collection-method}
 
-The `merge` method merges the given array into the collection. Any string key in the array matching a string key in the collection will overwrite the value in the collection:
+Phương thức `merge` gộp mảng đã cho vào collection. Bất kì string key trong mảng trùng với string key trong collection sẽ bị ghi đè bởi giá trị của collection:
 
     $collection = collect(['product_id' => 1, 'name' => 'Desk']);
 
@@ -715,7 +719,7 @@ The `merge` method merges the given array into the collection. Any string key in
 
     // ['product_id' => 1, 'name' => 'Desk', 'price' => 100, 'discount' => false]
 
-If the given array's keys are numeric, the values will be appended to the end of the collection:
+Nếu key của mảng đã cho là số, giá trị sẽ được xuất hiện tại cuối collection:
 
     $collection = collect(['Desk', 'Chair']);
 
@@ -728,7 +732,7 @@ If the given array's keys are numeric, the values will be appended to the end of
 <a name="method-min"></a>
 #### `min()` {#collection-method}
 
-The `min` method return the minimum value of a given key:
+Phương thức `min` trả về giá trị nhỏ nhất của key đã cho:
 
     $min = collect([['foo' => 10], ['foo' => 20]])->min('foo');
 
@@ -741,7 +745,7 @@ The `min` method return the minimum value of a given key:
 <a name="method-only"></a>
 #### `only()` {#collection-method}
 
-The `only` method returns the items in the collection with the specified keys:
+Phương thức `only` trả về các phần từ trong collection với key xác định:
 
     $collection = collect(['product_id' => 1, 'name' => 'Desk', 'price' => 100, 'discount' => false]);
 
@@ -751,12 +755,12 @@ The `only` method returns the items in the collection with the specified keys:
 
     // ['product_id' => 1, 'name' => 'Desk']
 
-For the inverse of `only`, see the [except](#method-except) method.
+Ngược lại với `only`, xem phương thức [except](#method-except).
 
 <a name="method-pluck"></a>
 #### `pluck()` {#collection-method}
 
-The `pluck` method retrieves all of the collection values for a given key:
+Phương thức `pluck` lấy toàn bộ các value của collection cho một key cho trước:
 
     $collection = collect([
         ['product_id' => 'prod-100', 'name' => 'Desk'],
@@ -769,7 +773,7 @@ The `pluck` method retrieves all of the collection values for a given key:
 
     // ['Desk', 'Chair']
 
-You may also specify how you wish the resulting collection to be keyed:
+Bạn cũng có thể chỉ định bạn muốn collection kết quả được chỉ mục như thế nào:
 
     $plucked = $collection->pluck('name', 'product_id');
 
@@ -780,7 +784,7 @@ You may also specify how you wish the resulting collection to be keyed:
 <a name="method-pop"></a>
 #### `pop()` {#collection-method}
 
-The `pop` method removes and returns the last item from the collection:
+Phương thức `pop` xóa và trả lại phần tử cuối cùng từ collection:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -795,7 +799,7 @@ The `pop` method removes and returns the last item from the collection:
 <a name="method-prepend"></a>
 #### `prepend()` {#collection-method}
 
-The `prepend` method adds an item to the beginning of the collection:
+Phương thức `prepend` thêm một phân từ vào đầu của collection: 
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -805,7 +809,7 @@ The `prepend` method adds an item to the beginning of the collection:
 
     // [0, 1, 2, 3, 4, 5]
 
-You can optionally pass a second argument to set the key of the prepended item:
+Bạn có thể tùy chọn truyền tham số thứ 2 để set key cho giá trị được thêm:
 
     $collection = collect(['one' => 1, 'two', => 2]);
 
@@ -818,7 +822,7 @@ You can optionally pass a second argument to set the key of the prepended item:
 <a name="method-pull"></a>
 #### `pull()` {#collection-method}
 
-The `pull` method removes and returns an item from the collection by its key:
+Phương thức `pull` xóa và trả về một giá trị từ collection bởi key của nó:
 
     $collection = collect(['product_id' => 'prod-100', 'name' => 'Desk']);
 
@@ -833,7 +837,7 @@ The `pull` method removes and returns an item from the collection by its key:
 <a name="method-push"></a>
 #### `push()` {#collection-method}
 
-The `push` method appends an item to the end of the collection:
+Phương thức `push` thêm một phần từ vào cuối của collection:
 
     $collection = collect([1, 2, 3, 4]);
 
