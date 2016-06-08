@@ -850,7 +850,7 @@ Phương thức `push` thêm một phần từ vào cuối của collection:
 <a name="method-put"></a>
 #### `put()` {#collection-method}
 
-The `put` method sets the given key and value in the collection:
+Phương thức `put` thên key và value vào trong collection:
 
     $collection = collect(['product_id' => 1, 'name' => 'Desk']);
 
@@ -863,7 +863,7 @@ The `put` method sets the given key and value in the collection:
 <a name="method-random"></a>
 #### `random()` {#collection-method}
 
-The `random` method returns a random item from the collection:
+Phương thức `random` trả về ngẫu nhiên 1 phần tử từ collection:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -871,7 +871,7 @@ The `random` method returns a random item from the collection:
 
     // 4 - (retrieved randomly)
 
-You may optionally pass an integer to `random`. If that integer is more than `1`, a collection of items is returned:
+Bạn có thể tùy chọn truyền vào 1 số nguyên trong `random`. Nếu số nguyên đó lớn hơn `1`, 1 collection sẽ được trả về:
 
     $random = $collection->random(3);
 
@@ -882,7 +882,7 @@ You may optionally pass an integer to `random`. If that integer is more than `1`
 <a name="method-reduce"></a>
 #### `reduce()` {#collection-method}
 
-The `reduce` method reduces the collection to a single value, passing the result of each iteration into the subsequent iteration:
+Phương thức `reduce` biến collection thành một giá trị duy nhất, truyền kết quả của mỗi lần lặp vào lần lặp tiếp theo:
 
     $collection = collect([1, 2, 3]);
 
@@ -892,7 +892,7 @@ The `reduce` method reduces the collection to a single value, passing the result
 
     // 6
 
-The value for `$carry` on the first iteration is `null`; however, you may specify its initial value by passing a second argument to `reduce`:
+Giá trị của `$cary` trong lần lặp đầu tiên là `null`; tuy nhiên bạn có thể chỉ định giá trị khởi tạo bằng cách truyền môt tham số thứ 2 vào `reduce`:
 
     $collection->reduce(function ($carry, $item) {
         return $carry + $item;
@@ -903,7 +903,7 @@ The value for `$carry` on the first iteration is `null`; however, you may specif
 <a name="method-reject"></a>
 #### `reject()` {#collection-method}
 
-The `reject` method filters the collection using the given callback. The callback should return `true` for any items it wishes to remove from the resulting collection:
+Phương thức `reject` lọc collection thông qua callback. Callback sẽ return `true` cho bất kì phần tử nào nó muốn xóa khỏi collection:
 
     $collection = collect([1, 2, 3, 4]);
 
@@ -915,12 +915,12 @@ The `reject` method filters the collection using the given callback. The callbac
 
     // [1, 2]
 
-For the inverse of the `reject` method, see the [`filter`](#method-filter) method.
+Ngược lại với phương thức `reject`, xem phương thức [`filter`](#method-filter).
 
 <a name="method-reverse"></a>
 #### `reverse()` {#collection-method}
 
-The `reverse` method reverses the order of the collection's items:
+Phương thức `reverse` đảo ngược thứ tự các phần tử trong collection:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -933,7 +933,7 @@ The `reverse` method reverses the order of the collection's items:
 <a name="method-search"></a>
 #### `search()` {#collection-method}
 
-The `search` method searches the collection for the given value and returns its key if found. If the item is not found, `false` is returned.
+Phương thức `search` tìm kiếm giá trị trong collection và trả về key của nó nếu tìm thấy. Nếu không tìm thấy, trả về `false`.
 
     $collection = collect([2, 4, 6, 8]);
 
@@ -941,13 +941,13 @@ The `search` method searches the collection for the given value and returns its 
 
     // 1
 
-The search is done using a "loose" comparison. To use strict comparison, pass `true` as the second argument to the method:
+Việc tìm kiếm sử dụng so sánh lỏng lẻo. Để sử dụng so sánh chặt chẽ, truyền `true` như là tham số thứ 2 vào phương thức:
 
     $collection->search('4', true);
 
     // false
 
-Alternatively, you may pass in your own callback to search for the first item that passes your truth test:
+Ngoài ra, bạn có thể truyền vào callback để tìm kiếm giá trị đầu tiên thỏa mãn điều kiện:
 
     $collection->search(function ($item, $key) {
         return $item > 5;
@@ -958,7 +958,7 @@ Alternatively, you may pass in your own callback to search for the first item th
 <a name="method-shift"></a>
 #### `shift()` {#collection-method}
 
-The `shift` method removes and returns the first item from the collection:
+Phương thức `shift` xóa và trả về giá trị đầu tiên trong collection:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -973,8 +973,7 @@ The `shift` method removes and returns the first item from the collection:
 <a name="method-shuffle"></a>
 #### `shuffle()` {#collection-method}
 
-The `shuffle` method randomly shuffles the items in the collection:
-
+Phương thức `shuffle` đảo ngẫu nhiên các phần tử trong collection:
     $collection = collect([1, 2, 3, 4, 5]);
 
     $shuffled = $collection->shuffle();
@@ -986,7 +985,7 @@ The `shuffle` method randomly shuffles the items in the collection:
 <a name="method-slice"></a>
 #### `slice()` {#collection-method}
 
-The `slice` method returns a slice of the collection starting at the given index:
+Phương thức `slide` trả về một phần của collection bắt đầu từ vị trí đã cho:
 
     $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
@@ -996,7 +995,7 @@ The `slice` method returns a slice of the collection starting at the given index
 
     // [5, 6, 7, 8, 9, 10]
 
-If you would like to limit the size of the returned slice, pass the desired size as the second argument to the method:
+Nếu bạn muốn giới hạn kích thước của collection trả về, truyền kích thước vào tham số thứ 2 trong phương thức:
 
     $slice = $collection->slice(4, 2);
 
@@ -1004,12 +1003,12 @@ If you would like to limit the size of the returned slice, pass the desired size
 
     // [5, 6]
 
-The returned slice will have new, numerically indexed keys. If you wish to preserve the original keys, pass `true` as the third argument to the method.
+Collection trả về từ slice là tạo mới, các key được đánh số theo thứ tự. Nếu bạn muốn giữ nguyên các key, truyền vào tham số thứ 3 là `true` vào phương thức.
 
 <a name="method-sort"></a>
 #### `sort()` {#collection-method}
 
-The `sort` method sorts the collection:
+Phương thức `sort` sắp xếp collection:
 
     $collection = collect([5, 3, 1, 2, 4]);
 
@@ -1019,16 +1018,16 @@ The `sort` method sorts the collection:
 
     // [1, 2, 3, 4, 5]
 
-The sorted collection keeps the original array keys. In this example we used the [`values`](#method-values) method to reset the keys to consecutively numbered indexes.
+Collection được sắp xếp giữ nguyên mảng key. Trong ví dụ này chúng ta  sử dụng phương thức [`values`](#method-values) để reset lại các key để đánh số liên tiếp.
 
-For sorting a collection of nested arrays or objects, see the [`sortBy`](#method-sortby) and [`sortByDesc`](#method-sortbydesc) methods.
+Để sắp xếp một collection của các mảng hoặc object lồng nhau, xem phương thức [`sortBy`](#method-sortby) và [`sortByDesc`](#method-sortbydesc).
 
-If your sorting needs are more advanced, you may pass a callback to `sort` with your own algorithm. Refer to the PHP documentation on [`usort`](http://php.net/manual/en/function.usort.php#refsect1-function.usort-parameters), which is what the collection's `sort` method calls under the hood.
+Nếu bạn muốn sắp xếp nâng cao hơn, bạn có thể truyền một callback vào `sort` với thuật toán của mình. Tham khảo tài liệu PHP tại [`usort`](http://php.net/manual/en/function.usort.php#refsect1-function.usort-parameters), đây chính là cái mà phương thức `sort` gọi tới.
 
 <a name="method-sortby"></a>
 #### `sortBy()` {#collection-method}
 
-The `sortBy` method sorts the collection by the given key:
+Phương thức `sortBy` sắp xếp collection bởi key đã cho:
 
     $collection = collect([
         ['name' => 'Desk', 'price' => 200],
@@ -1048,9 +1047,9 @@ The `sortBy` method sorts the collection by the given key:
         ]
     */
 
-The sorted collection keeps the original array keys. In this example we used the [`values`](#method-values) method to reset the keys to consecutively numbered indexes.
+Collection được sắp xếp giữ nguyên mảng key. Trong ví dụ này chúng ta sử dụng phương thức [`values`](#method-values) để reset key để đánh số liên tiếp.
 
-You can also pass your own callback to determine how to sort the collection values:
+Bạn cũng có thể truyền vào callback để xách định sắp  xếp giá trị collection như thế nào:
 
     $collection = collect([
         ['name' => 'Desk', 'colors' => ['Black', 'Mahogany']],
@@ -1075,12 +1074,12 @@ You can also pass your own callback to determine how to sort the collection valu
 <a name="method-sortbydesc"></a>
 #### `sortByDesc()` {#collection-method}
 
-This method has the same signature as the [`sortBy`](#method-sortby) method, but will sort the collection in the opposite order.
+Phương thức này tương tự như [`sortBy`](#method-sortby), nhưng sẽ sắp xếp collection theo thứ tự ngược lại.
 
 <a name="method-splice"></a>
 #### `splice()` {#collection-method}
 
-The `splice` method removes and returns a slice of items starting at the specified index:
+Phương thức `spile` xóa và trả về một collection các phần từ bắt đầu từ chỉ mục xác định:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -1094,7 +1093,7 @@ The `splice` method removes and returns a slice of items starting at the specifi
 
     // [1, 2]
 
-You may pass a second argument to limit the size of the resulting chunk:
+Bạn có thể truyền tham số thứ 2 để giới hạn kích thước của phần kết quả:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -1108,7 +1107,7 @@ You may pass a second argument to limit the size of the resulting chunk:
 
     // [1, 2, 4, 5]
 
-In addition, you can pass a third argument containing the new items to replace the items removed from the collection:
+Thêm vào đó bạn có thể truyền 1 tham số thứ 3 bao gồm các phần tử mới để thay thế các phần tử bị xóa khỏi collection:
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -1125,13 +1124,13 @@ In addition, you can pass a third argument containing the new items to replace t
 <a name="method-sum"></a>
 #### `sum()` {#collection-method}
 
-The `sum` method returns the sum of all items in the collection:
+Phương thức `sum` trả về tổng của tất cả phần từ trong collection:
 
     collect([1, 2, 3, 4, 5])->sum();
 
     // 15
 
-If the collection contains nested arrays or objects, you should pass a key to use for determining which values to sum:
+Nếu collection bao gồm nhiều mảng hoặc object lồng nhau, bạn phải truyền vào một key xác định giá trị nào cần tính tổng:
 
     $collection = collect([
         ['name' => 'JavaScript: The Good Parts', 'pages' => 176],
@@ -1142,7 +1141,7 @@ If the collection contains nested arrays or objects, you should pass a key to us
 
     // 1272
 
-In addition, you may pass your own callback to determine which values of the collection to sum:
+Thêm nữa, bạn có thể truyền vào callback để xác định các giá trị nào của collection dùng để tính tổng:
 
     $collection = collect([
         ['name' => 'Chair', 'colors' => ['Black']],
@@ -1159,7 +1158,7 @@ In addition, you may pass your own callback to determine which values of the col
 <a name="method-take"></a>
 #### `take()` {#collection-method}
 
-The `take` method returns a new collection with the specified number of items:
+Phương thức `take` trả về một collection mới với số lượng phần tử chỉ định:
 
     $collection = collect([0, 1, 2, 3, 4, 5]);
 
@@ -1169,7 +1168,7 @@ The `take` method returns a new collection with the specified number of items:
 
     // [0, 1, 2]
 
-You may also pass a negative integer to take the specified amount of items from the end of the collection:
+Bạn cũng có thể truyền vào 1 số nguyên âm để lấy các phần tử từ cuối của collection:
 
     $collection = collect([0, 1, 2, 3, 4, 5]);
 
@@ -1182,7 +1181,7 @@ You may also pass a negative integer to take the specified amount of items from 
 <a name="method-toarray"></a>
 #### `toArray()` {#collection-method}
 
-The `toArray` method converts the collection into a plain PHP `array`. If the collection's values are [Eloquent](/docs/{{version}}/eloquent) models, the models will also be converted to arrays:
+Phương thức `toArray` convert collection thành một plain PHP `array`. Nếu các giá trị của collection là [Eloquent](/docs/{{version}}/eloquent) models, các model cũng sẽ được convert sang mảng:
 
     $collection = collect(['name' => 'Desk', 'price' => 200]);
 
@@ -1194,12 +1193,12 @@ The `toArray` method converts the collection into a plain PHP `array`. If the co
         ]
     */
 
-> **Note:** `toArray` also converts all of its nested objects to an array. If you want to get the underlying array as is, use the [`all`](#method-all) method instead.
+> **Ghi chú:** `toArray` cũng convert toàn bộ các object lồng trong nó thành một mảng. If you want to get the underlying array as is, thay vào đó sử dụng phương thức [`all`] (#method-all).
 
 <a name="method-tojson"></a>
 #### `toJson()` {#collection-method}
 
-The `toJson` method converts the collection into JSON:
+Phương thức `toJson` convert collection thành JSON:
 
     $collection = collect(['name' => 'Desk', 'price' => 200]);
 
@@ -1210,7 +1209,7 @@ The `toJson` method converts the collection into JSON:
 <a name="method-transform"></a>
 #### `transform()` {#collection-method}
 
-The `transform` method iterates over the collection and calls the given callback with each item in the collection. The items in the collection will be replaced by the values returned by the callback:
+Phương thức `transform` lặp quan collection và gọi callback với mỗi phần tử trong collection. Các phần tử trong collection sẽ được thay thế bởi giá trị trả về của callback.
 
     $collection = collect([1, 2, 3, 4, 5]);
 
@@ -1222,12 +1221,12 @@ The `transform` method iterates over the collection and calls the given callback
 
     // [2, 4, 6, 8, 10]
 
-> **Note:** Unlike most other collection methods, `transform` modifies the collection itself. If you wish to create a new collection instead, use the [`map`](#method-map) method.
+> **Ghi chú:** Không giống như hầu hết các phương thức khác, `transform` thay đổi chính collection. Nếu bạn muốn tạo một collection mới, sử dụng [`map`](#method-map) method/.
 
 <a name="method-union"></a>
 #### `union()` {#collection-method}
 
-The `union` method adds the given array to the collection. If the given array contains keys that are already in the collection, the collection's values will be preferred:
+Phương thức `union` thêm một mảng đã cho vào collection. Nếu mảng đã cho bao gồm key đã xuất hiện trong collection, giá trị collection sẽ được ưu tiên hơn: 
 
     $collection = collect([1 => ['a'], 2 => ['b']]);
 
@@ -1240,7 +1239,7 @@ The `union` method adds the given array to the collection. If the given array co
 <a name="method-unique"></a>
 #### `unique()` {#collection-method}
 
-The `unique` method returns all of the unique items in the collection:
+Phương thức `unique` trả về toàn bộ các phần tử duy nhất trong collection:
 
     $collection = collect([1, 1, 2, 2, 3, 4, 2]);
 
@@ -1250,9 +1249,9 @@ The `unique` method returns all of the unique items in the collection:
 
     // [1, 2, 3, 4]
 
-The returned collection keeps the original array keys. In this example we used the [`values`](#method-values) method to reset the keys to consecutively numbered indexes.
+Collection trả về giữ nguyên mảng key. Trong ví dụ này chúng ta sử dụng [`values`](#method-values) method để reset key để đánh số thứ tự liên tiếp.
 
-When dealing with nested arrays or objects, you may specify the key used to determine uniqueness:
+Khi làm việc với các mảng hoặc object lồng nhau, bạn có thể chỉ định key để xác định tính duy nhất:
 
     $collection = collect([
         ['name' => 'iPhone 6', 'brand' => 'Apple', 'type' => 'phone'],
@@ -1273,7 +1272,7 @@ When dealing with nested arrays or objects, you may specify the key used to dete
         ]
     */
 
-You may also pass your own callback to determine item uniqueness:
+Bạn cũng có thể truyền vào callback để xác định phần tử có tính duy nhất:
 
     $unique = $collection->unique(function ($item) {
         return $item['brand'].$item['type'];
@@ -1293,7 +1292,7 @@ You may also pass your own callback to determine item uniqueness:
 <a name="method-values"></a>
 #### `values()` {#collection-method}
 
-The `values` method returns a new collection with the keys reset to consecutive integers:
+Phương thức `values` trả về collection mới với key được reset về các số nguyên liên tiếp:
 
     $collection = collect([
         10 => ['product' => 'Desk', 'price' => 200],
@@ -1314,6 +1313,7 @@ The `values` method returns a new collection with the keys reset to consecutive 
 #### `where()` {#collection-method}
 
 The `where` method filters the collection by a given key / value pair:
+Phương thức `where` lọc collection bởi cặp key / value:
 
     $collection = collect([
         ['product' => 'Desk', 'price' => 200],
@@ -1333,17 +1333,17 @@ The `where` method filters the collection by a given key / value pair:
     ]
     */
 
-The `where` method uses strict comparisons when checking item values. Use the [`whereLoose`](#method-whereloose) method to filter using "loose" comparisons.
+Phương thức `where` sử dụng so sánh chặt chẽ khi kiểm tra giá trị. Sử dụng [`whereLoose`](#method-whereloose) method để lọc với so sánh lỏng lẻo hơn.
 
 <a name="method-whereloose"></a>
 #### `whereLoose()` {#collection-method}
 
-This method has the same signature as the [`where`](#method-where) method; however, all values are compared using "loose" comparisons.
+Phương thức này giống như phương thức [`where`](#method-where); tuy nhiên toàn bộ giá trị được so sánh lỏng lẻo.
 
 <a name="method-wherein"></a>
 #### `whereIn()` {#collection-method}
 
-The `whereIn` method filters the collection by a given key / value contained within the given array.
+Phương thức `whereIn` lọc collection bằng 1 cặp key / value bao gồm trong mảng đã cho.
 
     $collection = collect([
         ['product' => 'Desk', 'price' => 200],
@@ -1363,17 +1363,17 @@ The `whereIn` method filters the collection by a given key / value contained wit
     ]
     */
 
-The `whereIn` method uses strict comparisons when checking item values. Use the [`whereInLoose`](#method-whereinloose) method to filter using "loose" comparisons.
+Phương thức `whereIn` sử dụng so sánh chặt chẽ khi kiểm tra giá trị phần tử. Sử dụng phương thức [`whereInLoose`](#method-whereinloose) để lọc với so sánh lỏng lẻo.
 
 <a name="method-whereinloose"></a>
 #### `whereInLoose()` {#collection-method}
 
-This method has the same signature as the [`whereIn`](#method-wherein) method; however, all values are compared using "loose" comparisons.
+Phương thức này giống như phương thức [`whereIn](#method-wherein); tuy nhiên toàn bộ giá trị được so sánh lỏng lẻo.
 
 <a name="method-zip"></a>
 #### `zip()` {#collection-method}
 
-The `zip` method merges together the values of the given array with the values of the collection at the corresponding index:
+Phương thức `zip` gộp các giá trị trong mảng đã cho với giá trị của collection tại chỉ mục tương ứng:
 
     $collection = collect(['Chair', 'Desk']);
 
