@@ -57,7 +57,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Mail](mail.md)
     * [Package Development](packages.md)
     * [Pagination](pagination.md)
-    * Queues
+    * [Queues](queues.md)
     * [Redis](redis.md)
     * [Envoy or SSH Tasks](envoy.md)
     * [Task Scheduling](scheduling.md)
