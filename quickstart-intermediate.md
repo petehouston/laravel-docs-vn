@@ -58,19 +58,21 @@ Bạn hoàn toàn tự do để đọc phần còn lại của hướng dẫn nh
 <a name="database-migrations"></a>
 ### Database Migrations
 
-First, let's use a migration to define a database table to hold all of our tasks. Laravel's database migrations provide an easy way to define your database table structure and modifications using fluent, expressive PHP code. Instead of telling your team members to manually add columns to their local copy of the database, your teammates can simply run the migrations you push into source control.
+Đầu tiên, hãy sử dụng migration để xác định database table chứa các task của chúng ta. Database migrations của Laravel cung cấp phương pháp đơn giản để định nghĩa cấu trúc database và chỉnh sửa database sử dụng các đoạn code PHP trơn tru, dễ hiểu. Thay vì bảo thành viên trong nhóm của bạn thêm cột vào trong database cục bộ của họ, thì thành viên trong nhóm của bạn đơn giản chỉ cần chạy migration mà bạn đã đấy lên source control.
 
-#### The `users` Table
+#### Bảng `users`
 
-Since we are going to allow users to create their accounts within the application, we will need a table to store all of our users. Thankfully, Laravel already ships with a migration to create a basic `users` table, so we do not need to manually generate one. The default migration for the `users` table is located in the `database/migrations` directory.
+Kể từ khi chúng ta cho phép người dùng tạo tài khoản của họ trong ứng dụng, thì chúng ta cần phải có một bảng để chứa tất cả các tài khoản của người dùng. Thật may mắn, Laravel đã có sẵn một migration để tạo bảng `users` cơ bản, do đó chúng ta không cần phải tạo một bảng khác một cách thủ công. Migration mặc định cho bảng `users` được đặt trong thư mục `database/migrations`.
 
-#### The `tasks` Table
+#### Bảng `tasks`
 
-Next, let's build a database table that will hold all of our tasks. The [Artisan CLI](/docs/{{version}}/artisan) can be used to generate a variety of classes and will save you a lot of typing as you build your Laravel projects. In this case, let's use the `make:migration` command to generate a new database migration for our `tasks` table:
+Tiếp theo, hãy xây dụng một bảng cơ sở dữ liệu mà chứa các task của chúng ta. [Artisan CLI](/docs/{{version}}/artisan) có thể được sử dụng để tạo ra nhiều kiểu class và sẽ tiết kiệm được kha khá thời gian viết code khi xây dụng dự án dựa vào Laravel. Với trường hợp này, hãy sử dụng câu lệnh `make:migration` để tạo ra một database migration mới cho bảng `tasks`.
 
     php artisan make:migration create_tasks_table --create=tasks
 
 The migration will be placed in the `database/migrations` directory of your project. As you may have noticed, the `make:migration` command already added an auto-incrementing ID and timestamps to the migration file. Let's edit this file and add an additional `string` column for the name of our tasks, as well as a `user_id` column which will link our `tasks` and `users` tables:
+
+Migration sẽ được để trong thư mục `database/migration`. Có thể bạn đã để ý, câu lệnh `make:migration` đã thêm thêm auto-íncrementing ID và timestamps vào file migration. Hãy chỉnh sửa file này và thêm cột `string` cho tên của các task, cũng như là cột `user_id` để kết nối 2 bảng `tasks` và `users`
 
     <?php
 
@@ -105,30 +107,30 @@ The migration will be placed in the `database/migrations` directory of your proj
         }
     }
 
-To run our migrations, we will use the `migrate` Artisan command. If you are using Homestead, you should run this command from within your virtual machine, since your host machine will not have direct access to the database:
+Để chạy migration, chúng ta sẽ sử dụng câu lệnh `migrate` của Artisan. Nếu bạn dùng Homestead, bạn nên chạy command này ở trong máy ảo(dùng ssh để kết nối), vì máy của bạn không kết nối trực tiếp đến database.
 
     php artisan migrate
 
-This command will create all of our database tables. If you inspect the database tables using the database client of your choice, you should see new `tasks` and `users` tables which contains the columns defined in our migration. Next, we're ready to define our Eloquent ORM models!
+Câu lệnh này sẽ tạo tất cả các bảng trong cơ sở dữ liệu. Nếu bạn kiểm tra bảng trong cơ sở dữ liệu, bạn có thể thấy bảng mới `tasks` và `users` có những cột mà đã được định nghĩa trong migration của ta. Tiếp theo, chúng ta đã sẵn sàng để định nghĩa những model Eloquent ORM.
 
 <a name="eloquent-models"></a>
 ### Eloquent Models
 
-[Eloquent](/docs/{{version}}/eloquent) is Laravel's default ORM (object-relational mapper). Eloquent makes it painless to retrieve and store data in your database using clearly defined "models". Usually, each Eloquent model corresponds directly with a single database table.
+[Eloquent](/docs/{{version}}/eloquent) là ORM (ánh xạ quan hệ đối tượng) mặc định của Laravel. Eloquent làm cho việc lấy và lưu trữ dữ liệu trong cơ sở dữ liệu trở nên đỡ đau đầu hơn bằng cách định nghĩa ra các "mô hình-model" rõ ràng. Thường thì, mỗi một mô hình Eloquent sẽ tương ứng với một bảng trong cơ sở dữ liệu.
 
-#### The `User` Model
+#### Model `User`
 
-First, we need a model that corresponds to our `users` database table. However, if you look in the `app` directory of your project, you will see that Laravel already ships with a `User` model, so we do not need to generate one manually.
+Đầu tiên, chúng ta cần một model tương ứng với bảng `users` trong database, nếu bạn nhìn qua thư mục `app` trong project thì bạn sẽ thấy rằng Laravel đã có sẵn model `User`, do đó chúng ta không cần tạo nó nữa.
 
-#### The `Task` Model
+#### Model `Task`
 
-So, let's define a `Task` model that corresponds to our `tasks` database table we just created. Again, we can use an Artisan command to generate this model. In this case, we'll use the `make:model` command:
+Vậy, hãy định nghĩa model `Task` tương ứng với bảng `tasks` trong cơ sở dữ liệu mà ta đã tạo. Một lần nữa, chúng ta có thể sử dụng câu lệnh Artisan để tạo ra model này. Trong trường hợp này, chúng ta sử dụng lệnh `make:model`:
 
     php artisan make:model Task
 
-The model will be placed in the `app` directory of your application. By default, the model class is empty. We do not have to explicitly tell the Eloquent model which table it corresponds to because it will assume the database table is the plural form of the model name. So, in this case, the `Task` model is assumed to correspond with the `tasks` database table.
+Model sẽ được đặt trong thư mục `app` của application. Mặc định thì class model là trống. Chúng ta không cần phải mô tả rõ ràng cho Eloquent model rằng bảng nào được tương ứng với model, bởi vì nó sẽ giả định cơ sở dữ liệu là dạng số nhiều của tên model. Do đó, trong trường hợp này, model `Task` được giả định tương ứng với bảng `tasks` trong cơ sở dữ liệu.
 
-Let's add a few things to this model. First, we will state that the `name` attribute on the model should be "mass-assignable". This will allow us to fill the `name` attribute when using Eloquent's `create` method:
+Hãy thêm một vài thứ vào model này. Đầu tiên, chúng ta sẽ chỉ ra rằng thuộc tính `name` trong model nên là `mass-assignable`. Việc này sẽ cho phép chúng ta điền thuộc tính `name` khi sử dụng câu lệnh `create` của Eloquent.
 
     <?php
 
@@ -146,12 +148,12 @@ Let's add a few things to this model. First, we will state that the `name` attri
         protected $fillable = ['name'];
     }
 
-We'll learn more about how to use Eloquent models as we add routes to our application. Of course, feel free to consult the [complete Eloquent documentation](/docs/{{version}}/eloquent) for more information.
+Chúng ta sẽ học thêm về cách sử dụng các model của Eloquent khi chúng ta thêm các route (định tuyến) và ứng dụng. Tất nhiên, bạn có thể tự do tham khảo thêm chi tiết tại [complete Eloquent documentation](/docs/{{version}}/eloquent).
 
 <a name="eloquent-relationships"></a>
 ### Eloquent Relationships
 
-Now that our models are defined, we need to link them. For example, our `User` can have many `Task` instances, while a `Task` is assigned to a single `User`. Defining a relationship will allow us to fluently walk through our relations like so:
+Bây giờ các model của chúng ta đã được định nghĩa, chúng ta cần kết nối chúng. Ví dụ như, một `User` của chúng ta có thể có nhiều `Task`, khi một `Task` chỉ được gán cho một `User`. Định nghĩa một mối quan hệ sẽ cho phép chúng ta dễ dàng di chuyển qua các quan hệ tương tự như sau:
 
     $user = App\User::find(1);
 
@@ -159,9 +161,9 @@ Now that our models are defined, we need to link them. For example, our `User` c
         echo $task->name;
     }
 
-#### The `tasks` Relationship
+#### Mối quan hệ của `tasks`
 
-First, let's define the `tasks` relationship on our `User` model. Eloquent relationships are defined as methods on models. Eloquent supports several different types of relationships, so be sure to consult the [full Eloquent documentation](/docs/{{version}}/eloquent-relationships) for more information. In this case, we will define a `tasks` function on the `User` model which calls the `hasMany` method provided by Eloquent:
+Đầu tiên, hãy định nghĩa mối quan hệ `tasks` trên model `User` của chúng ta. Mối quan hệ trong Eloquent được định nghĩa như là các method trong các model. Eloquent hỗ trợ vài kiểu khác nhau của các mối quan hệ, do đó nên chắc chắn rằng tham khảo [tài liệu Eloquent đầy đủ](/docs/{{version}}/eloquent-relationships) để có thêm thông tin. Trong trường hợp này , chúng ta sẽ định nghĩa function `tasks` trong model `User`, đây là function gọi method `hasMany` được cung cấp bởi Eloquent.
 
     <?php
 
@@ -182,9 +184,9 @@ First, let's define the `tasks` relationship on our `User` model. Eloquent relat
         }
     }
 
-#### The `user` Relationship
+#### Mối quan hệ của `user`
 
-Next, let's define the `user` relationship on the `Task` model. Again, we will define the relationship as a method on the model. In this case, we will use the `belongsTo` method provided by Eloquent to define the relationship:
+Tiếp theo, hãy định nghĩa mối quan hệ của `user` trong Model `Task`. Chúng ta sẽ định nghĩa mối quan hệ như là method của model. Trong trường hợp này, chúng ta sẽ sử dụng method `belongsTo`, được cung cấp bởi Eloquent, để định nghĩa mối quan hệ.
 
     <?php
 
@@ -211,7 +213,7 @@ Next, let's define the `user` relationship on the `Task` model. Again, we will d
         }
     }
 
-Wonderful! Now that our relationships are defined, we can start building our controllers!
+Tuyệt vời! Giờ các mối quan hệ của chúng ta đã hoàn thanh, chúng ta có thể bắt đầu xây dụng các controller!
 
 <a name="routing"></a>
 ## Routing
