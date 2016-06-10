@@ -49,7 +49,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Elixir
     * [Encryption](encryption.md)
     * [Errors & Logging](errors.md)
-    * Events
+    * [Events](events.md)
     * [Filesystem & Cloud Storage](filesystem.md)
     * [Hashing](hashing.md)
     * [Helpers](helpers.md)
