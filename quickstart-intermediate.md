@@ -148,7 +148,7 @@ Hãy thêm một vài thứ vào model này. Đầu tiên, chúng ta sẽ chỉ 
         protected $fillable = ['name'];
     }
 
-Chúng ta sẽ học thêm về cách sử dụng các model của Eloquent khi chúng ta thêm các route (định tuyến) và ứng dụng. Tất nhiên, bạn có thể tự do tham khảo thêm chi tiết tại [complete Eloquent documentation](/docs/{{version}}/eloquent).
+Chúng ta sẽ học thêm về cách sử dụng các model của Eloquent khi chúng ta thêm các route (định tuyến) và ứng dụng. Tất nhiên, bạn có thể tự do tham khảo thêm chi tiết tại [tài liệu Eloquent đầy đủ](/docs/{{version}}/eloquent).
 
 <a name="eloquent-relationships"></a>
 ### Eloquent Relationships
@@ -218,57 +218,57 @@ Tuyệt vời! Giờ các mối quan hệ của chúng ta đã hoàn thanh, chú
 <a name="routing"></a>
 ## Routing
 
-In the [basic version](/docs/{{version}}/quickstart) of our task list application, we defined all of our logic using Closures within our `routes.php` file. For the majority of this application, we will use [controllers](/docs/{{version}}/controllers) to organize our routes. Controllers will allow us to break out HTTP request handling logic across multiple files for better organization.
+Trong [version cơ bản](/docs/{{version}}/quickstart) của ứng dụng task list của chúng ta, chúng ta đã định nghĩa tất cả logic sử dụng Closures trong file `routes.php`. Với phần lớn ứng dụng như này, chúng ta sẽ sử dụng [controllers](/docs/{{version}}/controllers) để tổ chức các route của mình. Các controller sẽ cho phép chúng ta phân tách logic việc xử lý các request HTTP ra nhiều file khác nhau để quản lý tốt hơn.
 
 <a name="displaying-a-view"></a>
-### Displaying A View
+### Hiển thị View
 
-We will have a single route that uses a Closure: our `/` route, which will simply be a landing page for application guests. So, let's fill out our `/` route. From this route, we want to render an HTML template that contains the "welcome" page:
+Chúng ta sẽ có một route đơn lẻ sử dụng Closures: route `/`, cái mà sẽ dùng để hiển thị trang đích đơn giản cho ứng dụng khách. Từ route này, chúng ta sẽ render một trang template HTML bao gồm trang "welcome".
 
-In Laravel, all HTML templates are stored in the `resources/views` directory, and we can use the `view` helper to return one of these templates from our route:
+Trong Laravel, tất cả các template HTML được lưu trong thư mục `resources/views`, và chúng ta có thể sử dụng `view` helper để trả về một trong những template đó từ route của chúng ta:
 
     Route::get('/', function () {
         return view('welcome');
     });
 
-Of course, we need to actually define this view. We'll do that in a bit!
+Tất nhiên, chúng ta cần định nghĩa view này. Chúng ta sẽ làm điều đó sau một chút nữa.
 
 <a name="authentication-routing"></a>
 ### Authentication
 
-Remember, we also need to let users create accounts and login to our application. Typically, it can be a tedious task to build an entire authentication layer into a web application. However, since it is such a common need, Laravel attempts to make this procedure totally painless.
+Hãy nhớ rằng, chúng ta cũng cần cho phép người dùng tạo tài khoản và đăng nhập vào ứng dụng của chúng ta. Thông thường, điều đó có thể khá là buồn chán để xây dụng nguyên một layer dùng để authentication vào trong ứng dụng web. Tuy nhiên, kể từ lúc mà điều đó trở thành một thứ cần thiết phổ biến, thì Laravel đã chủ đích để làm cho điều này hoàn toàn đỡ mệt mỏi. 
 
-First, notice that there is already a `app/Http/Controllers/Auth/AuthController` included in your Laravel application. This controller uses a special `AuthenticatesAndRegistersUsers` trait which contains all of the necessary logic to create and authenticate users.
+Đầu tiên, chú ý rằng trong ứng dụng đã có sẵn `app/Http/Controllers/Auth/AuthController`. Controller này sử dụng một trait khá đặc biệt `AuthenticatesAndRegistersUsers` cái mà đã bao gồm tất cả những logic cần thiết để tạo và xác thực người dùng.
 
 #### Authentication Routes & Views
 
-So, what's left for us to do? Well, we still need to create the registration and login templates as well as define the routes to point to the authentication controller. We can do all of this using the `make:auth` Artisan command:
+Vậy, còn lại chúng ta phải làm những gì? À vâng, chúng ta vẫn cần phải tạo template để đăng ký và đăng nhập cũng như là định nghĩa các route chỉ đến controller authentication. Chúngta có thể làm tất cả điều đó sử dụng câu lệnh Artisan `make:auth`:
 
     php artisan make:auth
 
-> **Note:** If you would like to view complete examples for these views, remember that the entire application's source code is [available on GitHub](https://github.com/laravel/quickstart-intermediate).
+> **Note:** Nếu bạn muốn xem toàn bộ ví dụ cho các views này, nhớ rằng toàn bộ source code của ứng dụng là [sẵn có trên GitHub](https://github.com/laravel/quickstart-intermediate).
 
-Now, all we have to do is add the authentication routes to our routes file. We can do this using the `auth` method on the `Route` facade, which will register all of the routes we need for registration, login, and password reset:
+Bây giờ, tất cả những gì chúng ta phải làm là thêm route xác thực (authentication) vào file route của chúng ta. Chúng ta có thể làm điều đó sử dụng method `auth` trên facade `Route`, cái mà sẽ đăng ký tất cả các route mà chúng ta cần cho việc đăng ký, đăng nhập và lấy lại pass:
 
     // Authentication Routes...
     Route::auth();
 
-Once the `auth` routes are registered, verify that the `$redirectTo` property on the `app/Http/Controllers/Auth/AuthController` controller is set to '/tasks':
+Một khi route `auth` đã được đăng ký, đảm bảo rằng thuộc tính `$redirectTo` trong `app/Http/Controllers/Auth/AuthController` được gán đến `/tasks`:
 
     protected $redirectTo = '/tasks';
 
-It is also necessary to update the `app/Http/Middleware/RedirectIfAuthenticated.php` file with the proper redirect path:
+Cũng cần thiết để update file `app/Http/Middleware/RedirectIfAuthenticated.php` đúng path cần chuyển hướng:
 
     return redirect('/tasks');
 
 <a name="the-task-controller"></a>
-### The Task Controller
+### Controller Task
 
-Since we know we're going to need to retrieve and store tasks, let's create a `TaskController` using the Artisan CLI, which will place the new controller in the `app/Http/Controllers` directory:
+Chúng ta biết rằng sẽ phải nhận và lưu các task, hãy tạo `TaskController` sử dụng Artisan CLI, nó sẽ tạo một controller mới trong thư mục `app/Http/Controllers:
 
     php artisan make:controller TaskController
 
-Now that the controller has been generated, let's go ahead and stub out some routes in our `app/Http/routes.php` file to point to the controller:
+Bây giờ controller đã được tạo ra, tiếp theo chúng ta sẽ chuyển vài route từ `app/Http/routes.php` để trỏ sang controller:
 
     Route::get('/tasks', 'TaskController@index');
     Route::post('/task', 'TaskController@store');
@@ -276,9 +276,9 @@ Now that the controller has been generated, let's go ahead and stub out some rou
 
 #### Authenticating All Task Routes
 
-For this application, we want all of our task routes to require an authenticated user. In other words, the user must be "logged into" the application in order to create a task. So, we need to restrict access to our task routes to only authenticated users. Laravel makes this a cinch using [middleware](/docs/{{version}}/middleware).
+Với ứng dụng này, chúng ta muốn tất cả các task route đều yêu cầu người dùng đã xác thực, người dùng phải "đã đăng nhập" vào ứng dụng để có thể tạo task. Do đó, chúng ta cần phải hạn chế truy cập vào các task route thành chỉ cho phép người dùng đã xác thực. Laravel làm điều đó trở nên chắc chắn bằng cách sử dụng [middleware](/docs/{{version}}/middleware).
 
-To require an authenticated users for all actions on the controller, we can add a call to the `middleware` method from the controller's constructor. All available route middleware are defined in the `app/Http/Kernel.php` file. In this case, we want to assign the `auth` middleware to all actions on the controller:
+Để yêu cầu người dùng đã xác thực cho tất cả các actions trong controller, chúng ta thêm một lời gọi đến `middleware` từ constructor của controller. Tất cả các route middleware có sẵn được định nghĩa trong `app/Http/Kernel.php`. Trong trường hợp này, chúng ta muốn gán middleware `auth` đến tất cả các action trong controller:
 
     <?php
 
@@ -302,20 +302,20 @@ To require an authenticated users for all actions on the controller, we can add 
     }
 
 <a name="building-layouts-and-views"></a>
-## Building Layouts & Views
+## Xây dựng Layouts & Views
 
-The primary part of this application only has a single view which contains a form for adding new tasks as well as a listing of all current tasks. To help you visualize the view, here is a screenshot of the finished application with basic Bootstrap CSS styling applied:
+Phần chính của ứng dụng này chỉ có một view đơn có chứa form để thêm task mới cũng như là hiển thị tất cả các task hiện tại. Để giúp bạn hình dung ra được view này, thì đây là một ảnh chụp màn hình của ứng dụng đã hoàn thành với Bootsrap CSS cơ bản được áp dụng:
 
 ![Application Image](https://laravel.com/assets/img/quickstart/basic-overview.png)
 
 <a name="defining-the-layout"></a>
 ### Defining The Layout
 
-Almost all web applications share the same layout across pages. For example, this application has a top navigation bar that would be typically present on every page (if we had more than one). Laravel makes it easy to share these common features across every page using Blade **layouts**.
+Hầu hết các ứng dụng web chia sẻ layout giống nhau xuyên suốt các trang. Ví dụ, ứng dụng này có thanh navigation phía trên thường sẽ xuất hiện ở tất cả các page (nếu chúng ta có nhiều hơn 1 trang). Laravel làm chi việc chia sẻ các tính năng chung giữa các page trở nên dễ dàng bằng cách sử dụng Blade **layout**.
 
-As we discussed earlier, all Laravel views are stored in `resources/views`. So, let's define a new layout view in `resources/views/layouts/app.blade.php`. The `.blade.php` extension instructs the framework to use the [Blade templating engine](/docs/{{version}}/blade) to render the view. Of course, you may use plain PHP templates with Laravel. However, Blade provides convenient short-cuts for writing cleaner, terse templates.
+Như là chúng ta đã bàn luận trước đây, tất cả các view của Laravel được lưu trong `resources/views`. Do đó, hãy định nghĩa layout mới trong `resources/views/layouts/app.blade.php`. Phần mở rộng `.blade.php` chỉ cho framework sử dụng [Blade templating engine](/docs/{{version}}/blade) để tạo ra view. Tất nhiên, bạn có thể sử dụng template PHP thuần với Laravel. Tuy nhiên, Blade cung cấp các lối tắt tiện lợi để viết những template ngắn gọn.
 
-Our `app.blade.php` view should look like the following:
+File `app.blade.php` nên được nhìn thấy như sau:
 
     <!-- resources/views/layouts/app.blade.php -->
 
@@ -338,14 +338,14 @@ Our `app.blade.php` view should look like the following:
         </body>
     </html>
 
-Note the `@yield('content')` portion of the layout. This is a special Blade directive that specifies where all child pages that extend the layout can inject their own content. Next, let's define the child view that will use this layout and provide its primary content.
+Chú ý phần `@yield('content')` của layout. Đây là phần chỉ thị Blade đặc biệt quy định cụ thể tất cả các view con muốn mở rộng layout có thể thêm nội dung của chúng vào. Tiếp theo, hãy định nghĩa view con sẽ sử dụng layout này và cung cấp các nội dung cơ bản.
 
 <a name="defining-the-child-view"></a>
-### Defining The Child View
+### Định nghĩa View con
 
-Great, our application layout is finished. Next, we need to define a view that contains a form to create a new task as well as a table that lists all existing tasks. Let's define this view in `resources/views/tasks/index.blade.php`, which will correspond to the `index` method in our `TaskController`.
+Layout của ứng dụng của chúng ta đã hoàn thành. Tiếp theo, chúng ta cần định nghĩa một view sẽ chứa form để tạo task mới cũng như là chứa 1 bảng các danh sách những task tồn tại. Hãy định nghĩa view này trong `resources/views/tasks/index.blade.php`, cái mà sẽ tương ứng với method `index` của `TaskController` của chúng ta.
 
-We'll skip over some of the Bootstrap CSS boilerplate and only focus on the things that matter. Remember, you can download the full source for this application on [GitHub](https://github.com/laravel/quickstart-intermediate):
+Chúng ta sẽ bỏ qua một vài bản mẫu của Bootstrap CSS và chỉ tập trung vào những điều quan trọng. Nhớ rằng, bạn có thể tải xuống bản source đầy đủ cho ứng dụng này tại [GitHub](https://github.com/laravel/quickstart-intermediate): 
 
     <!-- resources/views/tasks/index.blade.php -->
 
@@ -386,13 +386,13 @@ We'll skip over some of the Bootstrap CSS boilerplate and only focus on the thin
         <!-- TODO: Current Tasks -->
     @endsection
 
-#### A Few Notes Of Explanation
+#### Vài ghi chú giải thích
 
-Before moving on, let's talk about this template a bit. First, the `@extends` directive informs Blade that we are using the layout we defined at `resources/views/layouts/app.blade.php`. All of the content between `@section('content')` and `@endsection` will be injected into the location of the `@yield('content')` directive within the `app.blade.php` layout.
+Trước khi đi đến phần tiếp theo, hãy nói một chút về template này. Đầu tiên, chỉ thị `@extends` cho Blade biết rằng chúng ta sử dụng layout được định nghĩa tại `resources/views/layouts/app.blade.php`. Tất cả các nội dung giữa `section('content')` và `@endsection` sẽ được thêm vào vị trí của chỉ thị `@yield('content')` trong file layout `app.blade.php`.
 
-The `@include('common.errors')` directive will load the template located at `resources/views/common/errors.blade.php`. We haven't defined this template, but we will soon!
+Chỉ thị `@include('common.errors')` sẽ load bản mẫu tại `resources/views/common/errors.blade.php`. Chúng ta vẫn chưa định nghĩa template này, nhưng sẽ sớm định nghĩa thôi!
 
-Now we have defined a basic layout and view for our application. Let's go ahead and return this view from the `index` method of our `TaskController`:
+Bây giờ chúng ta đã định nghĩa xong layout cơ bản và view cho ứng dụng của chúng ta. Hãy tiếp tục và trả cái view này từ method `index` của `TaskController`:
 
     /**
      * Display a list of all of the user's task.
@@ -405,17 +405,17 @@ Now we have defined a basic layout and view for our application. Let's go ahead 
         return view('tasks.index');
     }
 
-Next, we're ready to add code to our `POST /task` route's controller method to handle the incoming form input and add a new task to the database.
+Tiếp theo, chúng ta đã sẵn sàng để thêm code vào method route controller `POST /task` để xử lý input từ form và thêm task mới vào database.
 
 <a name="adding-tasks"></a>
-## Adding Tasks
+## Thêm các Task
 
 <a name="validation"></a>
 ### Validation
 
-Now that we have a form in our view, we need to add code to our `TaskController@store` method to validate the incoming form input and create a new task. First, let's validate the input.
+Giờ chúng ta đã có một form trong view, chúng ta cần thêm code vào method `TaskController@store` để validate đầu vào từ form và tạo task mới. Đầu tiên, hãy phê duyệt (validate) đầu vào.
 
-For this form, we will make the `name` field required and state that it must contain less than `255` characters. If the validation fails, we want to redirect the user back to the `/tasks` URL, as well as flash the old input and errors into the [session](/docs/{{version}}/session):
+Đối với form này, chúng ta sẽ làm cho trường `name` là bắt buộc và đặt điều kiện là chỉ bao gồm ít hơn `255` ký tự. Nếu như validate không được thông qua, chúng ta muốn chuyển hướng user quay lại URL `/tasks`, cũng như là làm nhấp nháy những input cũ và các lỗi vào trong [session](/docs/{{version}}/session):
 
     /**
      * Create a new task.
@@ -432,13 +432,13 @@ For this form, we will make the `name` field required and state that it must con
         // Create The Task...
     }
 
-If you followed along with the [basic quickstart](/docs/{{version}}/quickstart), you'll notice this validation code looks quite a bit different! Since we are in a controller, we can leverage the convenience of the `ValidatesRequests` trait that is included in the base Laravel controller. This trait exposes a simple `validate` method which accepts a request and an array of validation rules.
+Nếu bạn đã đọc qua phần [basic quickstart](/docs/{{version}}/quickstart), thì bạn sẽ để ý rằng đoạn code validation này có một chút khác biệt! Kể từ khi chúng ta sử dụng controller, chúng ta có thể tận dụng sự tiện lợi của trait (đặc điểm) `ValidatesRequest` được kèm theo trong controller base của Laravel. Trait này cung cấp một phương thức `validate` đơn giản chấp nhận một request và một chuỗi các quy tắc validation.
 
-We don't even have to manually determine if the validation failed or do manual redirection. If the validation fails for the given rules, the user will automatically be redirected back to where they came from and the errors will automatically be flashed to the session. Nice!
+Chúng ta thậm chí không cần phải xác nhận nếu validation thất bại hay phải xử lý điều hướng. Nếu như validation thất bại với những quy tắc đã được đặt ra, user sẽ được chuyển hướng tự động quay lại trang trước và các lỗi sẽ được tự động nhấp nháy. Tuyệt vãi!
 
-#### The `$errors` Variable
+#### Biến `$errors`
 
-Remember that we used the `@include('common.errors')` directive within our view to render the form's validation errors. The `common.errors` view will allow us to easily show validation errors in the same format across all of our pages. Let's define the contents of this view now:
+Nhớ rằng chúng ta sử dụng chỉ thị `@include('common.errors')` trong view để tạo ra validation error của form. View `common.errors` sẽ cho phép chúng ta dễ dàng hiển thị các lỗi validation với cùng một format xuyên suốt tất cả các trang của chúng ta. Hãy định nghĩa nội dung của view này:
 
     <!-- resources/views/common/errors.blade.php -->
 
@@ -458,14 +458,14 @@ Remember that we used the `@include('common.errors')` directive within our view 
     @endif
 
 
-> **Note:** The `$errors` variable is available in **every** Laravel view. It will simply be an empty instance of `ViewErrorBag` if no validation errors are present.
+> **Note:** Biến `$errors` là sẵn có trong **mỗi** view của Laravel. Nó đơn giản là một instance rỗng của `ViewErrorBag` nếu như không có lỗi validation nào được hiển thị.
 
 <a name="creating-the-task"></a>
-### Creating The Task
+### Tạo Task
 
-Now that input validation is handled, let's actually create a new task by continuing to fill out our route. Once the new task has been created, we will redirect the user back to the `/tasks` URL. To create the task, we are going to leverage the power of Eloquent's relationships.
+Bây giờ thì việc validate data đầu vào đã được xử lý, hãy thực sự tạo một task mới bằng cách tiếp tục hoàn thành route của chúng ta. Một khi task mới đã được tạo, chúng ta sẽ điều hướng user quay lại URL `/tasks`. Để tạo task mới, chúng ta sẽ dựa vào sức mạnh của các mối quan hệ (relationships) của Eloquent.
 
-Most of Laravel's relationships expose a `create` method, which accepts an array of attributes and will automatically set the foreign key value on the related model before storing it in the database. In this case, the `create` method will automatically set the `user_id` property of the given task to the ID of the currently authenticated user, which we are accessing using `$request->user()`:
+Đa số các mối quan hệ (relationships) của Laravel đều cung cấp một method `create`, nó nhận một loạt các thuộc tính và sẽ tự động thiết lập các giá trị khoá ngoại trên các mô hình có liên quan trước khi lưu trữ nó trong cơ sở dữ liệu. Trong trường hợp này, những method `create` sẽ tự động thiết lập các thuộc tính `user_id` của task đến ID của user đang được xác thực, cái mà chúng ta có thể truy cập bằng cách sử dụng `$request->user()`:
 
     /**
      * Create a new task.
@@ -486,12 +486,12 @@ Most of Laravel's relationships expose a `create` method, which accepts an array
         return redirect('/tasks');
     }
 
-Great! We can now successfully create tasks. Next, let's continue adding to our view by building a list of all existing tasks.
+Ngon! Bây giờ chúng ta đã có thể tạo các task thành công. Tiếp theo, hãy tiếp tục hoàn thiện view của chúng ta bằng cách xây dựng một danh sách của các task đã tồn tại.
 
 <a name="displaying-existing-tasks"></a>
-## Displaying Existing Tasks
+## Hiển thị các Task đã tồn tại
 
-First, we need to edit our `TaskController@index` method to pass all of the existing tasks to the view. The `view` function accepts a second argument which is an array of data that will be made available to the view, where each key in the array will become a variable within the view. For example, we could do this:
+Đầu tiên, chúng ta cần chỉnh sửa method `TaskController@index` để truyền tất cả các task đã tồn tại đến view. Function `view` chấp nhận đối số thứ hai là chuỗi các dữ liệu sẽ được hiển thị trên view, mỗi key trong array sẽ trở thành một biến trong view. Ví dụ ta có thể làm như sau:
 
     /**
      * Display a list of all of the user's task.
@@ -508,18 +508,18 @@ First, we need to edit our `TaskController@index` method to pass all of the exis
         ]);
     }
 
-However, let's explore some of the dependency injection capabilities of Laravel to inject a `TaskRepository` into our `TaskController`, which we will use for all of our data access.
+Tuy nhiên, hãy tìm hiểu mốt vài khả năng 'dependency injection' của Laravel để 'inject' một `TaskRespository` vào `TaskController` của chúng ta, cái mà chúng ta sẽ sử dụng cho tất cả các truy cập dữ liệu.
 
 <a name="dependency-injection"></a>
 ### Dependency Injection
 
-Laravel's [service container](/docs/{{version}}/container) is one of the most powerful features of the entire framework. After reading this quickstart, be sure to read over all of the container's documentation.
+[service container](/docs/{{version}}/container) của Laravel là một trong những chức năng mạnh nhất của toàn bộ framework. Sau khi đọc xong quickstart, hãy chắc chắn rằng bạn đã đọc qua toàn bộ tài liệu của container.
 
-#### Creating The Repository
+#### Tạo Repository
 
-As we mentioned earlier, we want to define a `TaskRepository` that holds all of our data access logic for the `Task` model. This will be especially useful if the application grows and you need to share some Eloquent queries across the application.
+Như chúng ta đã đề cập trước đây, chúng ta muốn định nghĩa một `TaskRespository` chứa tất cả các logic truy cập data cho model `Task`. Nó sẽ đặc biệt có ích nếu ứng dụng lớn lên và bạn cần chia sẻ một vài câu truy vấn Eloquent xuyên suốt toàn ứng dụng.
 
-So, let's create an `app/Repositories` directory and add a `TaskRepository` class. Remember, all Laravel `app` folders are auto-loaded using the PSR-4 auto-loading standard, so you are free to create as many extra directories as needed:
+Do đó, hãy tạo một thư mục `app/Respositories` và thêm class `TaskRespository`. Nhớ rằng, tất cả các folder trong `app` được load tự động sử dụng tiêu chuẩn PSR-4 auto-loading, do đó bạn thoải mái tạo thêm nhiều thư mục nếu cần:
 
     <?php
 
@@ -545,7 +545,7 @@ So, let's create an `app/Repositories` directory and add a `TaskRepository` clas
 
 #### Injecting The Repository
 
-Once our repository is defined, we can simply "type-hint" it in the constructor of our `TaskController` and utilize it within our `index` route. Since Laravel uses the container to resolve all controllers, our dependencies will automatically be injected into the controller instance:
+Một khi respository của chúng ta đã được định nghĩa, chúng ta đơn giản "type-hint" nó vào constructor của `TaskController` và sử dụng nó trong route `index` của chúng ta. Kể từ khi Laravel sử dụng container để xử lý tất cả các controller, các dependency sẽ được tự động inject vào instance của controller:
 
     <?php
 
@@ -594,9 +594,9 @@ Once our repository is defined, we can simply "type-hint" it in the constructor 
     }
 
 <a name="displaying-the-tasks"></a>
-### Displaying The Tasks
+### Hiển thị các Task
 
-Once the data is passed, we can spin through the tasks in our `tasks/index.blade.php` view and display them in a table. The `@foreach` Blade construct allows us to write concise loops that compile down into blazing fast plain PHP code:
+Một khi data đã được thông qua, chúng ta có thể quay qua các task trong view `tasks/index.blade.php` và hiển thị chúng lên table. Blade construct `@foreach` cho phép chúng ta viết một vòng lặp ngắn gọn biên dịch nhanh chóng các code PHP thuần:
 
     @extends('layouts.app')
 
@@ -640,15 +640,15 @@ Once the data is passed, we can spin through the tasks in our `tasks/index.blade
         @endif
     @endsection
 
-Our task application is almost complete. But, we have no way to delete our existing tasks when they're done. Let's add that next!
+Ứng dụng task của chúng ta đã gần như hoàn thành. Nhưng, chúng ta chưa có cách nào xoá các task đã tồn tại khi chúng đã xong. Hãy làm điều đó tiếp theo!    
 
 <a name="deleting-tasks"></a>
-## Deleting Tasks
+## Xoá các Task
 
 <a name="adding-the-delete-button"></a>
-### Adding The Delete Button
+### Thêm button Delete
 
-We left a "TODO" note in our code where our delete button is supposed to be. So, let's add a delete button to each row of our task listing within the `tasks/index.blade.php` view. We'll create a small single-button form for each task in the list. When the button is clicked, a `DELETE /task` request will be sent to the application which will trigger our `TaskController@destroy` method:
+Chúng tôi đã để lại một note "TODO" trong source code, nơi mà nên để button Delete ở đó. Do đó, hãy thêm button Delete vào mỗi hàng của danh sách các task trong view `tasks/index.blade.php`. Chúng ta sẽ tạo một button nhỏ cho mỗi task trong danh sách. Khi button được click, request `DELETE /task` sẽ được gửi đến application và trigger method `TaskController@destroy`:
 
     <tr>
         <!-- Task Name -->
@@ -670,18 +670,18 @@ We left a "TODO" note in our code where our delete button is supposed to be. So,
     </tr>
 
 <a name="a-note-on-method-spoofing"></a>
-#### A Note On Method Spoofing
+#### Ghi chú về phương thức giả mạo (Spoofing)
 
-Note that the delete button's form `method` is listed as `POST`, even though we are responding to the request using a `Route::delete` route. HTML forms only allow the `GET` and `POST` HTTP verbs, so we need a way to spoof a `DELETE` request from the form.
+Chú ý rằng method của button được liệt kê dưới dạng `POST`, mặc dù chúng ta đáp ứng cho request bằng route `Route:delete. HTML form chỉ cho phép các HTTP verb là `GET` và `POST`, do đó chúng ta cần một cách để giả mạo request `DELETE` từ form.
 
-We can spoof a `DELETE` request by outputting the results of the `method_field('DELETE')` function within our form. This function generates a hidden form input that Laravel recognizes and will use to override the actual HTTP request method. The generated field will look like the following:
+Chúng ta có thể giả mạo request `DELETE` bằng cách xuất ra các kết quả của function `method_field('DELETE')` trong form của chúng ta, Function này sẽ tạo ra một form input ẩn và Laravel sẽ nhận diện và sử dụng để ghi đè request HTTP thực tế. Field được tạo ra sẽ có dạng như sau:
 
     <input type="hidden" name="_method" value="DELETE">
 
 <a name="route-model-binding"></a>
 ### Route Model Binding
 
-Now, we're almost ready to define the `destroy` method on our `TaskController`. But, first, let's revisit our route declaration and controller method for this route:
+Bây giờ, chúng ta gần như sẵn sàng để định nghĩa method `destroy` vào `TaskController`. Tuy nhiên, đầu tiên chúng ta phải xem lại kiểm tra lại khai báo route và controller method cho route này:
 
     Route::delete('/task/{task}', 'TaskController@destroy');
 
@@ -697,20 +697,20 @@ Now, we're almost ready to define the `destroy` method on our `TaskController`. 
         //
     }
 
-Since the `{task}` variable in our route matches the `$task` variable defined in our controller method, Laravel's [implicit model binding](/docs/{{version}}/routing#route-model-binding) will automatically inject the corresponding Task model instance.
+Kể từ khi biến `{task}` trong route của chúng ta khớp với biến `$task` được định nghĩa trong method của controller. [implicit model binding](/docs/{{version}}/routing#route-model-binding) của Laravel sẽ tự động inject Task model tương ứng vào.
 
 <a name="authorization"></a>
 ### Authorization
 
-Now, we have a `Task` instance injected into our `destroy` method; however, we have no guarantee that the authenticated user actually "owns" the given task. For example, a malicious request could have been concocted in an attempt to delete another user's tasks by passing a random task ID to the `/tasks/{task}` URL. So, we need to use Laravel's authorization capabilities to make sure the authenticated user actually owns the `Task` instance that was injected into the route.
+Bây giờ chúng ta có một instance `Task` đã được inject vào trong method `destroy`; tuy nhiên, chúng ta không được đảm bảo rằng những user đã được xác nhận "sở hữu" những task đó. Ví dụ, một request độc hại có thể được chủ định để xoá đi task của user khác bằng cách gửi một task ID bất kỳ đén URL `/tasks/{task}`. Do đó, chúng ta cần sử dụng khả năng authorization của Laravel để đảm bảo rằng user đã được xác thực là chủ sở hữu của instance `Task` đã được inject vào route.
 
-#### Creating A Policy
+#### Tạo quy ước
 
-Laravel uses "policies" to organize authorization logic into simple, small classes. Typically, each policy corresponds to a model. So, let's create a `TaskPolicy` using the Artisan CLI, which will place the generated file in `app/Policies/TaskPolicy.php`:
+Laravel sử dụng các "quy ước" để sắp xếp các logic authorization thành các lớp nhỏ, đơn giản. Thông thường, mỗi quy ước tương ứng với một model. Do đó, hãy tạo một `TaskPolicy` sử dụng CLI Artisan, cái mà sẽ tạo ra file trong `app/Policies/TaskPolicy.php`:
 
     php artisan make:policy TaskPolicy
 
-Next, let's add a `destroy` method to the policy. This method will receive a `User` instance and a `Task` instance. The method should simply check if the user's ID matches the `user_id` on the task. In fact, all policy methods should either return `true` or `false`:
+Tiếp, hãy thêm method `destroy` vào policy. Method này sẽ nhận các instance của `User` và `Task`. Method sẽ đơn giản kiểm tra nếu user's ID tương ứng với `user_id` trong task. Trên thực tế, tất cả các method policy sẽ return `true` hoặc `false`:
 
     <?php
 
@@ -737,7 +737,7 @@ Next, let's add a `destroy` method to the policy. This method will receive a `Us
         }
     }
 
-Finally, we need to associate our `Task` model with our `TaskPolicy`. We can do this by adding a line in the `app/Providers/AuthServiceProvider.php` file's `$policies` property. This will inform Laravel which policy should be used whenever we try to authorize an action on a `Task` instance:
+Cuối cùng, chúng ta cần liên kết `Task` model với `TaskPolicy`. Chúng ta có thể làm d diều này bằng cách thêm một dòng thuộc tính `$policies` trong  file `app/Providers/AuthServiceProvider.php`. Điều này sẽ thông báo cho Laravel rằng policy nào sẽ được dùng mỗi khi chúng ta cố gắng để authorize một hành động tròng instance `Task`:
 
     /**
      * The policy mappings for the application.
@@ -751,7 +751,7 @@ Finally, we need to associate our `Task` model with our `TaskPolicy`. We can do 
 
 #### Authorizing The Action
 
-Now that our policy is written, let's use it in our `destroy` method. All Laravel controllers may call an `authorize` method, which is exposed by the `AuthorizesRequest` trait:
+Bây giờ, policy của chúng ta đã được viết, hãy sử dụng nó trong method `destroy` của chúng ta. Tất cả các controller của Laravel có thể gọi method `authorize`, cái mà được cung cấp bởi trait (đặc tính) `AuthorizesRequest`:
 
     /**
      * Destroy the given task.
@@ -767,16 +767,16 @@ Now that our policy is written, let's use it in our `destroy` method. All Larave
         // Delete The Task...
     }
 
-Let's examine this method call for a moment. The first argument passed to the `authorize` method is the name of the policy method we wish to call. The second argument is the model instance that is our current concern. Remember, we recently told Laravel that our `Task` model corresponds to our `TaskPolicy`, so the framework knows on which policy to fire the `destroy` method. The current user will automatically be sent to the policy method, so we do not need to manually pass it here.
+Hãy kiểm tra này gọi phương thức trong một lúc. Đối số đầu tiên được chuyển đến method 'authorize` là tên của method policy mà chúng ta muốn gọi. Đối số thứ hai là các instance của model mà chúng ta đang quan tâm. Nhớ rằng, gần đây chúng ta đã bảo Laravel rằng model `Task` tương ứng với `TaskPolicy`, do đó framework biết policy nào để gọi method `destroy`. User hiện tại sẽ được tự động gửi đến method policy, do đó chúng ta không câng phải gửi nó thủ công.
 
-If the action is authorized, our code will continue executing normally. However, if the action is not authorized (meaning the policy's `destroy` method returned `false`), a 403 exception will be thrown and an error page will be displayed to the user.
+Nếu action đã được xác thực, code của chúng ta sẽ tiếp tục thực thi bình thường. Tuy nhiên, nếu action không được xác thực (nghĩa là method destroy của policy trả về `false`), một ngoại lệ 403 sẽ được bắn ra và trang lỗi sẽ hiển thị đến người dùng.
 
-> **Note:** There are several other ways to interact with the authorization services Laravel provides. Be sure to browse the complete [authorization documentation](/docs/{{version}}/authorization).
+> **Note:** Có vài cách khác để tương tác với dich vụ authorization được cung cấp bởi Laraveel. Hãy chắc rằng xem hết tài liệu [authorization documentation](/docs/{{version}}/authorization).
 
 <a name="deleting-the-task"></a>
 ### Deleting The Task
 
-Finally, let's finish adding the logic to our `destroy` method to actually delete the given task. We can use Eloquent's `delete` method to delete the given model instance in the database. Once the record is deleted, we will redirect the user back to the `/tasks` URL:
+Cuối cùng, hãy hoàn thành logic vào method `destroy` để thực sự xoá được task đã cho. Chúng ta có thể sử dụng method `delete` của Eloquent để xoá instance của model đã cho trong cơ sở dữ liệu. Một khi bản ghi đã bị xoá, chúng ta sẽ chuyển hướng user quay lại URL `/tasks`:
 
     /**
      * Destroy the given task.
