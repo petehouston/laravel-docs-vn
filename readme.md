@@ -46,7 +46,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Billing
     * [Cache](cache.md)
     * Collections
-    * Elixir
+    * [Elixir](elixir.md)
     * [Encryption](encryption.md)
     * [Errors & Logging](errors.md)
     * [Events](events.md)
