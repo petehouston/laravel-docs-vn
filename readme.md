@@ -10,7 +10,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Release Notes
     * Upgrade Guide
     * [Contribution Guide](contributions.md)
-    * API Documentation
+    * [API Documentation](documentation.md)
 
 * **Thiết lập**
     * [Installation](installation.md)
@@ -20,7 +20,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 
 * **Hướng dẫn**
     * Basic Task List
-    * Intermediate Task List
+    * [Intermediate Task List](quickstart-intermediate.md)
 
 * **Cơ bản**
     * [Routing](routing.md)
@@ -45,7 +45,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Artisan Console](artisan.md)
     * Billing
     * [Cache](cache.md)
-    * Collections
+    * [Collections](collections.md)
     * [Elixir](elixir.md)
     * [Encryption](encryption.md)
     * [Errors & Logging](errors.md)
