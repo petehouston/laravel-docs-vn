@@ -133,12 +133,11 @@ Tuỳ chọn, như đối số, cũng là một kiểu nhập vào từ người
      */
     protected $signature = 'email:send {user} {--queue}';
 
-In this example, the `--queue` switch may be specified when calling the Artisan comman
 Ở ví dụ này, tuỳ chọn `--queue` có thể được chỉ định khi thực hiện gọi câu lệnh. Nếu như `--queue` được gọi, thì giá trị của tuỳ chọn này sẽ là `true`. Ngược lại, giá trị sẽ là `false`:
 
     php artisan email:send 1 --queue
 
-Bạn cũng có thể chỉnh định tuỳ chọn được gán bởi một giá trị bởi người dùng thông qua việc sử dụng kí hiệu `=` để cho biết là cần yêu cầu có dữ liệu nhập vào:
+Bạn cũng có thể điều chỉnh sao cho tuỳ chọn phải được gán với một giá trị bởi người dùng thông qua việc sử dụng kí hiệu `=` để cho biết là cần yêu cầu có dữ liệu nhập vào:
 
     /**
      * The name and signature of the console command.
