@@ -19,7 +19,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Valet](valet.md)
 
 * **Hướng dẫn**
-    * Basic Task List
+    * [Basic Task List](quickstart.md)
     * [Intermediate Task List](quickstart-intermediate.md)
 
 * **Cơ bản**
