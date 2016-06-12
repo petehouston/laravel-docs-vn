@@ -67,7 +67,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 * **Database**
     * [Getting Started](database.md)
     * Query Builder
-    * Migrations
+    * [Migrations](migrations.md)
     * [Seeding](seeding.md)
 
 * **Eloquent ORM**
