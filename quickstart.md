@@ -120,17 +120,17 @@ Model này sẽ chứa tại thư mục `app`. Mặc định, class model sẽ t
         //
     }
 
-Chúng ta sẽ học cách sử dụng Eloquent models as we add routes to our application. Of course, feel free to consult the [complete Eloquent documentation](/docs/{{version}}/eloquent) for more information.
+Chúng ta sẽ học cách sử dụng Eloquent models cùng với thêm các routes cho ứng dụng này. Tất nhiên, bạn cần phải đoc [hoàn tất tài liệu Eloquent](/docs/{{version}}/eloquent) để hiểu hơn về nó.
 
 <a name="routing"></a>
 ## Routing
 
 <a name="stubbing-the-routes"></a>
-### Stubbing The Routes
+### Chuẩn bị Routes
 
-Next, we're ready to add a few routes to our application. Routes are used to point URLs to controllers or anonymous functions that should be executed when a user accesses a given page. By default, all Laravel routes are defined in the `app/Http/routes.php` file that is included in every new project.
+Tiếp theo, chúng ta đã sẳn sàng thêm các routes cho ứng dụng này. Routes sử dụng các tham chiếu của URLs trỏ đến các controllers hoặc các hàm không định danh thực hiện các yêu cầu và xuất ra view cụ thể. Theo mặc định, Laravel routes được định nghĩa ở tập tin `app/Http/routes.php`.
 
-For this application, we know we will need at least three routes: a route to display a list of all of our tasks, a route to add new tasks, and a route to delete existing tasks. So, let's stub all of these routes in the `app/Http/routes.php` file:
+Trong ứng dụng này, chúng ta cần ba routes chính đó là: route hiển thị tất cả các tasks, route tạo tasks, và route để xóa tasks. Nào chúng ta cùng định nghĩa chúng trong `app/Http/routes.php`:
 
     <?php
 
@@ -158,36 +158,36 @@ For this application, we know we will need at least three routes: a route to dis
         //
     });
 
-> **Note**: If your copy of Laravel has a `RouteServiceProvider` that already includes the default routes file within the `web` middleware group, you do not need to manually add the group to your `routes.php` file.
+> **Lưu ý**: Các dự án của bạn có sẵn `RouteServiceProvider` thì chúng đã bao gồm `web` middleware group, thế nên bạn không cần thêm chúng vào trong `routes.php`.
 
 <a name="displaying-a-view"></a>
-### Displaying A View
+### Hiển thị một View
 
-Next, let's fill out our `/` route. From this route, we want to render an HTML template that contains a form to add new tasks, as well as a list of all current tasks.
+Tiếp tục, chúng ta cần truyền vào `/` vào một view. Với các route, chúng ta sẽ tạo ra một HTML template nơi hiển thị các trường nhập tạo task, hay hiển thị các task tồn tại.
 
-In Laravel, all HTML templates are stored in the `resources/views` directory, and we can use the `view` helper to return one of these templates from our route:
+Trong Laravel, tất cả các HTML templates được lưu tại `resources/views`, chúng dễ dàng gọi chúng bằng các gọi hàm `view`:
 
     Route::get('/', function () {
         return view('tasks');
     });
 
-Passing `tasks` to the `view` function will create a View object instance that corresponds to the template in `resources/views/tasks.blade.php`. Of course, we need to actually define this view, so let's do that now!
+Khi truyền `tasks` vào hàm `view` chúng sẽ gọi các thành phần từ `resources/views/tasks.blade.php`. Tất nhiên, chúng ta cần phải định nghĩa các view trước, và bây giờ chúng ta sẽ thực hiện điều đó!
 
 <a name="building-layouts-and-views"></a>
-## Building Layouts & Views
+## Xây dựng Layouts & Views
 
-This application only has a single view which contains a form for adding new tasks as well as a listing of all current tasks. To help you visualize the view, here is a screenshot of the finished application with basic Bootstrap CSS styling applied:
+Chúng ta chỉ cần hai thành phần view chính đó là view hiển thị các task tồn tại và view dùng để tạo các task. Để dễ hình dung, đây là một bức ảnh chụp một view khi hoàn thành đã được làm đẹp bằng Bootstrap CSS:
 
 ![Application Image](https://laravel.com/assets/img/quickstart/basic-overview.png)
 
 <a name="defining-the-layout"></a>
-### Defining The Layout
+### Đinh nghĩa Layout
 
-Almost all web applications share the same layout across pages. For example, this application has a top navigation bar that would be typically present on every page (if we had more than one). Laravel makes it easy to share these common features across every page using Blade **layouts**.
+Hầu hết các ứng dụng đều có một layout và các trang con được kế thừa từ chúng. Ví dụ, một ứng dụng cần có một thanh menu ở phía trên và ta muốn có ở mọi trang mà không cần phải thêm chúng ở nhiều trang. Laravel dễ dàng thực hiện việc này bằng các Blade **layouts**.
 
-As we discussed earlier, all Laravel views are stored in `resources/views`. So, let's define a new layout view in `resources/views/layouts/app.blade.php`. The `.blade.php` extension instructs the framework to use the [Blade templating engine](/docs/{{version}}/blade) to render the view. Of course, you may use plain PHP templates with Laravel. However, Blade provides convenient short-cuts for writing clean, terse templates.
+Như các chúng ta đã thảo luận trước đó, tất cả các Laravel views được lưu trữ tại `resources/views`. Vì thế, ta tiến hành tạo một layout mới `resources/views/layouts/app.blade.php`. Đuôi mở rộng `.blade.php` được giải thích ở [Blade templating engine](/docs/{{version}}/blade) nếu bạn không hiểu hãy đọc chúng. Và tất nhiên, chúng ta cũng có thể sử dụng các mã PHP thuần bên trong các view Laravel. Tuy vậy, Blade đã cung câp cho ta cách viết các view đơn giản và đẹp hơn, gọn gàng hơn trong các templates.
 
-Our `app.blade.php` view should look like the following:
+`app.blade.php` sẽ trông như thế này:
 
     <!-- resources/views/layouts/app.blade.php -->
 
@@ -210,14 +210,14 @@ Our `app.blade.php` view should look like the following:
         </body>
     </html>
 
-Note the `@yield('content')` portion of the layout. This is a special Blade directive that specifies where all child pages that extend the layout can inject their own content. Next, let's define the child view that will use this layout and provide its primary content.
+Chú ý các `@yield('content')` ở trong layout. là các thẻ Blade nơi mà tất cả các trang con kế thừa từ chúng có thể hiển thị các nội dung mong muốn ở các phần khác nhau. Tiếp tục, chúng ta sẽ định nghĩa các view con để hiển thị các task tồn tại cũng như việc tạo task.
 
 <a name="defining-the-child-view"></a>
-### Defining The Child View
+### Định nghĩa các view con
 
-Next, we need to define a view that contains a form to create a new task as well as a table that lists all existing tasks. Let's define this view in `resources/views/tasks.blade.php`.
+Nào, chúng ta hãy tạo view để hiển thị các task tồn tại. Chúng ta sẽ định nghĩa chúng bên trong `resources/views/tasks.blade.php`.
 
-We'll skip over some of the Bootstrap CSS boilerplate and only focus on the things that matter. Remember, you can download the full source for this application on [GitHub](https://github.com/laravel/quickstart-basic):
+Chúng ta sẽ bỏ qua bước cài đặt Bootstrap CSS vì không cần thiết. Hãy nhớ rằng, bạn dễ dàng tải về toàn bộ dự án này ở [GitHub](https://github.com/laravel/quickstart-basic):
 
     <!-- resources/views/tasks.blade.php -->
 
@@ -258,29 +258,29 @@ We'll skip over some of the Bootstrap CSS boilerplate and only focus on the thin
         <!-- TODO: Current Tasks -->
     @endsection
 
-#### A Few Notes Of Explanation
+#### Một vài ghi chú
 
-Before moving on, let's talk about this template a bit. First, the `@extends` directive informs Blade that we are using the layout we defined in `resources/views/layouts/app.blade.php`. All of the content between `@section('content')` and `@endsection` will be injected into the location of the `@yield('content')` directive within the `app.blade.php` layout.
+Trước khi qua bước tiếp theo, chúng ta sẽ nói về template. Đầu tiên, thẻ `@extends` sẽ định nghĩa Blade hiện tại sẽ kế thừa từ Blade chính tức là layout `resources/views/layouts/app.blade.php`. Các thẻ tiếp theo chính là `@section('content')` và `@endsection` chúng sẽ truyền đến các bị trí `@yield('content')` trên Blade `app.blade.php` layout.
 
-The `@include('common.errors')` directive will load the template located at `resources/views/common/errors.blade.php`. We haven't defined this template, but we will soon!
+Với `@include('common.errors')` chúng sẽ chèn trực tiếp tập tin `resources/views/common/errors.blade.php`. Chúng ta chưa nói về phần này, nhưng bạn sẽ sớm biết thôi!
 
-Now we have defined a basic layout and view for our application. Remember, we are returning this view from our `/` route like so:
+Bây giờ chúng ta đã hoàn tất định nghĩa các view và layout. Hãy nhớ rằng, chúng ta trả về view từ route `/` giống như thế này:
 
     Route::get('/', function () {
         return view('tasks');
     });
 
-Next, we're ready to add code to our `POST /task` route to handle the incoming form input and add a new task to the database.
+Tiếp theo, chúng ta sẵn sàng chỉnh sửa `POST /task` route để chuẩn bị việc thêm các task đế thêm chúng vào CSDL.
 
 <a name="adding-tasks"></a>
-## Adding Tasks
+## Tạo Tasks
 
 <a name="validation"></a>
 ### Validation
 
-Now that we have a form in our view, we need to add code to our `POST /task` route in `app/Http/routes.php` to validate the incoming form input and create a new task. First, let's validate the input.
+Chúng ta đã có các trường nhập cho view, chúng ta cần thêm phương thức `POST /task` vào bên trong `app/Http/routes.php` và kiểm tra các ràng buộc của các trường nhập trước khi thêm chúng vào CSDL.
 
-For this form, we will make the `name` field required and state that it must contain less than `255` characters. If the validation fails, we will redirect the user back to the `/` URL, as well as flash the old input and errors into the [session](/docs/{{version}}/session). Flashing the input into the session will allow us to maintain the user's input even when there are validation errors:
+Với các trường nhập này, chúng ta muốn trường `name` phải bắt buộc nhập và tồn tại ít nhất `255` ký tự. Nếu không đáp ứng đúng điều kiện đưa ra, Chúng ta sẽ chuyển hướng về `/`, cùng với đó sẽ thêm vào [session](/docs/{{version}}/session) các thông báo lỗi dưới dạng flash. Chúng ta dễ dàng thực hiện việc đó như sau:
 
     Route::post('/task', function (Request $request) {
         $validator = Validator::make($request->all(), [
@@ -296,11 +296,11 @@ For this form, we will make the `name` field required and state that it must con
         // Create The Task...
     });
 
-#### The `$errors` Variable
+#### Biến `$errors`
 
-Let's take a break for a moment to talk about the `->withErrors($validator)` portion of this example. The `->withErrors($validator)` call will flash the errors from the given validator instance into the session so that they can be accessed via the `$errors` variable in our view.
+Chúng nắm bắt các lỗi bằng phương thức `->withErrors($validator)`. Và `->withErrors($validator)` sẽ truyền vào flash lỗi (đã đề cập ở bài Session) chúng sẽ truyền các thông báo lỗi vào trong biến `$errors` của view.
 
-Remember that we used the `@include('common.errors')` directive within our view to render the form's validation errors. The `common.errors` will allow us to easily show validation errors in the same format across all of our pages. Let's define the contents of this view now:
+Hãy nhớ rằng hãy sử dụng `@include('common.errors')` để đính kèm vào bên trong các view chính cần hiển thị lỗi. `common.errors` sẽ giúp ta tách ra dễ dàng phần hiển thị các thông báo lỗi ở các view cần thiết mà không cần phải lập đi lập lại nhiều lần. Và tập tin ấy sẽ trông như thế này:
 
     <!-- resources/views/common/errors.blade.php -->
 
@@ -320,12 +320,12 @@ Remember that we used the `@include('common.errors')` directive within our view 
     @endif
 
 
-> **Note:** The `$errors` variable is available in **every** Laravel view. It will simply be an empty instance of `ViewErrorBag` if no validation errors are present.
+> **Lưu ý:** Biến `$errors` xuất hiện **thường xuyên** trong Laravel view. Trường hợp biến `ViewErrorBag` rỗng nếu như không có bất kỳ lỗi gì xảy ra.
 
 <a name="creating-the-task"></a>
-### Tạo ra
+### Tạo Task
 
-Now that input validation is handled, let's actually create a new task by continuing to fill out our route. Once the new task has been created, we will redirect the user back to the `/` URL. To create the task, we may use the `save` method after creating and setting properties on a new Eloquent model:
+Bây giờ các trường nhập đã được ràng buộc, chúng ta đã sẳn sàng tạo ra Task bằng cách sử dụng route. Một khi task mới được tạo ra, chúng ta sẽ chuyển hướng chúng đến URL `/`. Để tạo ra Task, chúng ta dùng phương thức `save` bằng cách tạo ra một đối tượng Eloquent model mới rồi truyền vào đó các thuộc tính cần thiết:
 
     Route::post('/task', function (Request $request) {
         $validator = Validator::make($request->all(), [
@@ -345,12 +345,12 @@ Now that input validation is handled, let's actually create a new task by contin
         return redirect('/');
     });
 
-Great! We can now successfully create tasks. Next, let's continue adding to our view by building a list of all existing tasks.
+Tuyệt! Chúng ta đã tạo ra tasks thành công. Kê tiếp, chúng ta sẽ hiển thị các task tồn tại.
 
 <a name="displaying-existing-tasks"></a>
-### Displaying Existing Tasks
+### Hiển thị các Tasks tồn tại
 
-First, we need to edit our `/` route to pass all of the existing tasks to the view. The `view` function accepts a second argument which is an array of data that will be made available to the view, where each key in the array will become a variable within the view:
+Đầu tiên, ta cần chỉnh sửa route `/` để chuyển tất cả dữ liệu vào view. hàm `view` có sẵn hai tham số và ta sẽ truyền dữ liệu vào tham số thứ hai, chúng là biến dữ liệu của chúng ta:
 
     Route::get('/', function () {
         $tasks = Task::orderBy('created_at', 'asc')->get();
@@ -360,7 +360,7 @@ First, we need to edit our `/` route to pass all of the existing tasks to the vi
         ]);
     });
 
-Once the data is passed, we can spin through the tasks in our `tasks.blade.php` view and display them in a table. The `@foreach` Blade construct allows us to write concise loops that compile down into blazing fast plain PHP code:
+Một khi dữ liệu được truyền, chúng ta quay lại `tasks.blade.php` và hiển thị chúng dưới dạng bảng. `@foreach` Blade cho phép chúng ta hiển thị dữ liệu theo vòng lập, các mảng và ta có PHP code như sau:
 
     @extends('layouts.app')
 
