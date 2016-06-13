@@ -71,7 +71,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * [Seeding](seeding.md)
 
 * **Eloquent ORM**
-    * Getting Started
+    * [Getting Started](eloquent.md)
     * [Relationships](eloquent-relationships.md)
     * [Collections](eloquent-collections.md)
     * [Mutators](eloquent-mutators.md)
