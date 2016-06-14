@@ -17,11 +17,11 @@
 - [Pessimistic Locking](#pessimistic-locking)
 
 <a name="introduction"></a>
-## Introduction
+## Giới thiệu
 
-The database query builder provides a convenient, fluent interface to creating and running database queries. It can be used to perform most database operations in your application, and works on all supported database systems.
+Query builder cung cấp một giao thức thuận tiện, linh hoạt cho việc tạo và thực thi các truy vấn dữ liệu. Nó có thể sử dụng để thực hiện hầu hết các tính toán dữ liệu trong ứng dụng của bạn, và làm việc trên tất các các hệ cơ sở dữ liệu được hỗ trợ.
 
-> **Note:** The Laravel query builder uses PDO parameter binding to protect your application against SQL injection attacks. There is no need to clean strings being passed as bindings.
+> **Ghi chú:** Laravel query builder sử dụng PDO parameter binding để bảo vệ ứng dung của bạn khỏi SQL injection. Vì vậy không cần phải xử lí các chuối khi truyền vào.
 
 <a name="retrieving-results"></a>
 ## Retrieving Results
