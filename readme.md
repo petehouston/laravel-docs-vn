@@ -9,23 +9,23 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 * **Mở đầu**
     * Release Notes
     * Upgrade Guide
-    * Contribution Guide
-    * API Documentation
+    * [Contribution Guide](contributions.md)
+    * [API Documentation](documentation.md)
 
 * **Thiết lập**
     * [Installation](installation.md)
-    * Configuration
+    * [Configuration](configuration.md)
     * [Homestead](homestead.md)
-    * Valet
+    * [Valet](valet.md)
 
 * **Hướng dẫn**
-    * Basic Task List
-    * Intermediate Task List
+    * [Basic Task List](quickstart.md)
+    * [Intermediate Task List](quickstart-intermediate.md)
 
 * **Cơ bản**
     * [Routing](routing.md)
-    * Middleware
-    * Controllers
+    * [Middleware](middleware.md)
+    * [Controllers](controllers.md)
     * [Requests](requests.md)
     * Responses
     * [Views](views.md)
@@ -44,38 +44,38 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
     * Authorization
     * [Artisan Console](artisan.md)
     * Billing
-    * Cache
-    * Collections
-    * Elixir
+    * [Cache](cache.md)
+    * [Collections](collections.md)
+    * [Elixir](elixir.md)
     * [Encryption](encryption.md)
     * [Errors & Logging](errors.md)
-    * Events
-    * Filesystem & Cloud Storage
+    * [Events](events.md)
+    * [Filesystem & Cloud Storage](filesystem.md)
     * [Hashing](hashing.md)
-    * Helpers
+    * [Helpers](helpers.md)
     * [Localization](localization.md)
-    * Mail
-    * Package Development
+    * [Mail](mail.md)
+    * [Package Development](packages.md)
     * [Pagination](pagination.md)
-    * Queues
-    * Redis
+    * [Queues](queues.md)
+    * [Redis](redis.md)
     * [Envoy or SSH Tasks](envoy.md)
     * [Task Scheduling](scheduling.md)
     * Testing
     * Validation
 
 * **Database**
-    * Getting Started
+    * [Getting Started](database.md)
     * Query Builder
-    * Migrations
+    * [Migrations](migrations.md)
     * [Seeding](seeding.md)
 
 * **Eloquent ORM**
-    * Getting Started
-    * Relationships
-    * Collections
-    * Mutators
-    * Serialization
+    * [Getting Started](eloquent.md)
+    * [Relationships](eloquent-relationships.md)
+    * [Collections](eloquent-collections.md)
+    * [Mutators](eloquent-mutators.md)
+    * [Serialization](eloquent-serialization.md)
 
 ### Thuật ngữ
 
