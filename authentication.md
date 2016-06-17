@@ -26,15 +26,19 @@
 - [Events](#events)
 
 <a name="introduction"></a>
-## Introduction
+## Giới thiệu
 
 Laravel makes implementing authentication very simple. In fact, almost everything is configured for you out of the box. The authentication configuration file is located at `config/auth.php`, which contains several well documented options for tweaking the behavior of the authentication services.
+Laravel giúp cho việc thực hiện việc xác thực vô cùng đơn giản. Trong thực tế, hầu hết mọi thứ đã được cấu hình cho bạn mà bạn đéo thể tưởng tượng nổi (out of the box). Các file cấu hình xác thực được đặt tại `config/auth.php`, bao gồm một số tài liệu tùy chọn rõ ràng cho việc tinh chỉnh cách xử lí của các dịch vụ authentication.
 
 At its core, Laravel's authentication facilities are made up of "guards" and "providers". Guards define how users are authenticated for each request. For example, Laravel ships with a `session` guard which maintains state using session storage and cookies and a `token` guard, which authenticates users using a "API token" that is passed with each request.
+Tại phần lõi của nó, các cơ sở của Laravel's authentication được tạo bởi các "guards" và "providers". Guards định nghĩa cái cách mà các user được xác thực cho mỗi request. Ví dụ, Laravel mang theo một `session` guard cái mà duy trì trạng thái bằng cách sử dụng session storage và cookies và một `token` guard, cái mà xác thực user bằng cách sử dụng một "API token" cái mà được truyền cùng mỗi request.
 
 Providers define how users are retrieved from your persistent storage. Laravel ships with support for retrieving users using Eloquent and the database query builder. However, you are free to define additional providers as needed for your application.
+Providers định nghĩa cách mà user được truy xuất từ lưu trữ không đổi (persistent storage) của bạn. Laravel mang theo sự hỗ trợ cho việc truy xuất các user sử dụng Eloquent và Query Builder.
 
 Don't worry if this all sounds confusing now! Most applications will never need to modify the default authentication configuration.
+Đùng lo lắng nếu tất các điều này nghe có vẻ bối rối. Hầu hết các ứng dụng sẽ không cần tinh chỉnh các cấu hình xác thực mặc định.
 
 <a name="introduction-database-considerations"></a>
 ### Database Considerations
