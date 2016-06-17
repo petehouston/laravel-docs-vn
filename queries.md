@@ -1,14 +1,14 @@
 # Database: Query Builder
 
-- [Introduction](#introduction)
+- [Giới thiệu](#introduction)
 - [Retrieving Results](#retrieving-results)
     - [Aggregates](#aggregates)
 - [Selects](#selects)
 - [Joins](#joins)
 - [Unions](#unions)
 - [Where Clauses](#where-clauses)
-    - [Advanced Where Clauses](#advanced-where-clauses)
-    - [JSON Where Clauses](#json-where-clauses)
+    - [Các mệnh đề Where nâng cao](#advanced-where-clauses)
+    - [Các mệnh đề JSON Where](#json-where-clauses)
 - [Ordering, Grouping, Limit, & Offset](#ordering-grouping-limit-and-offset)
 - [Conditional Statements](#conditional-statements)
 - [Inserts](#inserts)
@@ -26,9 +26,9 @@ Query builder cung cấp một giao thức thuận tiện, linh hoạt cho việ
 <a name="retrieving-results"></a>
 ## Retrieving Results
 
-#### Retrieving All Rows From A Table
+#### Trả về toàn bộ dòng từ một table
 
-To begin a fluent query, use the `table` method on the `DB` facade. The `table` method returns a fluent query builder instance for the given table, allowing you to chain more constraints onto the query and then finally get the results. In this example, let's just `get` all records from a table:
+Bắt đầu với một fluent query, sử dụng phương thức `table` trên facade `DB`. Phương thức `table` trả về một fluent query buildẻ instance với bảng đã cho, cho phép bạn thêm nhiều ràng buộc vào truy vấn và cuối cùng là lấy kết quả. Trong ví dụ này, hãy `get` toàn bộ bản ghi từ 1 table:
 
     <?php
 
@@ -52,27 +52,27 @@ To begin a fluent query, use the `table` method on the `DB` facade. The `table` 
         }
     }
 
-Like [raw queries](/docs/{{version}}/database), the `get` method returns an `array` of results where each result is an instance of the PHP `StdClass` object. You may access each column's value by accessing the column as a property of the object:
+Giống như [raw queries](/docs/{{version}}/database), phương thức `get` trả về một `array` các kết quả mà mỗi kết quả là một instance của đối tượng PHP `StdClass`. Bạn có thể truy cập mỗi cột giá trị bằng cách coi cột như là thuộc tính của một object.
 
     foreach ($users as $user) {
         echo $user->name;
     }
 
-#### Retrieving A Single Row / Column From A Table
+#### Trả về một dòng / cột từ một bảng
 
-If you just need to retrieve a single row from the database table, you may use the `first` method. This method will return a single `StdClass` object:
+Nếu bạn chỉ cần lấy một dòng từ bảng dữ liệu, bạn có thể sử dụng phương thức `first`. Phương thức này sẽ trả về một đối tượng `StdClass`:
 
     $user = DB::table('users')->where('name', 'John')->first();
 
     echo $user->name;
 
-If you don't even need an entire row, you may extract a single value from a record using the `value` method. This method will return the value of the column directly:
+Nếu bạn không cần lấy toàn bộ dòng, bạn có thể lấy ra một giá trị từ một bản ghi sử dụng phương thức `value`. Phương thức này sẽ trả về giá trị của cột:
 
     $email = DB::table('users')->where('name', 'John')->value('email');
 
-#### Chunking Results From A Table
+#### Chia nhỏ kết quả từ một bảng
 
-If you need to work with thousands of database records, consider using the `chunk` method. This method retrieves a small "chunk" of the results at a time, and feeds each chunk into a `Closure` for processing. This method is very useful for writing [Artisan commands](/docs/{{version}}/artisan) that process thousands of records. For example, let's work with the entire `users` table in chunks of 100 records at a time:
+Nếu bạn phải làm việc với hàng nghìn bản ghi dữ liệu, hãy xem xét việc sử dụng phương thức `chunk`. Phương thức này sẽ lấy một "chunk" các kết quả tại một thời điểm, và đưa mỗi chunk vào một `Closure` để xử lí. Phương thức này vô cùng hữu ích cho việc viết [Artisan commands](/docs/{{version}}/artisan) để xử lí hàng nghìn bản ghi. Ví dụ hãy làm việc với toàn bộ table `users` với các chunks 100 bản ghi một lúc:
 
     DB::table('users')->orderBy('id')->chunk(100, function($users) {
         foreach ($users as $user) {
@@ -80,7 +80,7 @@ If you need to work with thousands of database records, consider using the `chun
         }
     });
 
-You may stop further chunks from being processed by returning `false` from the `Closure`:
+Bạn có thể dừng các chunk khác khỏi việc xử lí bằng cách trả về `false` từ `Closure`:
 
     DB::table('users')->orderBy('id')->chunk(100, function($users) {
         // Process the records...
@@ -88,9 +88,9 @@ You may stop further chunks from being processed by returning `false` from the `
         return false;
     });
 
-#### Retrieving A List Of Column Values
+#### Trả về danh sách giá trị của một cột
 
-If you would like to retrieve an array containing the values of a single column, you may use the `pluck` method. In this example, we'll retrieve an array of role titles:
+Nếu bạn thích lấy một mảng gồm các giá trị của một cột, bạn có thể sử dụng phương thức `pluck`. Trong ví dụ này, chúng ta sẽ lấy một mảng gồm các role titles:
 
     $titles = DB::table('roles')->pluck('title');
 
@@ -98,7 +98,7 @@ If you would like to retrieve an array containing the values of a single column,
         echo $title;
     }
 
- You may also specify a custom key column for the returned array:
+ Bạn cũng có thể chỉ định một cột key cho mảng trả về:
 
     $roles = DB::table('roles')->pluck('title', 'name');
 
@@ -109,13 +109,13 @@ If you would like to retrieve an array containing the values of a single column,
 <a name="aggregates"></a>
 ### Aggregates
 
-The query builder also provides a variety of aggregate methods, such as `count`, `max`, `min`, `avg`, and `sum`. You may call any of these methods after constructing your query:
+Query builder cũng cung cấp một tập hợp các phương thức khác nhau, như là `count`, `max`, `min`, `avg` và `sum`. Bạn có thể gọi bất kì phương thức nào sau cấu trúc truy vấn của bạn:
 
     $users = DB::table('users')->count();
 
     $price = DB::table('orders')->max('price');
 
-Of course, you may combine these methods with other clauses to build your query:
+Tất nhiên, bạn có thể gộp những phương thức này với các mệnh đề khác để tạo truy vấn của bạn:
 
     $price = DB::table('orders')
                     ->where('finalized', 1)
@@ -124,17 +124,17 @@ Of course, you may combine these methods with other clauses to build your query:
 <a name="selects"></a>
 ## Selects
 
-#### Specifying A Select Clause
+#### Chỉ định một mệnh đề select
 
-Of course, you may not always want to select all columns from a database table. Using the `select` method, you can specify a custom `select` clause for the query:
+Tất nhiên, bạn có thể không phải lúc nào cũng muốn lấy toàn bộ các cột từ một bảng. Sử dụng phương thức `select`, bạn có thể chỉ định tùy chọn một mệnh đề `select` cho truy vấn:
 
     $users = DB::table('users')->select('name', 'email as user_email')->get();
 
-The `distinct` method allows you to force the query to return distinct results:
+Phương thức `distinct` cho phép bạn bắt buộc truy vấn trả về các kết quả phân biệt:
 
     $users = DB::table('users')->distinct()->get();
 
-If you already have a query builder instance and you wish to add a column to its existing select clause, you may use the `addSelect` method:
+Nếu bạn đã có sẵn một query builder instance và bạn muốn thêm một cột vào mệnh đề select, bạn có thể sử dụng phương thức `addSelect`:
 
     $query = DB::table('users')->select('name');
 
@@ -142,7 +142,7 @@ If you already have a query builder instance and you wish to add a column to its
 
 #### Raw Expressions
 
-Sometimes you may need to use a raw expression in a query. These expressions will be injected into the query as strings, so be careful not to create any SQL injection points! To create a raw expression, you may use the `DB::raw` method:
+Đôi khi bạn có thể cần sử dụng một biểu thức trong truy vấn. Những expression này sẽ được đưa vào truy vấn như các chuỗi, vì vậy hãy cần thân đừng tạo bất kì lỗi SQL injection nào. Để tạo một raw expression, bạn có thể sử dụng phương thức `DB:raw`:
 
     $users = DB::table('users')
                          ->select(DB::raw('count(*) as user_count, status'))
@@ -153,9 +153,9 @@ Sometimes you may need to use a raw expression in a query. These expressions wil
 <a name="joins"></a>
 ## Joins
 
-#### Inner Join Statement
+#### Cú pháp Inner Join
 
-The query builder may also be used to write join statements. To perform a basic SQL "inner join", you may use the `join` method on a query builder instance. The first argument passed to the `join` method is the name of the table you need to join to, while the remaining arguments specify the column constraints for the join. Of course, as you can see, you can join to multiple tables in a single query:
+Query builder cũng có thể được sử dụng để viết các cú pháp join. Để thực hiện một "inner join" SQL đơn giản, bạn có thể sử dụng phương thức `join` cho một query builder instance. Tham số được truyền vào đầu tiên trong phương thức `join` là tên của bảng bạn join đến, trong khi tham số còn lại chỉ định các cột ràng buộc cho việc join. Tất nhiên như bạn có thể thấy, bạn có thể join nhiều bảng trong một truy vấn:
 
     $users = DB::table('users')
                 ->join('contacts', 'users.id', '=', 'contacts.user_id')
@@ -163,25 +163,25 @@ The query builder may also be used to write join statements. To perform a basic 
                 ->select('users.*', 'contacts.phone', 'orders.price')
                 ->get();
 
-#### Left Join Statement
+#### Cú pháp Left Join
 
-If you would like to perform a "left join" instead of an "inner join", use the `leftJoin` method. The `leftJoin` method has the same signature as the `join` method:
+Nếu bạn thích thực hiện một "left join" thay vì "inner join", sử dụng phương thức `leftJoin`. Phương thức này có cú pháp giống phương thức `join`: 
 
     $users = DB::table('users')
                 ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
                 ->get();
 
-#### Cross Join Statement
+#### Cú pháp Cross Join
 
-To perform a "cross join" use the `crossJoin` method with the name of the table you wish to cross join to. Cross joins generate a cartesian product between the first table and the joined table:
+Để thực hiện một "cross join", sử dụng phương thức `crossJoin` với tên của bảng bạn muốn cross join đến. Cross join sinh ra một cartesion product (tích Descartes - là một tập hợp AxB của A và B) giữa bảng đầu tiên và bảng bị join:
 
     $users = DB::table('sizes')
                 ->crossJoin('colours')
                 ->get();
 
-#### Advanced Join Statements
+#### Các cú pháp Join nâng cao
 
-You may also specify more advanced join clauses. To get started, pass a `Closure` as the second argument into the `join` method. The `Closure` will receive a `JoinClause` object which allows you to specify constraints on the `join` clause:
+Bạn cũng có thể chỉ định nhiều mệnh đề join nâng cao. Để bắt đầu, truyền một `Closure` như là tham số thứ 2 vào phương thức `join`. `Closure` sẽ nhận một đối tượng `JoinClause` cái mà cho phép bạn chỉ định các ràng buộc trong mệnh đề `join`:
 
     DB::table('users')
             ->join('contacts', function ($join) {
@@ -189,7 +189,7 @@ You may also specify more advanced join clauses. To get started, pass a `Closure
             })
             ->get();
 
-If you would like to use a "where" style clause on your joins, you may use the `where` and `orWhere` methods on a join. Instead of comparing two columns, these methods will compare the column against a value:
+Nếu bạn thích sử dụng mệnh đề "where" trong join, bạn có thể sử dụng phương thức `where` và `orWhere` trong join. Thay vì so sanh 2 cột, các phương thức này sẽ so sánh cột với giá trị:
 
     DB::table('users')
             ->join('contacts', function ($join) {
@@ -201,7 +201,7 @@ If you would like to use a "where" style clause on your joins, you may use the `
 <a name="unions"></a>
 ## Unions
 
-The query builder also provides a quick way to "union" two queries together. For example, you may create an initial query, and then use the `union` method to union it with a second query:
+Query builder cũng cung cấp một các nhanh chóng để "union" 2 truy vấn với nhau. Ví dụ, bạn có thể tạo một truy vấn khởi tạo, và sau đó sử dụng phương thức `union` để nối nó vào truy vấn thứ 2:
 
     $first = DB::table('users')
                 ->whereNull('first_name');
@@ -211,24 +211,24 @@ The query builder also provides a quick way to "union" two queries together. For
                 ->union($first)
                 ->get();
 
-The `unionAll` method is also available and has the same method signature as `union`.
+Phương thức `unionAll` cũng có và có cách sử dụng như `union`.
 
 <a name="where-clauses"></a>
-## Where Clauses
+## Mệnh đề Where
 
-#### Simple Where Clauses
+### Các mệnh đề Wherer đơn giản
 
-To add `where` clauses to the query, use the `where` method on a query builder instance. The most basic call to `where` requires three arguments. The first argument is the name of the column. The second argument is an operator, which can be any of the database's supported operators. The third argument is the value to evaluate against the column.
+Để thêm mệnh đề `where` vào truy vấn, sử dụng phương thức `where` trong query builder instance. Hầu hết cách gọi cơ bản `where` yêu cầu 3 tham số. Tham số đầu tiên là tên của cột. Tham số thứ 2 là một toán tử, cái mà có thể là bất kì toán tử nào mà được hỗ trợ bởi database. Tham số thứ 3 là giá trị để so sanh với cột.
 
-For example, here is a query that verifies the value of the "votes" column is equal to 100:
+Ví dụ, đây là một truy vấn mà kiểm tra giá trị của cột "votes" bằng 100:
 
     $users = DB::table('users')->where('votes', '=', 100)->get();
 
-For convenience, if you simply want to verify that a column is equal to a given value, you may pass the value directly as the second argument to the `where` method:
+Để thuận tiện, bạn có thể đơn giản chỉ muốn xác nhận một cột có giá trị bằng giá trị đã có, bạn chỉ cần truyền giá trị trực tiếp như là tham số thứ 2 vào phương thức `where`:
 
     $users = DB::table('users')->where('votes', 100)->get();
 
-Of course, you may use a variety of other operators when writing a `where` clause:
+Tất nhiên, bạn có thể sử dụng nhiều toán tử khác khi viết mệnh đề `where`:
 
     $users = DB::table('users')
                     ->where('votes', '>=', 100)
@@ -242,34 +242,34 @@ Of course, you may use a variety of other operators when writing a `where` claus
                     ->where('name', 'like', 'T%')
                     ->get();
 
-You may also pass an array of conditions to the `where` function:
+Bạn có thể truyền vào một mảng điều kiện vào hàm `where`:
 
     $users = DB::table('users')->where([
         ['status','1'],
         ['subscribed','<>','1'],
     ])->get();
 
-#### Or Statements
+#### Cú pháp Or
 
-You may chain where constraints together, as well as add `or` clauses to the query. The `orWhere` method accepts the same arguments as the `where` method:
+Bạn có thể nối tiếp các ràng buộc where cùng nhau, cũng như thêm mệnh đề `or` vào truy vấn. Phương thức `orWhere` chấp nhận các đối số giống như `where`:
 
     $users = DB::table('users')
                         ->where('votes', '>', 100)
                         ->orWhere('name', 'John')
                         ->get();
 
-#### Additional Where Clauses
+#### Các mệnh đề Where khác
 
 **whereBetween**
 
-The `whereBetween` method verifies that a column's value is between two values:
+Phương thức `whereBetween` kiểm tra giá trị một cột có ở giữa 2 giá trị:
 
     $users = DB::table('users')
                         ->whereBetween('votes', [1, 100])->get();
 
 **whereNotBetween**
 
-The `whereNotBetween` method verifies that a column's value lies outside of two values:
+Phương thức `whereNotBetween` kiểm tra giá trị của cột có nằm bên ngoài hai giá trị:
 
     $users = DB::table('users')
                         ->whereNotBetween('votes', [1, 100])
@@ -277,13 +277,13 @@ The `whereNotBetween` method verifies that a column's value lies outside of two 
 
 **whereIn / whereNotIn**
 
-The `whereIn` method verifies that a given column's value is contained within the given array:
+Phương thức `whereIn` kiểm tra giá trị của cột đã có có thuộc về trong mảng:
 
     $users = DB::table('users')
                         ->whereIn('id', [1, 2, 3])
                         ->get();
 
-The `whereNotIn` method verifies that the given column's value is **not** contained in the given array:
+Phương thức `whereNotIn` kiểm tra giá trị của cột có **không** thuộc về mảng:
 
     $users = DB::table('users')
                         ->whereNotIn('id', [1, 2, 3])
@@ -291,13 +291,13 @@ The `whereNotIn` method verifies that the given column's value is **not** contai
 
 **whereNull / whereNotNull**
 
-The `whereNull` method verifies that the value of the given column is `NULL`:
+Phương thức `whereNull` kiểm tra giá trị của cột đã có là `NULL`:
 
     $users = DB::table('users')
                         ->whereNull('updated_at')
                         ->get();
 
-The `whereNotNull` method verifies that the column's value is **not** `NULL`:
+Phương thức `whereNotNull` kiểm tra giá trị của cột là **không** `NULL`:
 
     $users = DB::table('users')
                         ->whereNotNull('updated_at')
@@ -305,17 +305,17 @@ The `whereNotNull` method verifies that the column's value is **not** `NULL`:
 
 **whereColumn**
 
-The `whereColumn` method may be used to verify that two columns are equal:
+Phương thức `whereColumn` có thể sử dụng để kiểm tra 2 cột bằng nhau:
 
     $users = DB::table('users')
                     ->whereColumn('first_name', 'last_name');
 
-You may also pass a comparison operator to the method:
+Bạn cũng có thể truyền một toán tử so sánh vào phương thức:
 
     $users = DB::table('users')
                     ->whereColumn('updated_at', '>', 'created_at');
 
-The `whereColumn` method can also be passed an array of multiple conditions. These conditions will be joined using the `and` operator:
+Phương thức `whereColumn` có thể được truyền vào một mảng của các điều kiện. Những điều kiện này sẽ được nối với nhau sử dụng toán tử `and`:
 
     $users = DB::table('users')
                     ->whereColumn([
@@ -324,11 +324,11 @@ The `whereColumn` method can also be passed an array of multiple conditions. The
                     ]);
 
 <a name="advanced-where-clauses"></a>
-## Advanced Where Clauses
+## Mệnh đề Where nâng cao
 
-#### Parameter Grouping
+#### Nhóm tham số
 
-Sometimes you may need to create more advanced where clauses such as "where exists" or nested parameter groupings. The Laravel query builder can handle these as well. To get started, let's look at an example of grouping constraints within parenthesis:
+Đôi khi bạn có thể cần tạo nhiều mệnh đề where nâng cao như "where exists" hoặc nhóm các tham số lồng nhau. Laravel query builder có thể xử lí việc này ok. Để bắt đầu, hãy xem ví dụ sau về việc nhóm các ràng buộc trong ngoặc:
 
     DB::table('users')
                 ->where('name', '=', 'John')
@@ -338,13 +338,13 @@ Sometimes you may need to create more advanced where clauses such as "where exis
                 })
                 ->get();
 
-As you can see, passing a `Closure` into the `orWhere` method instructs the query builder to begin a constraint group. The `Closure` will receive a query builder instance which you can use to set the constraints that should be contained within the parenthesis group. The example above will produce the following SQL:
+Như bạn có thể thấy, truyền một `Closure` vào trong phương thức `orWhere` chỉ cho query builder bắt đầu một nhóm ràng buộc. `Closure` sẽ nhận một query builder instance cái mà bạn có thể sử dụng để thiết lập các ràng buộc mà sẽ được đặt trong trong ngoặc. Ví dụ trên sẽ tạo ra một câu lệnh SQL như sau:
 
     select * from users where name = 'John' or (votes > 100 and title <> 'Admin')
 
-#### Exists Statements
+#### Các cú pháp Exist
 
-The `whereExists` method allows you to write `where exists` SQL clauses. The `whereExists` method accepts a `Closure` argument, which will receive a query builder instance allowing you to define the query that should be placed inside of the "exists" clause:
+Phương thức `whereExists` cho phép bạn viết các mệnh đề `where exists`. Phương thức `whereExists` chấp nhận tham số là một `Closure`, cái mà nhận một query builder instance cho phép bạn định nghĩa truy vấn mà sẽ được đặt trong mệnh đề "exists":
 
     DB::table('users')
                 ->whereExists(function ($query) {
@@ -354,7 +354,7 @@ The `whereExists` method allows you to write `where exists` SQL clauses. The `wh
                 })
                 ->get();
 
-The query above will produce the following SQL:
+Truy vấn trên sẽ sinh ra đoạn SQL sau:
 
     select * from users
     where exists (
@@ -362,9 +362,9 @@ The query above will produce the following SQL:
     )
 
 <a name="json-where-clauses"></a>
-## JSON Where Clauses
+## Mệnh đề JSON Where
 
-Laravel supports querying JSON column types on databases that provide support for JSON column types. Currently, this includes MySQL 5.7 and Postgres. To query a JSON column, use the `->` operator:
+Laravel hỗ trợ truy vấn với cột kiểu JSON trên database mà hỗ trợ cột kiểu JSON. Hiện tại, các hỗ trợ này có trong MySQL 5.7 và Postgres. Để truy vấn một cột JSON, sử dụng toán tử `->`:
 
     $users = DB::table('users')
                     ->where('options->language', 'en')
@@ -379,7 +379,7 @@ Laravel supports querying JSON column types on databases that provide support fo
 
 #### orderBy
 
-The `orderBy` method allows you to sort the result of the query by a given column. The first argument to the `orderBy` method should be the column you wish to sort by, while the second argument controls the direction of the sort and may be either `asc` or `desc`:
+Phương thức `orderBy` cho phép bạn sắp xếp kết quả của truy vấn bởi một cột cho trước. Tham số đầu tiên của phương thức `orderBy` nên là cột bạn muốn sắp xếp, trong khi tham số thứ 2 là chiểu của sắp xếp và có thể là `asc` hoặc `desc`:
 
     $users = DB::table('users')
                     ->orderBy('name', 'desc')
@@ -387,7 +387,7 @@ The `orderBy` method allows you to sort the result of the query by a given colum
 
 #### inRandomOrder
 
-The `inRandomOrder` method may be used to sort the query results randomly. For example, you may use this method to fetch a random user:
+Phương thức `inRandomOrder` có thể được sử dụng để sắp xếp kết quả truy vấn một cách ngẫu nhiên. Ví dụ bạn có thể sử dụng phương thức này để lấy một user ngẫu nhiên:
 
     $randomUser = DB::table('users')
                     ->inRandomOrder()
@@ -395,14 +395,14 @@ The `inRandomOrder` method may be used to sort the query results randomly. For e
 
 #### groupBy / having / havingRaw
 
-The `groupBy` and `having` methods may be used to group the query results. The `having` method's signature is similar to that of the `where` method:
+Phương thức `groupBy` và `having` có thể được sử dụng để nhóm kết quả truy vấn. Phương thức `having` có cách sử dụng tương tự phương thức `where`:
 
     $users = DB::table('users')
                     ->groupBy('account_id')
                     ->having('account_id', '>', 100)
                     ->get();
 
-The `havingRaw` method may be used to set a raw string as the value of the `having` clause. For example, we can find all of the departments with sales greater than $2,500:
+Phương thức `havingRaw` có thể được sử dụng thiết lập các chuỗi vào mệnh đề `having`. Ví dụ chúng ta có thể tìm toàn bộ các department mà có sale lớn hơn 2,500$:
 
     $users = DB::table('orders')
                     ->select('department', DB::raw('SUM(price) as total_sales'))
@@ -412,14 +412,14 @@ The `havingRaw` method may be used to set a raw string as the value of the `havi
 
 #### skip / take
 
-To limit the number of results returned from the query, or to skip a given number of results in the query (`OFFSET`), you may use the `skip` and `take` methods:
+Để giới hạn số kết quả trả về từ truy vấn, hoặc bỏ qua một số cho trước các kết quả trong truy vấn (`OFFSET`), bạn có thể sử dụng phương thức `skip` và `take`:
 
     $users = DB::table('users')->skip(10)->take(5)->get();
 
 <a name="conditional-statements"></a>
-## Conditional Statements
+## Các cú pháp điều kiện
 
-Sometimes you may want statements to apply to a query only when something else is true. For instance you may only want to apply a `where` statement if a given input value is present on the incoming request. You may accomplish this using the `when` method:
+Đôi khi bạn có thể muốn các cú pháp áp dụng vào truy vấn chỉ khi cái đéo gì đấy đúng. Ví dụ bạn chỉ muốn áp dụng mệnh đề `where` khi giá trị nhập vào ở trong trong request đến. Bạn có thể thực hiện điều này bằng cách sử dụng phương thức `when`:
 
     $role = $request->input('role');
 
@@ -430,18 +430,18 @@ Sometimes you may want statements to apply to a query only when something else i
                     ->get();
 
 
-The `when` method only executes the given Closure when the first parameter is `true`. If the first parameter is `false`, the Closure will not be executed.
+Phương thức `when` chỉ thực hiện Closure khi tham số đầu tiên là `true`. Nếu tham số đầu tiên là `false`, Closure sẽ không được thực thi.
 
 <a name="inserts"></a>
 ## Inserts
 
-The query builder also provides an `insert` method for inserting records into the database table. The `insert` method accepts an array of column names and values to insert:
+Query builder cũng cung cấp phương thức `insert` cho việc chèn các bản ghi vào trong bảng. Phương thức `insert` chấp nhận một mảng tên các cột và giá trị để thêm vào:
 
     DB::table('users')->insert(
         ['email' => 'john@example.com', 'votes' => 0]
     );
 
-You may even insert several records into the table with a single call to `insert` by passing an array of arrays. Each array represents a row to be inserted into the table:
+Bạn có thể chèn các bản ghi riêng biệt vào bảng với một lần gọi `insert` bằng cách truyền vào một mảng của mảng. Mỗi mảng đại diện cho một dòng sẽ được chèn vô table:
 
     DB::table('users')->insert([
         ['email' => 'taylor@example.com', 'votes' => 0],
@@ -451,17 +451,18 @@ You may even insert several records into the table with a single call to `insert
 #### Auto-Incrementing IDs
 
 If the table has an auto-incrementing id, use the `insertGetId` method to insert a record and then retrieve the ID:
+Nếu bảng có một id auto-incrementing, sử dụng phương thức `insertGetId` để thêm vào một bản ghi vào sau đó lấy ID:
 
     $id = DB::table('users')->insertGetId(
         ['email' => 'john@example.com', 'votes' => 0]
     );
 
-> **Note:** When using PostgreSQL the insertGetId method expects the auto-incrementing column to be named `id`. If you would like to retrieve the ID from a different "sequence", you may pass the sequence name as the second parameter to the `insertGetId` method.
+> **Ghi chú:** Khi sử dụng PostgreSQL phương thức insertGetId coi như cột auto-incrementing sẽ được đặt tên là `id`. Nếu bạn thích lấy giá trị ID từ một "sequence" khác, bạn có thể truyền vào the sequence name như là tham số thứ 2 trong phương thức `insertGetId`.
 
 <a name="updates"></a>
 ## Updates
 
-Of course, in addition to inserting records into the database, the query builder can also update existing records using the `update` method. The `update` method, like the `insert` method, accepts an array of column and value pairs containing the columns to be updated. You may constrain the `update` query using `where` clauses:
+Tất nhiên, ngoài việc chèn thêm bản ghi vào database, query builder cũng có thể cập nhật bản ghi có sẵn bằng cách sử dụng phương thức `update`. Phương thức `update` giống như `insert`, chấp nhận một mảng các cặp cột và giá trị có trong cột để cập nhật. Bạn có thể ràng buộc truy vấn `update` sử dụng mệnh đề `where`:
 
     DB::table('users')
                 ->where('id', 1)
@@ -469,9 +470,9 @@ Of course, in addition to inserting records into the database, the query builder
 
 #### Increment / Decrement
 
-The query builder also provides convenient methods for incrementing or decrementing the value of a given column. This is simply a short-cut, providing a more expressive and terse interface compared to manually writing the `update` statement.
+The query builder cũng cung cấp các phương thức thuận tiện cho việc tăng hay giảm giá trị của một cột. Đây chỉ đơn giản là một short-cut, cung cấp một interface nhanh chóng và ngắn gọn so với việc viết cú pháp `update`.
 
-Both of these methods accept at least one argument: the column to modify. A second argument may optionally be passed to control the amount by which the column should be incremented / decremented.
+Cả hai phương thức trên đều chấp nhận ít nhất 1 tham số: cột để thay đổi. Một tham số thứ 2 có thể tùy chọn được truyền vào để điều khiển giá trị tăng hay giảm cho cột.
 
     DB::table('users')->increment('votes');
 
@@ -481,32 +482,32 @@ Both of these methods accept at least one argument: the column to modify. A seco
 
     DB::table('users')->decrement('votes', 5);
 
-You may also specify additional columns to update during the operation:
+Bạn cũng có thể chỉ định thêm các cột để cập nhật trong khi thực hiện:
 
     DB::table('users')->increment('votes', 1, ['name' => 'John']);
 
 <a name="deletes"></a>
 ## Deletes
 
-Of course, the query builder may also be used to delete records from the table via the `delete` method:
+Tất nhiên, query builder cũng có thể được sử dụng để xóa các bản ghi từ bảng thông qua phương thức `delete`:
 
     DB::table('users')->delete();
 
-You may constrain `delete` statements by adding `where` clauses before calling the `delete` method:
+Bạn có thể ràng buộc cú pháp `delete` bằng cách thêm mệnh đề `where` trước khi gọi phương thức `delete`:
 
     DB::table('users')->where('votes', '>', 100)->delete();
 
-If you wish to truncate the entire table, which will remove all rows and reset the auto-incrementing ID to zero, you may use the `truncate` method:
+Nếu bạn muốn truncate toàn bộ bảng, cái mà sẽ xóa toàn bộ các dòng và reset lại auto-incrementing ID về 0, bạn có thể sử dụng phương thức `truncate`:
 
     DB::table('users')->truncate();
 
 <a name="pessimistic-locking"></a>
 ## Pessimistic Locking
 
-The query builder also includes a few functions to help you do "pessimistic locking" on your `select` statements. To run the statement with a "shared lock", you may use the `sharedLock` method on a query. A shared lock prevents the selected rows from being modified until your transaction commits:
+Query builder cũng bao gồm các hàm nhỏ để giúp bạn thực hiện "pessimistic locking" trên cú pháp `select`. Để chạy cú pháp với một "shared lock", bạn có thể sử dụng phương thức `sharedLock` trên truy vấn. Một shared lock bảo về các dòng được chọn khỏi việc bị thay đổi tới khi transaction của bạn được ủy thác (nghe như game - commit):
 
     DB::table('users')->where('votes', '>', 100)->sharedLock()->get();
 
-Alternatively, you may use the `lockForUpdate` method. A "for update" lock prevents the rows from being modified or from being selected with another shared lock:
+Ngoài ra, bạn có thể sử dụng phương thức `lockForUpdate`. Một "for update" lock bảo về các dòng khỏi việc thay đổi hoặc bị selected bởi các shared lock khác
 
     DB::table('users')->where('votes', '>', 100)->lockForUpdate()->get();
