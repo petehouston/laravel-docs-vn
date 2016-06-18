@@ -44,31 +44,40 @@ Don't worry if this all sounds confusing now! Most applications will never need 
 ### Database Considerations
 
 By default, Laravel includes an `App\User` [Eloquent model](/docs/{{version}}/eloquent) in your `app` directory. This model may be used with the default Eloquent authentication driver. If your application is not using Eloquent, you may use the `database` authentication driver which uses the Laravel query builder.
+Mặc định, Laravel bao gồm một [Eloquent model](/docs/{{version}}/eloquent) `App\User` trong thư mục `app`. Model này có thể sử dụng với driver Eloquent xác thực mặc định.
 
 When building the database schema for the `App\User` model, make sure the password column is at least 60 characters in length, the default of 255 would be a good choice.
+Khi xây dựng database schema cho model `App\User`, đảm bảo rằng độ dài cột password tối thiểu là 60 kí tự, mặc định với 255 kí tự sẽ là 1 lựa chọn tốt.
 
 Also, you should verify that your `users` (or equivalent) table contains a nullable, string `remember_token` column of 100 characters. This column will be used to store a token for "remember me" sessions being maintained by your application. This can be done by using `$table->rememberToken();` in a migration.
+Bạn cũng nên xác nhận table `user` ( hoặc một table khác tương đương ) gồm một giá trị nullable, cột `remember_token` 100 kí tự. Cột này sẽ được dùng để lưu một token cho session "remember me" khi đang được duy trì bởi ứng dụng của bạn.
 
 <a name="authentication-quickstart"></a>
 ## Authentication Quickstart
+## Bắt đầu nhanh với Authentication
 
 Laravel ships with two authentication controllers out of the box, which are located in the `App\Http\Controllers\Auth` namespace. The `AuthController` handles new user registration and authentication, while the `PasswordController` contains the logic to help existing users reset their forgotten passwords. Each of these controllers uses a trait to include their necessary methods. For many applications, you will not need to modify these controllers at all.
+Laravel mang tới 2 authentication controllers tuyệt vời, được đặt trong namespace `App\Http\Controllers\Auth`. `AuthController` xử lí user đăng kí mới và xác nhận, trong khi `PasswordController` bao gồm logic giúp cho các user đã tồn tại reset password. Mỗi controllers sử dụng một trait để bao gồm các phương thức cần thiết của chúng. Với nhiều ứng dụng, bạn sẽ không cần phải sửa đổi toàn bộ các controller
 
 <a name="included-routing"></a>
 ### Routing
 
 Laravel provides a quick way to scaffold all of the routes and views you need for authentication using one simple command:
+Laravel cung cấp một cách nhanh chóng để sinh ra toàn bộ các route và view cần thiết cho authentication chỉ với 1 command:
 
     php artisan make:auth
 
 This command should be used on fresh applications and will install registration and login views, as well as routes for all authentication end-points. A `HomeController` will also be generated, which serves post-login requests to your application's dashboard. However, you are free to customize or even remove this controller based on the needs of your application.
+Command này nên được dùng với các ứng dụng mới và sẽ cài đạt view đăng kí và đăng nhập cũng như các route cho toàn bộ việc xác thực đầu cuối. Một `HomeController` cũng sẽ được sinh ra, phục vụ các request post-login tới ứng dụng. Tuy nhiên, bạn có thể tự do tùy chỉnh hoặc xóa controller này dựa trên sự cần thiết trong ứng dụng của bạn.
 
 <a name="included-views"></a>
 ### Views
 
 As mentioned in the previous section, the `php artisan make:auth` command will create all of the views you need for authentication and place them in the `resources/views/auth` directory.
+Như đã đề cập ở phần trên, command `php artisan make:auth` cũng sẽ tạo toàn bộ các view cần thiết cho authentication và đặt chúng trong thư mục `resources/views/auth`.
 
 The `make:auth` command will also create a `resources/views/layouts` directory containing a base layout for your application. All of these views use the Bootstrap CSS framework, but you are free to customize them however you wish.
+Command `make:auth` cũng tạo một thư mục `resources/views/layouts` bao gồm các layout cơ bản cho ứng dụng. Toàn bộ những view này sử dụng framework Bootstrap, nhưng bạn tự do tùy chỉnh nếu bạn thích.
 
 <a name="included-authenticating"></a>
 ### Authenticating
