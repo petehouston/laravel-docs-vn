@@ -83,24 +83,32 @@ Command `make:auth` cũng tạo một thư mục `resources/views/layouts` bao g
 ### Authenticating
 
 Now that you have routes and views setup for the included authentication controllers, you are ready to register and authenticate new users for your application! You may simply access your application in a browser. The authentication controllers already contain the logic (via their traits) to authenticate existing users and store new users in the database.
+Bây giờ bạn có các route và view cho các authentication controllers, bạn đã sẵn sàng để đăng kí và xác nhận những user mới cho ứng dụng. Bạn chỉ đơn giản truy cập ứng dụng thông qua trình duyêt. Các authentication controller đã sẵn sàng gồm các logic (thông qua trait của chúng) để xác nhận những user đã tồn tại và lưu những user mới vào database.
 
 #### Path Customization
+#### Tùy chỉnh đường dẫn
 
 When a user is successfully authenticated, they will be redirected to the `/` URI. You can customize the post-authentication redirect location by defining a `redirectTo` property on the `AuthController`:
+Khi một user được xác nhận thành công, họ sẽ được chuyển sang URI '/'. Bạn có thể tùy biến địa điểm chuyển hướng post-authentication bằng cách định nghĩa thuộc tính `redirectTo` trong `AuthController`:
 
     protected $redirectTo = '/home';
 
 When a user is not successfully authenticated, they will be redirected back to the login form location automatically.
+Khi một user không được xác nhận thành công, họ sẽ tự động bị chuyển hướng quay lại form đăng nhập.
 
 #### Guard Customization
+#### Tùy chỉnh bảo mật
 
 You may also customize the "guard" that is used to authenticate users. To get started, define a `guard` property on your `AuthController`. The value of this property should correspond with one of the guards configured in your `auth.php` configuration file:
+Bạn cũng có thể tùy biến "guard" cái mà sử dụng để xác thực user. Để bắt đầu, định nghĩa một thuộc tính `guard` trong `AuthController`. Giá trị của thuộc tính này nên tương xứng với một trong những guard đã được cấu hình trong file `auth.php`.
 
     protected $guard = 'admin';
 
-#### Validation / Storage Customization
+#### Validation / Storage Customization 
+#### Tùy biến Validate / Storage
 
 To modify the form fields that are required when a new user registers with your application, or to customize how new user records are inserted into your database, you may modify the `AuthController` class. This class is responsible for validating and creating new users of your application.
+Để thay đổi các trường trong form được yêu cầu khi người dùng đăng kí với ứng dụng của bạn, hoặc tùy biến các bản ghi user mới được chèn vào database như thế nào, bạn có thể chỉnh sửa class `AuthController`. Class này phản hồi lại việc chứng thực và tạo user mới của ứng dụng.
 
 The `validator` method of the `AuthController` contains the validation rules for new users of the application. You are free to modify this method as you wish.
 
