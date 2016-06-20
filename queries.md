@@ -21,14 +21,14 @@
 
 Query builder cung cấp một giao thức thuận tiện, linh hoạt cho việc tạo và thực thi các truy vấn dữ liệu. Nó có thể sử dụng để thực hiện hầu hết các tính toán dữ liệu trong ứng dụng của bạn, và làm việc trên tất các các hệ cơ sở dữ liệu được hỗ trợ.
 
-> **Ghi chú:** Laravel query builder sử dụng PDO parameter binding để bảo vệ ứng dung của bạn khỏi SQL injection. Vì vậy không cần phải xử lí các chuối khi truyền vào.
+> **Ghi chú:** Laravel query builder sử dụng PDO parameter binding để bảo vệ ứng dụng của bạn khỏi SQL injection. Vì vậy không cần phải xử lí các chuỗi khi truyền vào.
 
 <a name="retrieving-results"></a>
 ## Retrieving Results
 
 #### Trả về toàn bộ dòng từ một table
 
-Bắt đầu với một fluent query, sử dụng phương thức `table` trên facade `DB`. Phương thức `table` trả về một fluent query buildẻ instance với bảng đã cho, cho phép bạn thêm nhiều ràng buộc vào truy vấn và cuối cùng là lấy kết quả. Trong ví dụ này, hãy `get` toàn bộ bản ghi từ 1 table:
+Bắt đầu với một fluent query, sử dụng phương thức `table` trên facade `DB`. Phương thức `table` trả về một fluent query builder instance với bảng đã cho, cho phép bạn thêm nhiều ràng buộc vào truy vấn và cuối cùng là lấy kết quả. Trong ví dụ này, hãy `get` toàn bộ bản ghi từ 1 table:
 
     <?php
 
@@ -70,7 +70,7 @@ Nếu bạn không cần lấy toàn bộ dòng, bạn có thể lấy ra một 
 
     $email = DB::table('users')->where('name', 'John')->value('email');
 
-#### Chia nhỏ kết quả từ một bảng
+#### Chia nhỏ kết quả một bảng
 
 Nếu bạn phải làm việc với hàng nghìn bản ghi dữ liệu, hãy xem xét việc sử dụng phương thức `chunk`. Phương thức này sẽ lấy một "chunk" các kết quả tại một thời điểm, và đưa mỗi chunk vào một `Closure` để xử lí. Phương thức này vô cùng hữu ích cho việc viết [Artisan commands](/docs/{{version}}/artisan) để xử lí hàng nghìn bản ghi. Ví dụ hãy làm việc với toàn bộ table `users` với các chunks 100 bản ghi một lúc:
 
@@ -109,13 +109,13 @@ Nếu bạn thích lấy một mảng gồm các giá trị của một cột, b
 <a name="aggregates"></a>
 ### Aggregates
 
-Query builder cũng cung cấp một tập hợp các phương thức khác nhau, như là `count`, `max`, `min`, `avg` và `sum`. Bạn có thể gọi bất kì phương thức nào sau cấu trúc truy vấn của bạn:
+Query builder cũng cung cấp một tập hợp các phương thức khác nhau, như là `count`, `max`, `min`, `avg` và `sum`. Bạn có thể gọi bất kì phương thức nào sau cấu trúc truy vấn:
 
     $users = DB::table('users')->count();
 
     $price = DB::table('orders')->max('price');
 
-Tất nhiên, bạn có thể gộp những phương thức này với các mệnh đề khác để tạo truy vấn của bạn:
+Tất nhiên, bạn có thể gộp những phương thức này với các mệnh đề khác để tạo truy vấn:
 
     $price = DB::table('orders')
                     ->where('finalized', 1)
@@ -142,7 +142,7 @@ Nếu bạn đã có sẵn một query builder instance và bạn muốn thêm m
 
 #### Raw Expressions
 
-Đôi khi bạn có thể cần sử dụng một biểu thức trong truy vấn. Những expression này sẽ được đưa vào truy vấn như các chuỗi, vì vậy hãy cần thân đừng tạo bất kì lỗi SQL injection nào. Để tạo một raw expression, bạn có thể sử dụng phương thức `DB:raw`:
+Đôi khi bạn có thể cần sử dụng một biểu thức trong truy vấn. Những expression này sẽ được đưa vào truy vấn như các chuỗi, vì vậy hãy cẩn thận đừng tạo bất kì lỗi SQL injection nào. Để tạo một raw expression, bạn có thể sử dụng phương thức `DB:raw`:
 
     $users = DB::table('users')
                          ->select(DB::raw('count(*) as user_count, status'))
@@ -189,7 +189,7 @@ Bạn cũng có thể chỉ định nhiều mệnh đề join nâng cao. Để b
             })
             ->get();
 
-Nếu bạn thích sử dụng mệnh đề "where" trong join, bạn có thể sử dụng phương thức `where` và `orWhere` trong join. Thay vì so sanh 2 cột, các phương thức này sẽ so sánh cột với giá trị:
+Nếu bạn thích sử dụng mệnh đề "where" trong join, bạn có thể sử dụng phương thức `where` và `orWhere` trong join. Thay vì so sánh 2 cột, các phương thức này sẽ so sánh cột với giá trị:
 
     DB::table('users')
             ->join('contacts', function ($join) {
@@ -201,7 +201,7 @@ Nếu bạn thích sử dụng mệnh đề "where" trong join, bạn có thể 
 <a name="unions"></a>
 ## Unions
 
-Query builder cũng cung cấp một các nhanh chóng để "union" 2 truy vấn với nhau. Ví dụ, bạn có thể tạo một truy vấn khởi tạo, và sau đó sử dụng phương thức `union` để nối nó vào truy vấn thứ 2:
+Query builder cũng cung cấp một cách nhanh chóng để "union" 2 truy vấn với nhau. Ví dụ, bạn có thể tạo một truy vấn khởi tạo, và sau đó sử dụng phương thức `union` để nối nó vào truy vấn thứ 2:
 
     $first = DB::table('users')
                 ->whereNull('first_name');
@@ -218,13 +218,13 @@ Phương thức `unionAll` cũng có và có cách sử dụng như `union`.
 
 ### Các mệnh đề Wherer đơn giản
 
-Để thêm mệnh đề `where` vào truy vấn, sử dụng phương thức `where` trong query builder instance. Hầu hết cách gọi cơ bản `where` yêu cầu 3 tham số. Tham số đầu tiên là tên của cột. Tham số thứ 2 là một toán tử, cái mà có thể là bất kì toán tử nào mà được hỗ trợ bởi database. Tham số thứ 3 là giá trị để so sanh với cột.
+Để thêm mệnh đề `where` vào truy vấn, sử dụng phương thức `where` trong query builder instance. Hầu hết cách gọi cơ bản `where` yêu cầu 3 tham số. Tham số đầu tiên là tên của cột. Tham số thứ 2 là một toán tử, cái mà có thể là bất kì toán tử nào mà được hỗ trợ bởi database. Tham số thứ 3 là giá trị để so sánh với cột.
 
 Ví dụ, đây là một truy vấn mà kiểm tra giá trị của cột "votes" bằng 100:
 
     $users = DB::table('users')->where('votes', '=', 100)->get();
 
-Để thuận tiện, bạn có thể đơn giản chỉ muốn xác nhận một cột có giá trị bằng giá trị đã có, bạn chỉ cần truyền giá trị trực tiếp như là tham số thứ 2 vào phương thức `where`:
+Để thuận tiện, bạn có thể đơn giản chỉ muốn lấy một cột có giá trị bằng giá trị đã cho, bạn chỉ cần truyền giá trị trực tiếp vào như là tham số thứ 2 vào phương thức `where`:
 
     $users = DB::table('users')->where('votes', 100)->get();
 
@@ -277,7 +277,7 @@ Phương thức `whereNotBetween` kiểm tra giá trị của cột có nằm b�
 
 **whereIn / whereNotIn**
 
-Phương thức `whereIn` kiểm tra giá trị của cột đã có có thuộc về trong mảng:
+Phương thức `whereIn` kiểm tra giá trị của cột đã có có thuộc về mảng:
 
     $users = DB::table('users')
                         ->whereIn('id', [1, 2, 3])
@@ -297,7 +297,7 @@ Phương thức `whereNull` kiểm tra giá trị của cột đã có là `NULL
                         ->whereNull('updated_at')
                         ->get();
 
-Phương thức `whereNotNull` kiểm tra giá trị của cột là **không** `NULL`:
+Phương thức `whereNotNull` kiểm tra giá trị của cột có là **không** `NULL`:
 
     $users = DB::table('users')
                         ->whereNotNull('updated_at')
@@ -315,7 +315,7 @@ Bạn cũng có thể truyền một toán tử so sánh vào phương thức:
     $users = DB::table('users')
                     ->whereColumn('updated_at', '>', 'created_at');
 
-Phương thức `whereColumn` có thể được truyền vào một mảng của các điều kiện. Những điều kiện này sẽ được nối với nhau sử dụng toán tử `and`:
+Phương thức `whereColumn` có thể được truyền vào một mảng các điều kiện. Những điều kiện này sẽ được nối với nhau sử dụng toán tử `and`:
 
     $users = DB::table('users')
                     ->whereColumn([
@@ -344,7 +344,7 @@ Như bạn có thể thấy, truyền một `Closure` vào trong phương thức
 
 #### Các cú pháp Exist
 
-Phương thức `whereExists` cho phép bạn viết các mệnh đề `where exists`. Phương thức `whereExists` chấp nhận tham số là một `Closure`, cái mà nhận một query builder instance cho phép bạn định nghĩa truy vấn mà sẽ được đặt trong mệnh đề "exists":
+Phương thức `whereExists` cho phép bạn viết các mệnh đề `where exists`. Phương thức `whereExists` chấp nhận tham số là một `Closure`, cái mà sẽ nhận một query builder instance cho phép bạn định nghĩa truy vấn mà sẽ được đặt trong mệnh đề "exists":
 
     DB::table('users')
                 ->whereExists(function ($query) {
@@ -364,7 +364,7 @@ Truy vấn trên sẽ sinh ra đoạn SQL sau:
 <a name="json-where-clauses"></a>
 ## Mệnh đề JSON Where
 
-Laravel hỗ trợ truy vấn với cột kiểu JSON trên database mà hỗ trợ cột kiểu JSON. Hiện tại, các hỗ trợ này có trong MySQL 5.7 và Postgres. Để truy vấn một cột JSON, sử dụng toán tử `->`:
+Laravel hỗ trợ truy vấn với cột kiểu JSON trên database hỗ trợ JSON. Hiện tại, các hỗ trợ này có trong MySQL 5.7 và Postgres. Để truy vấn một cột JSON, sử dụng toán tử `->`:
 
     $users = DB::table('users')
                     ->where('options->language', 'en')
@@ -419,7 +419,7 @@ Phương thức `havingRaw` có thể được sử dụng thiết lập các ch
 <a name="conditional-statements"></a>
 ## Các cú pháp điều kiện
 
-Đôi khi bạn có thể muốn các cú pháp áp dụng vào truy vấn chỉ khi cái đéo gì đấy đúng. Ví dụ bạn chỉ muốn áp dụng mệnh đề `where` khi giá trị nhập vào ở trong trong request đến. Bạn có thể thực hiện điều này bằng cách sử dụng phương thức `when`:
+Đôi khi bạn có thể muốn các cú pháp áp dụng vào truy vấn chỉ khi cái đéo gì đấy đúng. Ví dụ bạn chỉ muốn áp dụng mệnh đề `where` khi có giá trị nhập vào ở trong trong request đến. Bạn có thể thực hiện điều này bằng cách sử dụng phương thức `when`:
 
     $role = $request->input('role');
 
@@ -441,7 +441,7 @@ Query builder cũng cung cấp phương thức `insert` cho việc chèn các b�
         ['email' => 'john@example.com', 'votes' => 0]
     );
 
-Bạn có thể chèn các bản ghi riêng biệt vào bảng với một lần gọi `insert` bằng cách truyền vào một mảng của mảng. Mỗi mảng đại diện cho một dòng sẽ được chèn vô table:
+Bạn có thể chèn các bản ghi riêng biệt vào bảng với một lần gọi `insert` bằng cách truyền vào một mảng các mảng. Mỗi mảng con đại diện cho một dòng sẽ được chèn vô table:
 
     DB::table('users')->insert([
         ['email' => 'taylor@example.com', 'votes' => 0],
@@ -450,7 +450,6 @@ Bạn có thể chèn các bản ghi riêng biệt vào bảng với một lần
 
 #### Auto-Incrementing IDs
 
-If the table has an auto-incrementing id, use the `insertGetId` method to insert a record and then retrieve the ID:
 Nếu bảng có một id auto-incrementing, sử dụng phương thức `insertGetId` để thêm vào một bản ghi vào sau đó lấy ID:
 
     $id = DB::table('users')->insertGetId(
@@ -470,7 +469,7 @@ Tất nhiên, ngoài việc chèn thêm bản ghi vào database, query builder c
 
 #### Increment / Decrement
 
-The query builder cũng cung cấp các phương thức thuận tiện cho việc tăng hay giảm giá trị của một cột. Đây chỉ đơn giản là một short-cut, cung cấp một interface nhanh chóng và ngắn gọn so với việc viết cú pháp `update`.
+Query builder cũng cung cấp các phương thức thuận tiện cho việc tăng hay giảm giá trị của một cột. Đây chỉ đơn giản là một short-cut, cung cấp một interface nhanh chóng và ngắn gọn so với việc viết cú pháp `update`.
 
 Cả hai phương thức trên đều chấp nhận ít nhất 1 tham số: cột để thay đổi. Một tham số thứ 2 có thể tùy chọn được truyền vào để điều khiển giá trị tăng hay giảm cho cột.
 
