@@ -15,13 +15,19 @@
 
 <a name="introduction"></a>
 ## Introduction
+## Giới thiệu
 
 In addition to providing [authentication](/docs/{{version}}/authentication) services out of the box, Laravel also provides a simple way to organize authorization logic and control access to resources. There are a variety of methods and helpers to assist you in organizing your authorization logic, and we'll cover each of them in this document.
 
+Ngoài việc cung cấp các service [authenticatioin](/docs/{versioin}/authentication), Laravel cũng cung cấp một cách đơn giản để tổ chức các logic cấp quyền và điều khiển việc truy cập vào tài nguyên. Có nhiều methods và helpers hỗ trợ bạn trong việc tổ chức việc cấp quyền của bạn và chúng ta sẽ đi qua từng phần của chúng trong tài liệu này.
+
 <a name="defining-abilities"></a>
 ## Defining Abilities
+## Định nghĩa các Abilities
 
 The simplest way to determine if a user may perform a given action is to define an "ability" using the `Illuminate\Auth\Access\Gate` class. The `AuthServiceProvider` which ships with Laravel serves as a convenient location to define all of the abilities for your application. For example, let's define an `update-post` ability which receives the current `User` and a `Post` [model](/docs/{{version}}/eloquent). Within our ability, we will determine if the user's `id` matches the post's `user_id`:
+
+Cách đơn giản nhất để xác định nếu một user có thể thực hiện một hành động đã cho là định nghĩa ra một "ability" bằng cách sử dụng class `Illuminate\Auth\Access\Gate`. `AuthServiceProvider` cái mà cùng với Laravel phục vụ như một nơi để định nghĩa tất cả các abilities cho ứng dụng của bạn. Ví dụ, hãy định nghĩa một `update-post` ability nhận `User` hiện tại và một `Post` [model](/docs/{versioni}/eloquent). Với ability này, chúng ta sẽ xác định nếu `id` của user trùng với `user_id` của post.
 
     <?php
 
@@ -50,9 +56,12 @@ The simplest way to determine if a user may perform a given action is to define 
 
 Note that we did not check if the given `$user` is not `NULL`. The `Gate` will automatically return `false` for **all abilities** when there is not an authenticated user or a specific user has not been specified using the `forUser` method.
 
+Chú ý rằng chúng ta đã không kiểm tra nếu `$user` đã cho là không `NULL`. `Gate` sẽ tự động trả về `false` cho **tất cả abilities** khi có một user chưa được xác thực hoặc một user được chỉ định mà không sử dụng `forUser` method.
+
 #### Class Based Abilities
 
 In addition to registering `Closures` as authorization callbacks, you may register class methods by passing a string containing the class name and the method. When needed, the class will be resolved via the [service container](/docs/{{version}}/container):
+Ngoài ra để đăng kí `Closures` như là authorization callbacks, bạn có thể đăng kí các class methods bằng cách truyền vào một string gồm tên class và method. Khi cần thiết, class sẽ được resolved thông qua [service container](/docs/{{version}}/container):
 
     $gate->define('update-post', 'Class@method');
 
@@ -61,6 +70,7 @@ In addition to registering `Closures` as authorization callbacks, you may regist
 #### Intercepting Authorization Checks
 
 Sometimes, you may wish to grant all abilities to a specific user. For this situation, use the `before` method to define a callback that is run before all other authorization checks:
+Đôi khi, bạn có thể muốn cấp toàn bộ abilities cho một user nào đó. Trong trường hợp này, sử dụng method `before` để định nghĩa một callback mà được chạy trước tất cả các authorization checks:
 
     $gate->before(function ($user, $ability) {
         if ($user->isSuperAdmin()) {
@@ -69,8 +79,10 @@ Sometimes, you may wish to grant all abilities to a specific user. For this situ
     });
 
 If the `before` callback returns a non-null result that result will be considered the result of the check.
+Nếu callback `before` trả về kết quả non-null, kết quả đó sẽ được đại diện cho kết quả của việc kiểm tra.
 
 You may use the `after` method to define a callback to be executed after every authorization check. However, you may not modify the result of the authorization check from an `after` callback:
+Bạn có thể sử dụng method `after` để định nghĩa một callback thực thi sau mỗi authorization check. Tuy nhiên bạn không thể thay đổi kết quả của việc kiểm tra authorization từ `after` callback:
 
     $gate->after(function ($user, $ability, $result, $arguments) {
         //
@@ -83,6 +95,7 @@ You may use the `after` method to define a callback to be executed after every a
 ### Via The Gate Facade
 
 Once an ability has been defined, we may "check" it in a variety of ways. First, we may use the `check`, `allows`, or `denies` methods on the `Gate` [facade](/docs/{{version}}/facades). All of these methods receive the name of the ability and the arguments that should be passed to the ability's callback. You do **not** need to pass the current user to these methods, since the `Gate` will automatically prepend the current user to the arguments passed to the callback. So, when checking the `update-post` ability we defined earlier, we only need to pass a `Post` instance to the `denies` method:
+Một khi ability đã được định nghĩa, chúng ta có thể "kiểm tra" nó bằng nhiều cách khác nhau. Đầu tiên, chúng ta có thể sử dụng `check`, `allows` hoặc `denies` methods trong `Gate` [facade](/docs/{{version}}/facades). Tất cả những phương thức này nhận tên của ability và các đối số mà sẽ được truyền vào ability's callback. Bạn **không cần** truyền vào user hiện tại vào các methods này, khi mà `Gate` sẽ tự động thêm user vào trước các đối số được truyền vào callback. Vì vậy khi kiểm tra `update-post` ability chúng ta đã định nghĩa lúc trước, chúng ta chỉ cần truyền một `Post` instance vào `denies` method:
 
     <?php
 
@@ -114,6 +127,7 @@ Once an ability has been defined, we may "check" it in a variety of ways. First,
     }
 
 Of course, the `allows` method is simply the inverse of the `denies` method, and returns `true` if the action is authorized. The `check` method is an alias of the `allows` method.
+Tất nhiên, method `allows` đơn giản là ngược lại của method `denies`, và trả về `true` nếu hành động được cấp quyền. Method `check` là một alias của method `allows`.
 
 #### Checking Abilities For Specific Users
 
