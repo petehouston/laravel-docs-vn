@@ -1,31 +1,25 @@
 # Authorization
 
-- [Introduction](#introduction)
-- [Defining Abilities](#defining-abilities)
-- [Checking Abilities](#checking-abilities)
-    - [Via The Gate Facade](#via-the-gate-facade)
-    - [Via The User Model](#via-the-user-model)
-    - [Within Blade Templates](#within-blade-templates)
-    - [Within Form Requests](#within-form-requests)
+- [Giới thiệu](#introduction)
+- [Định Nghĩa Abilities](#defining-abilities)
+- [Kiểm Tra Abilities](#checking-abilities)
+    - [Thông Qua Gate Facade](#via-the-gate-facade)
+    - [Thông Qua The User Model](#via-the-user-model)
+    - [Trong Blade Templates](#within-blade-templates)
+    - [Trong Form Requests](#within-form-requests)
 - [Policies](#policies)
-    - [Creating Policies](#creating-policies)
-    - [Writing Policies](#writing-policies)
-    - [Checking Policies](#checking-policies)
+    - [Tạo Policies](#creating-policies)
+    - [Viết Policies](#writing-policies)
+    - [Kiểm Tra Policies](#checking-policies)
 - [Controller Authorization](#controller-authorization)
 
 <a name="introduction"></a>
-## Introduction
 ## Giới thiệu
-
-In addition to providing [authentication](/docs/{{version}}/authentication) services out of the box, Laravel also provides a simple way to organize authorization logic and control access to resources. There are a variety of methods and helpers to assist you in organizing your authorization logic, and we'll cover each of them in this document.
 
 Ngoài việc cung cấp các service [authenticatioin](/docs/{versioin}/authentication), Laravel cũng cung cấp một cách đơn giản để tổ chức các logic cấp quyền và điều khiển việc truy cập vào tài nguyên. Có nhiều methods và helpers hỗ trợ bạn trong việc tổ chức việc cấp quyền của bạn và chúng ta sẽ đi qua từng phần của chúng trong tài liệu này.
 
 <a name="defining-abilities"></a>
-## Defining Abilities
 ## Định nghĩa các Abilities
-
-The simplest way to determine if a user may perform a given action is to define an "ability" using the `Illuminate\Auth\Access\Gate` class. The `AuthServiceProvider` which ships with Laravel serves as a convenient location to define all of the abilities for your application. For example, let's define an `update-post` ability which receives the current `User` and a `Post` [model](/docs/{{version}}/eloquent). Within our ability, we will determine if the user's `id` matches the post's `user_id`:
 
 Cách đơn giản nhất để xác định nếu một user có thể thực hiện một hành động đã cho là định nghĩa ra một "ability" bằng cách sử dụng class `Illuminate\Auth\Access\Gate`. `AuthServiceProvider` cái mà cùng với Laravel phục vụ như một nơi để định nghĩa tất cả các abilities cho ứng dụng của bạn. Ví dụ, hãy định nghĩa một `update-post` ability nhận `User` hiện tại và một `Post` [model](/docs/{versioni}/eloquent). Với ability này, chúng ta sẽ xác định nếu `id` của user trùng với `user_id` của post.
 
@@ -54,22 +48,18 @@ Cách đơn giản nhất để xác định nếu một user có thể thực h
         }
     }
 
-Note that we did not check if the given `$user` is not `NULL`. The `Gate` will automatically return `false` for **all abilities** when there is not an authenticated user or a specific user has not been specified using the `forUser` method.
-
 Chú ý rằng chúng ta đã không kiểm tra nếu `$user` đã cho là không `NULL`. `Gate` sẽ tự động trả về `false` cho **tất cả abilities** khi có một user chưa được xác thực hoặc một user được chỉ định mà không sử dụng `forUser` method.
 
 #### Class Based Abilities
 
-In addition to registering `Closures` as authorization callbacks, you may register class methods by passing a string containing the class name and the method. When needed, the class will be resolved via the [service container](/docs/{{version}}/container):
 Ngoài ra để đăng kí `Closures` như là authorization callbacks, bạn có thể đăng kí các class methods bằng cách truyền vào một string gồm tên class và method. Khi cần thiết, class sẽ được resolved thông qua [service container](/docs/{{version}}/container):
 
     $gate->define('update-post', 'Class@method');
 
 <a name="intercepting-all-checks"></a>
 <a name="intercepting-authorization-checks"></a>
-#### Intercepting Authorization Checks
+#### Bỏ Qua Authorization Checks
 
-Sometimes, you may wish to grant all abilities to a specific user. For this situation, use the `before` method to define a callback that is run before all other authorization checks:
 Đôi khi, bạn có thể muốn cấp toàn bộ abilities cho một user nào đó. Trong trường hợp này, sử dụng method `before` để định nghĩa một callback mà được chạy trước tất cả các authorization checks:
 
     $gate->before(function ($user, $ability) {
@@ -78,10 +68,8 @@ Sometimes, you may wish to grant all abilities to a specific user. For this situ
         }
     });
 
-If the `before` callback returns a non-null result that result will be considered the result of the check.
 Nếu callback `before` trả về kết quả non-null, kết quả đó sẽ được đại diện cho kết quả của việc kiểm tra.
 
-You may use the `after` method to define a callback to be executed after every authorization check. However, you may not modify the result of the authorization check from an `after` callback:
 Bạn có thể sử dụng method `after` để định nghĩa một callback thực thi sau mỗi authorization check. Tuy nhiên bạn không thể thay đổi kết quả của việc kiểm tra authorization từ `after` callback:
 
     $gate->after(function ($user, $ability, $result, $arguments) {
@@ -89,12 +77,11 @@ Bạn có thể sử dụng method `after` để định nghĩa một callback t
     });
 
 <a name="checking-abilities"></a>
-## Checking Abilities
+## Kiểm Tra Abilities
 
 <a name="via-the-gate-facade"></a>
-### Via The Gate Facade
+### Thông Qua Gate Facade
 
-Once an ability has been defined, we may "check" it in a variety of ways. First, we may use the `check`, `allows`, or `denies` methods on the `Gate` [facade](/docs/{{version}}/facades). All of these methods receive the name of the ability and the arguments that should be passed to the ability's callback. You do **not** need to pass the current user to these methods, since the `Gate` will automatically prepend the current user to the arguments passed to the callback. So, when checking the `update-post` ability we defined earlier, we only need to pass a `Post` instance to the `denies` method:
 Một khi ability đã được định nghĩa, chúng ta có thể "kiểm tra" nó bằng nhiều cách khác nhau. Đầu tiên, chúng ta có thể sử dụng `check`, `allows` hoặc `denies` methods trong `Gate` [facade](/docs/{{version}}/facades). Tất cả những phương thức này nhận tên của ability và các đối số mà sẽ được truyền vào ability's callback. Bạn **không cần** truyền vào user hiện tại vào các methods này, khi mà `Gate` sẽ tự động thêm user vào trước các đối số được truyền vào callback. Vì vậy khi kiểm tra `update-post` ability chúng ta đã định nghĩa lúc trước, chúng ta chỉ cần truyền một `Post` instance vào `denies` method:
 
     <?php
@@ -126,35 +113,35 @@ Một khi ability đã được định nghĩa, chúng ta có thể "kiểm tra"
         }
     }
 
-Of course, the `allows` method is simply the inverse of the `denies` method, and returns `true` if the action is authorized. The `check` method is an alias of the `allows` method.
 Tất nhiên, method `allows` đơn giản là ngược lại của method `denies`, và trả về `true` nếu hành động được cấp quyền. Method `check` là một alias của method `allows`.
 
-#### Checking Abilities For Specific Users
+#### Kiểm Tra Abilities Cho User Xác Định
 
-If you would like to use the `Gate` facade to check if a user **other than the currently authenticated user** has a given ability, you may use the `forUser` method:
+Nếu bạn muốn sử dụng `Gate` facade để kiểm tra một user **không phải là user hiện tại đã được xác thực** có quyền nào đó hay không, bạn có thể sử dụng `forUser` method:
 
     if (Gate::forUser($user)->allows('update-post', $post)) {
         //
     }
 
-#### Passing Multiple Arguments
+#### Truyền Nhiều Đối Số
 
-Of course, ability callbacks may receive multiple arguments:
+Tất nhiên, các ability callback có thể nhận nhiều đối số:
 
     Gate::define('delete-comment', function ($user, $post, $comment) {
         //
     });
 
-If your ability needs multiple arguments, simply pass an array of arguments to the `Gate` methods:
+Nếu ability của bạn cần nhiều đối số, đơn giản chỉ cần truyền chúng dưới dạng mảng vào trong `Gate` methods:
 
     if (Gate::allows('delete-comment', [$post, $comment])) {
         //
     }
 
 <a name="via-the-user-model"></a>
-### Via The User Model
+### Thông Qua User Model
 
-Alternatively, you may check abilities via the `User` model instance. By default, Laravel's `App\User` model uses an `Authorizable` trait which provides two methods: `can` and `cannot`. These methods may be used similarly to the `allows` and `denies` methods present on the `Gate` facade. So, using our previous example, we may modify our code like so:
+Ngoaì ra, bạn có thể kiểm tra abilities thông qua instance của `User` model. Mặc định, `App\User` model của Laravel sử dụng `Authorizable` trait cái mà cung cấp cho chúng ta 2 methods: `can` và `cannot`. Những methods này có cách sử dụng tương tự như `allows` và `denies` trong `Gate` facade.
+Vì vậy, trong cách ví dụ chúng ta sử dụng trước, có thể thay đổi như sau:
 
     <?php
 
@@ -186,15 +173,16 @@ Alternatively, you may check abilities via the `User` model instance. By default
     }
 
 Of course, the `can` method is simply the inverse of the `cannot` method:
+Tất nhiên, `can` method chỉ đơn giản là ngược lại của `cannot` method:
 
     if ($request->user()->can('update-post', $post)) {
         // Update Post...
     }
 
 <a name="within-blade-templates"></a>
-### Within Blade Templates
+### Trong Blade Templates
 
-For convenience, Laravel provides the `@can` Blade directive to quickly check if the currently authenticated user has a given ability. For example:
+Để thuận tiện, Laravel cung cấp cho chúng ta `@can` Blade directive để nhanh chóng kiểm tra user đã xác thực hiện tại có ability nào đó hay không. Ví dụ:
 
     <a href="/post/{{ $post->id }}">View Post</a>
 
@@ -202,7 +190,7 @@ For convenience, Laravel provides the `@can` Blade directive to quickly check if
         <a href="/post/{{ $post->id }}/edit">Edit Post</a>
     @endcan
 
-You may also combine the `@can` directive with `@else` directive:
+Bạn cũng có thể kết hợp `@can` với `@else`:
 
     @can('update-post', $post)
         <!-- The Current User Can Update The Post -->
@@ -211,9 +199,9 @@ You may also combine the `@can` directive with `@else` directive:
     @endcan
 
 <a name="within-form-requests"></a>
-### Within Form Requests
+### Trong Form Requests
 
-You may also choose to utilize your `Gate` defined abilities from a [form request's](/docs/{{version}}/validation#form-request-validation) `authorize` method. For example:
+Bạn cũng có thể chọn việc sử dụng các abilities đã được định nghĩa trong `Gate` từ [form request's](/docs/{{version}}/validation#form-request-validation) `authorize` method. Ví dụ:
 
     /**
      * Determine if the user is authorized to make this request.
@@ -231,17 +219,17 @@ You may also choose to utilize your `Gate` defined abilities from a [form reques
 ## Policies
 
 <a name="creating-policies"></a>
-### Creating Policies
+### Tạo Policies
 
-Since defining all of your authorization logic in the `AuthServiceProvider` could become cumbersome in large applications, Laravel allows you to split your authorization logic into "Policy" classes. Policies are plain PHP classes that group authorization logic based on the resource they authorize.
+Khi mà việc định nghĩa toàn bộ authorization logic trong `AuthServiceProvider` có thể thành trở ngại trong các ứng dụng lớn, Laravel cho phép bạn tách các authorization login thành cách class "Policy". Policies là các class thuần PHP mà nhóm các authorization logic dựa trên tài nguyền chúng cấp quyền.
 
-First, let's generate a policy to manage authorization for our `Post` model. You may generate a policy using the `make:policy` [artisan command](/docs/{{version}}/artisan). The generated policy will be placed in the `app/Policies` directory:
+Đầu tiên, tạo một policy để quản lí việc cấp quyền cho `Post` model. Bạn có thể tạo một policy thông quan `make;policy` [artisan command](/docs/{{version}}/artisan). Policy được tạo ra sẽ ở trong thư mục `app/Policies`:
 
     php artisan make:policy PostPolicy
 
-#### Registering Policies
+#### Đăng Kí Policies
 
-Once the policy exists, we need to register it with the `Gate` class. The `AuthServiceProvider` contains a `policies` property which maps various entities to the policies that manage them. So, we will specify that the `Post` model's policy is the `PostPolicy` class:
+Khi đã có policy, chúng ta cần đăng kí nó với `Gate` class. `AuthServiceProvider` bao gồm một thuộc tính `policies` dùng để map nhiều thực thể policies để quản lý chúng. Vì vậy, chúng ta sẽ chỉ định policy của `Post` model là `PostPolicy` class:
 
     <?php
 
@@ -275,9 +263,9 @@ Once the policy exists, we need to register it with the `Gate` class. The `AuthS
     }
 
 <a name="writing-policies"></a>
-### Writing Policies
+### Viết Policies
 
-Once the policy has been generated and registered, we can add methods for each ability it authorizes. For example, let's define an `update` method on our `PostPolicy`, which will determine if the given `User` can "update" a `Post`:
+Khi policy được sinh ra và đăng kí, chúng ta cần thêm các method cho mỗi ability mà nó cấp quyền. ví dụ, định nghĩa một `update` method trong `PostPolicy` để xác định `User` có thể "update" `Post` hay không:
 
     <?php
 
@@ -301,13 +289,13 @@ Once the policy has been generated and registered, we can add methods for each a
         }
     }
 
-You may continue to define additional methods on the policy as needed for the various abilities it authorizes. For example, you might define `show`, `destroy`, or `addComment` methods to authorize various `Post` actions.
+Bạn có thể tiếp tục định nghĩa thêm các method vào policy nếu thấy cần thiết. Ví dụ bạn có thể định nghĩa `show`, `destroy` hoặc `addComment` method để cấp quyền cho nhiều hành động `Post`.
 
-> **Note:** All policies are resolved via the Laravel [service container](/docs/{{version}}/container), meaning you may type-hint any needed dependencies in the policy's constructor and they will be automatically injected.
+> **Ghi chú:** Toàn bộ các policies được mang đến thông qua Laravel [service container](/docs/{{version}}/container), nghĩa là bạn có thể type-hint bất kì các dependencies trong policy constructor và chúng sẽ tự động được injected.
 
-#### Intercepting All Checks
+#### Bỏ Qua Bộ Kiểm Tra
 
-Sometimes, you may wish to grant all abilities to a specific user on a policy. For this situation, define a `before` method on the policy. This method will be run before all other authorization checks on the policy:
+Đôi khi, bạn có thể muốn cấp toàn bộ abilities cho một người dùng nào đó. Trong trường hợp này, định nghĩa `before` method trong policy. Method này sẽ trả chạy trước toàn bộ các kiểm tra cấp quyền trong policy:
 
     public function before($user, $ability)
     {
@@ -316,16 +304,16 @@ Sometimes, you may wish to grant all abilities to a specific user on a policy. F
         }
     }
 
-If the `before` method returns a non-null result that result will be considered the result of the check.
+Nếu `before` method trả về một kết quả non-null thì kết quả đó sẽ được đại diện cho kết quả của kiểm tra.
 
 <a name="checking-policies"></a>
-### Checking Policies
+### Kiểm Tra Policies
 
-Policy methods are called in exactly the same way as `Closure` based authorization callbacks. You may use the `Gate` facade, the `User` model, the `@can` Blade directive, or the `policy` helper.
+Các policy methos được gọi chính xác giống như cách `Closure` based authorization callbacks. Bạn có thể sử dụng `Gate` facade, `User` model, `@can` Blade directive hoặc `policy` helper.
 
-#### Via The Gate Facade
+#### Thông Qua Gate Facade
 
-The `Gate` will automatically determine which policy to use by examining the class of the arguments passed to its methods. So, if we pass a `Post` instance to the `denies` method, the `Gate` will utilize the corresponding `PostPolicy` to authorize actions:
+`Gate` sẽ tự động xác định policy nào để sử dụng kiểm tra với class của các đối số truyền vào method của nó. Vì vậy, nếu chúng ta truyền một `Post` instance vào `denies` method, `Gate` sẽ tự động lựa chọn đúng `PostPolicy` tương ứng thực hiện các hành động cấp quyền:
 
     <?php
 
@@ -356,9 +344,9 @@ The `Gate` will automatically determine which policy to use by examining the cla
         }
     }
 
-#### Via The User Model
+#### Thông Qua User Model
 
-The `User` model's `can` and `cannot` methods will also automatically utilize policies when they are available for the given arguments. These methods provide a convenient way to authorize actions for any `User` instance retrieved by your application:
+Các phương thực `can` và `cannot` của `User` model sẽ tự động sử dụng các policies khi chúng có sẵn với các đối số đã cho. Những method này cho chúng ta thuận tiện trong việc cấp quyền các hành động cho bất kì `User` instance nào được lấy ra bởi ứng dụng của bạn:
 
     if ($user->can('update', $post)) {
         //
@@ -368,17 +356,17 @@ The `User` model's `can` and `cannot` methods will also automatically utilize po
         //
     }
 
-#### Within Blade Templates
+#### Trong Blade Templates
 
-Likewise, the `@can` Blade directive will utilize policies when they are available for the given arguments:
+Tương tự, `@can` Blade directive sẽ sử dụng policies khi chúng có sẵn cho các đối số:
 
     @can('update', $post)
         <!-- The Current User Can Update The Post -->
     @endcan
 
-#### Via The Policy Helper
+#### Thông Qua Policy Helper
 
-The global `policy` helper function may be used to retrieve the `Policy` class for a given class instance. For example, we may pass a `Post` instance to the `policy` helper to get an instance of our corresponding `PostPolicy` class:
+Global `policy` helper function có thể được sử dụng để lấy `Policy` class cho một class instance đã cho. Ví dụ, chúng ta có thể truyền một `Post` instance vào `policy` helper để nhận được một instance tương ứng `PostPolicy` class:
 
     if (policy($post)->update($user, $post)) {
         //
@@ -387,9 +375,9 @@ The global `policy` helper function may be used to retrieve the `Policy` class f
 <a name="controller-authorization"></a>
 ## Controller Authorization
 
-By default, the base `App\Http\Controllers\Controller` class included with Laravel uses the `AuthorizesRequests` trait. This trait provides the `authorize` method, which may be used to quickly authorize a given action and throw a `AuthorizationException` if the action is not authorized.
+Mặc định, `App\Http\Controllers\Controller` class trong Laravel sử dụng `AuthorizesRequests` trait. Trait này cung cấp `authorize` method, mà có thể được sử dụng để nhanh chóng cấp quyền cho một hành động và throw một `AuthorizationException` nếu hành động không được cấp quyền.
 
-The `authorize` method shares the same signature as the various other authorization methods such as `Gate::allows` and `$user->can()`. So, let's use the `authorize` method to quickly authorize a request to update a `Post`:
+`authorize` method giống các phương thức cấp quyền khác như `Gate::allows` và `$user->can()`. Vì vậy, hãy sử dụng `authorize` method để nhanh chóng cấp quyền cho một request thực hiện cập nhật một `Post`:
 
     <?php
 
@@ -416,17 +404,17 @@ The `authorize` method shares the same signature as the various other authorizat
         }
     }
 
-If the action is authorized, the controller will continue executing normally; however, if the `authorize` method determines that the action is not authorized, a `AuthorizationException` will automatically be thrown which generates a HTTP response with a `403 Not Authorized` status code. As you can see, the `authorize` method is a convenient, fast way to authorize an action or throw an exception with a single line of code.
+Nếu hành động được cấp quyền, controller sẽ tiếp tục thực thi bình thường; tuy nhiên, nếu `authorize` method xác định rằng hành động không được cấp quyền, một `AuthorizationException` sẽ tự động được throw cái mà sẽ sinh ra một HTTP response với `403 Not Authorized` status code. Như bạn có thể thấy, `authorize` method là cách thuận tiện, nhanh chóng để cấp quyền một hành động hoặc throw một exception với duy nhất một dòng code.
 
-The `AuthorizesRequests` trait also provides the `authorizeForUser` method to authorize an action on a user that is not the currently authenticated user:
+`AuthorizesRequests` trait cũng cung cấp `authorizeForUser` method để cấp quyền một hành động cho một user mà hiện tại chưa được xác thực:
 
     $this->authorizeForUser($user, 'update', $post);
 
-#### Automatically Determining Policy Methods
+#### Tự Động Xác Định Policy Methods
 
-Frequently, a policy's methods will correspond to the methods on a controller. For example, in the `update` method above, the controller method and the policy method share the same name: `update`.
+Các method của một policy sẽ tương ứng với các method trong controller. Ví dụ, trong `update` method trên, controller method và policy method cùng sử dụng chung tên: `update`.
 
-For this reason, Laravel allows you to simply pass the instance arguments to the `authorize` method, and the ability being authorized will automatically be determined based on the name of the calling function. In this example, since `authorize` is called from the controller's `update` method, the `update` method will also be called on the `PostPolicy`:
+Vì lí do này, Laravel cho phép bạn đơn giản truyền vào các đối số instance vào `authorize` method, và ability để cấp quyền sẽ tự động được xác định dựa trên tên của hàm gọi. Trong ví dụ này, khi `authorize` được gọi từ controller `update` method, `update` method cũng sẽ được gọi trên `PostPolicy`:
 
     /**
      * Update the given post.
