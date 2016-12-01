@@ -17,44 +17,44 @@ Trong một ứng dụng Laravel, facade là một class cung cấp truy cập v
 Một class facade chỉ cần triển khai một phương thức duy nhất: `getFacadeAccessor`. Việc của `getFacadeAccessor` là định nghĩa cái gì cần được resolve từ container. Class `Facade` cơ sở tận dụng phương thức magic `__callStatic()` để điều việc thực thi từ facade tới object đã được resolve.
 
 Trong ví dụ dưới đây, một lệnh thực thi được gọi tới hệ thống cache của Laravel. Nhìn qua đoạn code này, bạn có thể nghĩ là phương thức tĩnh `get` đang được gọi trong class `Cache`:
+```php
+<?php
 
-    <?php
+namespace App\Http\Controllers;
 
-    namespace App\Http\Controllers;
+use Cache;
+use App\Http\Controllers\Controller;
 
-    use Cache;
-    use App\Http\Controllers\Controller;
-
-    class UserController extends Controller
+class UserController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function showProfile($id)
     {
-        /**
-         * Show the profile for the given user.
-         *
-         * @param  int  $id
-         * @return Response
-         */
-        public function showProfile($id)
-        {
-            $user = Cache::get('user:'.$id);
+        $user = Cache::get('user:'.$id);
 
-            return view('profile', ['user' => $user]);
-        }
+        return view('profile', ['user' => $user]);
     }
-
+}
+```
 Chú ý ở gần đầu file chúng ta có thực hiện "importing" vào facade `Cache`. Facade này đóng vai trò như một proxy để truy cập vào phần triển khai phía dưới của interface `Illuminate\Contracts\Cache\Factory`. Bất cứ việc gọi nào mà chúng ta sử dụng từ facade sẽ được đẩy tới instance phía dưới của Laravel cache service.
 
 Nếu nhìn vào class `Illuminate\Support\Facades\Cache`, bạn sẽ thấy không hề có phương thức tĩnh `get` nào cả:
-
-    class Cache extends Facade
-    {
-        /**
-         * Get the registered name of the component.
-         *
-         * @return string
-         */
-        protected static function getFacadeAccessor() { return 'cache'; }
-    }
-
+```php
+class Cache extends Facade
+{
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor() { return 'cache'; }
+}
+```
 Thay vào đó, facade `Cache` mở rộng class cơ sở `Facade` và định nghĩa phương thức `getFacadeAccessor()`. Nhớ là nhiệm vụ của phương thức này là trả về tên của liên kết trong service container. Khi mà người dùng tham chiếu tới bất kì phương thức tĩnh nào trong facade `Cache`, Laravel thực hiện việc Resolve liên kết `cache` từ [service container](/docs/{{version}}/container) và thực thi phương thức được gọi (trong trường hợp này, `get`) đối với object.
 
 <a name="facade-class-reference"></a>
