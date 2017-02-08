@@ -71,7 +71,7 @@ Bạn có thể cài đặt Homestead bằng cách đơn giản là sao chép kh
 
     git clone https://github.com/laravel/homestead.git Homestead
 
-Sau khi bạn đã sao chếp Homestead, vào thư mục Homestead và chạy lệnh `bash init.sh` để tạo file cấu hình `Homestead.yaml`. File `Homestead.yaml` sẽ được đặt trong thư mục ẩn `~/.homestead`:
+Sau khi bạn đã sao chép Homestead, vào thư mục Homestead và chạy lệnh `bash init.sh` để tạo file cấu hình `Homestead.yaml`. File `Homestead.yaml` sẽ được đặt trong thư mục ẩn `~/.homestead`:
 
     bash init.sh
 
