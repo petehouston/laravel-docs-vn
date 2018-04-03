@@ -5,10 +5,11 @@
 - [Branch nào?](#which-branch)
 - [Các lỗi bảo mật](#security-vulnerabilities)
 - [Coding Style](#coding-style)
-    - [PHPDoc](#phpdoc)
-    - [StyleCI](#styleci)
+  - [PHPDoc](#phpdoc)
+  - [StyleCI](#styleci)
 
 <a name="bug-reports"></a>
+
 ## Thông báo lỗi
 
 Để hỗ trợ hợp tác hiệu quả, Laravel rất khuyến khích các pull requests, không chỉ là thông báo lỗi. "Thông báo lỗi" cũng có thể được gửi dưới dạng một pull request có chứa một kết quả test thất bại.

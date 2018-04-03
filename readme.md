@@ -6,76 +6,76 @@
 
 Mục lục này tương ứng với [mục lục trên trang chủ](https://laravel.com/docs) của Laravel.
 
-* **Mở đầu**
-    * Release Notes
-    * Upgrade Guide
-    * [Contribution Guide](contributions.md)
-    * [API Documentation](documentation.md)
+- **Mở đầu**
+  - Release Notes
+  - Upgrade Guide
+  - [Contribution Guide](./docs/contributions.md)
+  - [API Documentation](./docs/documentation.md)
 
-* **Thiết lập**
-    * [Installation](installation.md)
-    * [Configuration](configuration.md)
-    * [Homestead](homestead.md)
-    * [Valet](valet.md)
+- **Thiết lập**
+  - [Installation](./docs/installation.md)
+  - [Configuration](./docs/configuration.md)
+  - [Homestead](./docs/homestead.md)
+  - [Valet](./docs/valet.md)
 
-* **Hướng dẫn**
-    * [Basic Task List](quickstart.md)
-    * [Intermediate Task List](quickstart-intermediate.md)
+- **Hướng dẫn**
+  - [Basic Task List](./docs/quickstart.md)
+  - [Intermediate Task List](./docs/quickstart-intermediate.md)
 
-* **Cơ bản**
-    * [Routing](routing.md)
-    * [Middleware](middleware.md)
-    * [Controllers](controllers.md)
-    * [Requests](requests.md)
-    * Responses
-    * [Views](views.md)
-    * [Blade Templates](blade.md)
+- **Cơ bản**
+  - [Routing](./docs/routing.md)
+  - [Middleware](./docs/middleware.md)
+  - [Controllers](./docs/controllers.md)
+  - [Requests](./docs/requests.md)
+  - Responses
+  - [Views](./docs/views.md)
+  - [Blade Templates](./docs/blade.md)
 
-* **Nền tảng kiến trúc**
-    * [Request Lifecycle](lifecycle.md)
-    * [Application Structure](structure.md)
-    * [Service Providers](providers.md)
-    * [Service Container](container.md)
-    * [Contracts](contracts.md)
-    * [Facades](facades.md)
+- **Nền tảng kiến trúc**
+  - [Request Lifecycle](./docs/lifecycle.md)
+  - [Application Structure](./docs/structure.md)
+  - [Service Providers](./docs/providers.md)
+  - [Service Container](./docs/container.md)
+  - [Contracts](./docs/contracts.md)
+  - [Facades](./docs/facades.md)
 
-* **Services**
-    * Authentication
-    * Authorization
-    * [Artisan Console](artisan.md)
-    * Billing
-    * [Cache](cache.md)
-    * [Collections](collections.md)
-    * [Elixir](elixir.md)
-    * [Encryption](encryption.md)
-    * [Errors & Logging](errors.md)
-    * [Events](events.md)
-    * [Filesystem & Cloud Storage](filesystem.md)
-    * [Hashing](hashing.md)
-    * [Helpers](helpers.md)
-    * [Localization](localization.md)
-    * [Mail](mail.md)
-    * [Package Development](packages.md)
-    * [Pagination](pagination.md)
-    * [Queues](queues.md)
-    * [Redis](redis.md)
-    * [Envoy or SSH Tasks](envoy.md)
-    * [Task Scheduling](scheduling.md)
-    * Testing
-    * Validation
+- **Services**
+  - Authentication
+  - Authorization
+  - [Artisan Console](./docs/artisan.md)
+  - Billing
+  - [Cache](./docs/cache.md)
+  - [Collections](./docs/collections.md)
+  - [Elixir](./docs/elixir.md)
+  - [Encryption](./docs/encryption.md)
+  - [Errors & Logging](./docs/errors.md)
+  - [Events](./docs/events.md)
+  - [Filesystem & Cloud Storage](./docs/filesystem.md)
+  - [Hashing](./docs/hashing.md)
+  - [Helpers](./docs/helpers.md)
+  - [Localization](./docs/localization.md)
+  - [Mail](./docs/mail.md)
+  - [Package Development](./docs/packages.md)
+  - [Pagination](./docs/pagination.md)
+  - [Queues](./docs/queues.md)
+  - [Redis](./docs/redis.md)
+  - [Envoy or SSH Tasks](./docs/envoy.md)
+  - [Task Scheduling](./docs/scheduling.md)
+  - Testing
+  - Validation
 
-* **Database**
-    * [Getting Started](database.md)
-    * Query Builder
-    * [Migrations](migrations.md)
-    * [Seeding](seeding.md)
+- **Database**
+  - [Getting Started](./docs/database.md)
+  - Query Builder
+  - [Migrations](./docs/migrations.md)
+  - [Seeding](./docs/seeding.md)
 
-* **Eloquent ORM**
-    * [Getting Started](eloquent.md)
-    * [Relationships](eloquent-relationships.md)
-    * [Collections](eloquent-collections.md)
-    * [Mutators](eloquent-mutators.md)
-    * [Serialization](eloquent-serialization.md)
+- **Eloquent ORM**
+  - [Getting Started](./docs/eloquent.md)
+  - [Relationships](./docs/eloquent-relationships.md)
+  - [Collections](./docs/eloquent-collections.md)
+  - [Mutators](./docs/eloquent-mutators.md)
+  - [Serialization](./docs/eloquent-serialization.md)
 
 ### Thuật ngữ
 
@@ -85,10 +85,11 @@ Do đó, với các thuật ngữ mà bạn không hiểu, bạn có thể tra c
 
 ## Hướng dẫn đóng góp
 
+Bản dịnh hiện giờ là lấy từ [trang](https://github.com/petehouston/laravel-docs-vn) dịch từ vs 5.2
+
 Hiện tại documentation này đang dịch dựa trên bản [Laravel 5.2](https://github.com/laravel/docs/tree/5.2). Vì thế các bạn muốn đóng góp hãy sử dụng version này nhé.
 
-Sau khi bản này hoàn thiện các version sẽ được phân chia theo các branch, với mỗi branch được ứng với một version của Laravel.
-
+** Bắt đầu thêm dữ liệu từ phiên bản 5.6**
 
 ## Chú ý
 
@@ -106,10 +107,10 @@ Xin gửi lời cảm ơn tới tác giả của Laravel, [Taylor Otwell](https:
 
 Và cũng gửi lời cảm ơn tới các bạn tham gia đóng góp vào dự án Việt hoá này.
 
-* [Pete Houston](https://github.com/petehouston): **Tác giả dự án**
-* [phumaster](https://github.com/phumaster)
-* [Đinh Quốc Hân](https://github.com/dinhquochan)
-* [RioV](https://github.com/RioV)
+- [Pete Houston](https://github.com/petehouston): **Tác giả dự án**
+- [phumaster](https://github.com/phumaster)
+- [Đinh Quốc Hân](https://github.com/dinhquochan)
+- [RioV](https://github.com/RioV)
 
 cùng tất cả các bạn khác đã gởi các lời ý kiến đóng góp tới dự án.
 
