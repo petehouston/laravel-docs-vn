@@ -1,15 +1,16 @@
 # HTTP Middleware
 
-- [Giới thiệu](#introduction)
-- [Tạo middleware](#defining-middleware)
-- [Đăng kí middleware](#registering-middleware)
-    - [Global middleware](#global-middleware)
-    - [Thiết lập middleware cho routes](#assigning-middleware-to-routes)
-    - [Tạo nhóm middleware](#middleware-groups)
-- [Middleware Parameters](#middleware-parameters)
-- [Terminable Middleware](#terminable-middleware)
+- [HTTP Middleware](#http-middleware)
+  - [Giới thiệu](#gi%E1%BB%9Bi-thi%E1%BB%87u)
+  - [Tạo middleware](#t%E1%BA%A1o-middleware)
+    - [*Before* / *After* Middleware](#before-after-middleware)
+  - [Đăng kí middleware](#%C4%91%C4%83ng-k%C3%AD-middleware)
+    - [Global Middleware](#global-middleware)
+    - [Thiết lập middleware cho route](#thi%E1%BA%BFt-l%E1%BA%ADp-middleware-cho-route)
+    - [Tạo nhóm middleware](#t%E1%BA%A1o-nh%C3%B3m-middleware)
+  - [Middleware Parameters](#middleware-parameters)
+  - [Terminable Middleware](#terminable-middleware)
 
-<a name="introduction"></a>
 ## Giới thiệu
 
 HTTP middleware cung cấp một giải pháp tiện ích cho việc lock các HTTP request vào ứng dụng. Ví dụ, Laravel có chứa một middleware xác thực người dùng đăng nhập vào hệ thống. Nếu user chưa đăng nhập, middleware sẽ chuyển hướng user tới màn hình login. Còn nếu user đã đăng nhập rồi, thì middleware sẽ cho phép request được thực hiện tiếp tiến trình xử lý.
@@ -18,7 +19,6 @@ Tất nhiên là có thể viết thêm middleware để thực hiện nhiều t
 
 Vài middleware đã có sẵn trong Laravel framework, bao gồm middleware cho bảo trì, xác thực, phòng chống CSRF và còn nữa. Tất cả những middleware này nằm trong thư mục `app/Http/Middlware`.
 
-<a name="defining-middleware"></a>
 ## Tạo middleware
 
 Để tạo một middleware mới, sử dụng câu lệnh Artisan `make:middleware`:
@@ -97,15 +97,12 @@ Tuy nhiên, middleware này sẽ thực hiện việc của nó **sau khi** requ
         }
     }
 
-<a name="registering-middleware"></a>
 ## Đăng kí middleware
 
-<a name="global-middleware"></a>
 ### Global Middleware
 
 Nếu bạn muốn một middleware có thể được thực thi trong mỗi HTTP request tới chương trình, đơn giản chỉ cần thêm tên class của middleware đó vào trong thuộc tính `$middleware` của class `app/Http/Kernel.php`.
 
-<a name="assigning-middleware-to-routes"></a>
 ### Thiết lập middleware cho route
 
 Nếu bạn muốn thiết lập middleware cho một số route cụ thể, bạn đầu tiên cần phải thêm middleware vào trong biến `$routeMiddleware` trong file `app/Http/Kernel.php` và đặt cho nó một key:
@@ -145,7 +142,6 @@ Khi gán middleware, bạn cũng có thể sử dụng tên class đầy đủ c
         //
     }]);
 
-<a name="middleware-groups"></a>
 ### Tạo nhóm middleware
 
 Sẽ có lúc bạn muốn thực hiện nhóm một vài middleware lại vào trong một khoá để có thể thực hiện gán vào route dễ dàng hơn. Bạn có thể làm như vậy bằng cách sử dụng thuộc tính `$middlewareGroups` của HTTP kernel.
@@ -180,7 +176,6 @@ Các nhóm middleware được gán vào route và controller action sử dụng
 
 Nên nhớ là, nhóm middleware `web` được tự động áp dụng vào trong file `routes.php` qua `RouteServiceProvider`.
 
-<a name="middleware-parameters"></a>
 ## Middleware Parameters
 
 Middleware cũng có thể nhận các tham số truyền vào. Ví dụ, nếu chương trình cần xác nhận user đã được xác thực có "role" cụ thể trước khi thực hiện một thao tác nào đó, bạn có thể tạo ra `RoleMiddleware` để nhận tên của role như một tham số.
@@ -220,7 +215,6 @@ Tham số cho middleware cũng có thể được khai báo trên route bằng c
         //
     }]);
 
-<a name="terminable-middleware"></a>
 ## Terminable Middleware
 
 Sẽ có lúc một middleware cần thực hiện chỉ sau khi HTTP response đã được gửi xong cho trình duyệt. Ví dụ, "session" middleware đi kèm với Laravel cung cấp session data cho storage _sau khi_ response được gửi tới trình duyệt. Để làm được việc này, cần phải tạo một middleware kiểu "kết thúc" bằng cách thêm vào hàm `terminate` vào trong middleware:

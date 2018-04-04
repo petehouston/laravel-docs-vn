@@ -25,6 +25,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 - **Cơ bản**
   - [Routing](./docs/routing.md)
   - [Middleware](./docs/middleware.md)
+  - [CSRF Protection](./docs/csrfprotection.md)
   - [Controllers](./docs/controllers.md)
   - [Requests](./docs/requests.md)
   - Responses
