@@ -1,5 +1,44 @@
 # HTTP Requests
 
+- [HTTP Requests](#http-requests)
+  - [Truy cập vào Request](#truy-c%E1%BA%ADp-v%C3%A0o-request)
+    - [Dependency Injection & Route Parameters](#dependency-injection-route-parameters)
+      - [Truy cập vào Request qua Route Closures](#truy-c%E1%BA%ADp-v%C3%A0o-request-qua-route-closures)
+    - [Thông tin Request cơ bản](#th%C3%B4ng-tin-request-c%C6%A1-b%E1%BA%A3n)
+      - [Lấy Request URI](#l%E1%BA%A5y-request-uri)
+      - [Lấy tên hàm được gọi của Request](#l%E1%BA%A5y-t%C3%AAn-h%C3%A0m-%C4%91%C6%B0%E1%BB%A3c-g%E1%BB%8Di-c%E1%BB%A7a-request)
+    - [Đường dẫn Request & Phương thức](#%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request-ph%C6%B0%C6%A1ng-th%E1%BB%A9c)
+      - [Nhận đường dẫn Request](#nh%E1%BA%ADn-%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request)
+      - [Nhận Request URL](#nh%E1%BA%ADn-request-url)
+      - [Nhận phương thức Request](#nh%E1%BA%ADn-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-request)
+  - [PSR-7 Requests](#psr-7-requests)
+  - [Input Trimming & Normalization](#input-trimming-normalization)
+  - [Nhận input](#nh%E1%BA%ADn-input)
+    - [Nhận toàn bộ giá trị input](#nh%E1%BA%ADn-to%C3%A0n-b%E1%BB%99-gi%C3%A1-tr%E1%BB%8B-input)
+    - [Nhận giá trị input](#nh%E1%BA%ADn-gi%C3%A1-tr%E1%BB%8B-input)
+    - [Nhận dữ liệu từ câu truy vấn](#nh%E1%BA%ADn-d%E1%BB%AF-li%E1%BB%87u-t%E1%BB%AB-c%C3%A2u-truy-v%E1%BA%A5n)
+    - [Nhận dữ liệu với Thuộc tính động](#nh%E1%BA%ADn-d%E1%BB%AF-li%E1%BB%87u-v%E1%BB%9Bi-thu%E1%BB%99c-t%C3%ADnh-%C4%91%E1%BB%99ng)
+    - [Nhận giá trị input từ JSON](#nh%E1%BA%ADn-gi%C3%A1-tr%E1%BB%8B-input-t%E1%BB%AB-json)
+    - [Nhận một phần của dữ liệu input](#nh%E1%BA%ADn-m%E1%BB%99t-ph%E1%BA%A7n-c%E1%BB%A7a-d%E1%BB%AF-li%E1%BB%87u-input)
+    - [Kiểm tra một giá trị input có tồn tại](#ki%E1%BB%83m-tra-m%E1%BB%99t-gi%C3%A1-tr%E1%BB%8B-input-c%C3%B3-t%E1%BB%93n-t%E1%BA%A1i)
+    - [Input cũ](#input-c%C5%A9)
+      - [Flash input tới session](#flash-input-t%E1%BB%9Bi-session)
+      - [Flash input vào trong session rồi chuyển trang](#flash-input-v%C3%A0o-trong-session-r%E1%BB%93i-chuy%E1%BB%83n-trang)
+      - [Lấy dữ liệu cũ](#l%E1%BA%A5y-d%E1%BB%AF-li%E1%BB%87u-c%C5%A9)
+    - [Cookies](#cookies)
+      - [Lấy cookies từ Request](#l%E1%BA%A5y-cookies-t%E1%BB%AB-request)
+      - [Gắn một cookie mới vào Response](#g%E1%BA%AFn-m%E1%BB%99t-cookie-m%E1%BB%9Bi-v%C3%A0o-response)
+    - [Tạo Cookie Instances](#t%E1%BA%A1o-cookie-instances)
+  - [Files](#files)
+    - [Lấy file được upload](#l%E1%BA%A5y-file-%C4%91%C6%B0%E1%BB%A3c-upload)
+    - [Kiểm tra upload thành công](#ki%E1%BB%83m-tra-upload-th%C3%A0nh-c%C3%B4ng)
+    - [Đường dẫn File & Extensions](#%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-file-extensions)
+    - [Phương thức khác của File](#ph%C6%B0%C6%A1ng-th%E1%BB%A9c-kh%C3%A1c-c%E1%BB%A7a-file)
+    - [Chuyển vị trí file upload](#chuy%E1%BB%83n-v%E1%BB%8B-tr%C3%AD-file-upload)
+    - [Các phương thức khác với file](#c%C3%A1c-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-kh%C3%A1c-v%E1%BB%9Bi-file)
+  - [Configuring Trusted Proxies](#configuring-trusted-proxies)
+    - [Trusting All Proxies](#trusting-all-proxies)
+
 ## Truy cập vào Request
 
 Để lấy đối tượng của HTTP request hiện tại thông qua dependency injection, bạn phải type-hint `Illuminate\Http\Request` vào trong hàm khởi tạo của controller hay phương thức trong controller. Đối tượng của request hiện tại sẽ được tự động inject vào bởi [service container](container.md):
@@ -28,7 +67,7 @@ class UserController extends Controller
 }
 ```
 
-#### Dependency Injection & Route Parameters
+### Dependency Injection & Route Parameters
 
 Nếu như hàm của controller cũng cần input từ route parameter, đơn giản chỉ cần ghi danh sách các đối số vào sau các dependencies. Ví dụ, nếu route được khai báo như sau:
 
@@ -110,7 +149,6 @@ Hàm `method` sẽ trả về hành động HTTP của request. Bạn cũng có 
     if ($request->isMethod('post')) {
         //
     }
-
 
 ### Đường dẫn Request & Phương thức
 

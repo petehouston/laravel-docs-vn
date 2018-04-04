@@ -28,7 +28,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
   - [CSRF Protection](./docs/csrfprotection.md)
   - [Controllers](./docs/controllers.md)
   - [Requests](./docs/requests.md)
-  - Responses
+  - [Responses](./docs/responses.md)
   - [Views](./docs/views.md)
   - [Blade Templates](./docs/blade.md)
 
