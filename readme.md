@@ -12,11 +12,21 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
   - [Contribution Guide](./docs/contributions.md)
   - [API Documentation](./docs/documentation.md)
 
-- **Thiết lập**
+- **Khởi đầu**
   - [Installation](./docs/installation.md)
+  - Directory Structure
   - [Configuration](./docs/configuration.md)
   - [Homestead](./docs/homestead.md)
   - [Valet](./docs/valet.md)
+  - Deployment
+
+- **Nền tảng kiến trúc**
+  - [Request Lifecycle](./docs/lifecycle.md)
+  - [Application Structure](./docs/structure.md)
+  - [Service Providers](./docs/providers.md)
+  - [Service Container](./docs/container.md)
+  - [Contracts](./docs/contracts.md)
+  - [Facades](./docs/facades.md)
 
 - **Hướng dẫn**
   - [Basic Task List](./docs/quickstart.md)
@@ -30,53 +40,71 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
   - [Requests](./docs/requests.md)
   - [Responses](./docs/responses.md)
   - [Views](./docs/views.md)
-  - [Blade Templates](./docs/blade.md)
+  - URL Generation
+  - Session
+  - Validation
+  - [Errors & Logging](./docs/errors.md)
+  - Logging
 
-- **Nền tảng kiến trúc**
-  - [Request Lifecycle](./docs/lifecycle.md)
-  - [Application Structure](./docs/structure.md)
-  - [Service Providers](./docs/providers.md)
-  - [Service Container](./docs/container.md)
-  - [Contracts](./docs/contracts.md)
-  - [Facades](./docs/facades.md)
+- **Frontend**
+  - [Blade Templates](./docs/blade.md)
+  - [Localization](./docs/localization.md)
+  - Frontend Scaffolding
+  - Compiling Assets
 
 - **Services**
   - Authentication
+  - API Authentication
   - Authorization
+  - [Encryption](./docs/encryption.md)
+  - [Hashing](./docs/hashing.md)
+  - Password Reset
+  - [Elixir](./docs/elixir.md)
+
+- **Digging Deeper**
   - [Artisan Console](./docs/artisan.md)
-  - Billing
+  - Broadcasting
   - [Cache](./docs/cache.md)
   - [Collections](./docs/collections.md)
-  - [Elixir](./docs/elixir.md)
-  - [Encryption](./docs/encryption.md)
-  - [Errors & Logging](./docs/errors.md)
   - [Events](./docs/events.md)
   - [Filesystem & Cloud Storage](./docs/filesystem.md)
-  - [Hashing](./docs/hashing.md)
   - [Helpers](./docs/helpers.md)
-  - [Localization](./docs/localization.md)
   - [Mail](./docs/mail.md)
+  - Notifications
   - [Package Development](./docs/packages.md)
-  - [Pagination](./docs/pagination.md)
   - [Queues](./docs/queues.md)
-  - [Redis](./docs/redis.md)
-  - [Envoy or SSH Tasks](./docs/envoy.md)
   - [Task Scheduling](./docs/scheduling.md)
-  - Testing
-  - Validation
 
 - **Database**
   - [Getting Started](./docs/database.md)
   - Query Builder
+  - [Pagination](./docs/pagination.md)
   - [Migrations](./docs/migrations.md)
   - [Seeding](./docs/seeding.md)
+  - [Redis](./docs/redis.md)
 
 - **Eloquent ORM**
   - [Getting Started](./docs/eloquent.md)
   - [Relationships](./docs/eloquent-relationships.md)
   - [Collections](./docs/eloquent-collections.md)
   - [Mutators](./docs/eloquent-mutators.md)
+  - API Resources
   - [Serialization](./docs/eloquent-serialization.md)
+
+- **Testing**
+  - Getting Started
+  - HTTP Tests
+  - Browser Tests
+  - Database
+  - Mocking
+
+- **Official Packages**
+  - Cashier
+  - [Envoy or SSH Tasks](./docs/envoy.md)
+  - Horizon
+  - Passport
+  - Scout
+  - Socialite
 
 ### Thuật ngữ
 
