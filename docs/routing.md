@@ -57,19 +57,14 @@ Route::get('/user', 'UserController@index');
 
 Router cho phép bạn đăng ký routes đáp ứng nhiều phương thức HTTP:
 
-```PHP
-Route::get($uri, $callback);
-
-Route::post($uri, $callback);
-
-Route::put($uri, $callback);
-
-Route::patch($uri, $callback);
-
-Route::delete($uri, $callback);
-
-Route::options($uri, $callback);
-```
+- Route::get nhận resquest với phương thức GET.
+- Route::post nhận resquest với phương thức POST.
+- Route::put nhận resquest với phương thức PUT.
+- Route::delete nhận resquest với phương thức DELETE.
+- Route::match kết hợp nhiều phương phức như POST,GET,PUT,..
+- Route::any nhận tất cả các phương thức.
+- Route::group tạo ra các nhóm route.
+- Route::controller gọi đến controller tương ứng mà chúng ta tự định.
 
 Đôi khi bạn có thể phải đăng ký nhiều router mà đáp ứng nhiều phương thức HTTP. Bạn có thể làm như vậy bằng cách sử dụng các phương thức `match`. Hoặc, bạn thậm chí có thể đăng ký một router mà đáp ứng tất cả các phương thức HTTP bằng cách sử dụng phương thức `any`:
 
@@ -174,7 +169,7 @@ Route::get('user/{id}/{name}', function ($id, $name) {
 
 ### Hạn chế toàn cục
 
-Nếu bạn muốn có một số router luôn bị hạn chế bởi một biểu thức chính quy, bạn có thể sử dụng phương thức `pattern`. Bạn nên xác định những quy định này trong phương thức `boot` của `RouteServiceProvider`:
+Nếu bạn muốn giới hạn với mọi route, bạn có thể sử dụng phương thức ``pattern``. Bạn nên định nghĩa phương thức này trong phương thức ``boot`` ở file ``RouteServiceProvider.php``:
 
 ```PHP
 /**
@@ -201,7 +196,7 @@ Route::get('user/{id}', function ($id) {
 
 ## Tên của router
 
-Các router cho phép đặt tên để thuận tiện cho các URL hoặc chuyển hướng cho các router cụ thể. Bạn có thể chỉ định một tên cho router bằng cách sử dụng khóa `as` khi tạo router:
+Các router cho phép đặt tên để thuận tiện cho các URL hoặc chuyển hướng cho các router cụ thể. Bạn có thể chỉ định một tên cho router bằng cách sử dụng phương thức `name` khi tạo router:
 
 ```PHP
 Route::get('user/profile', function () {

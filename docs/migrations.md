@@ -4,7 +4,7 @@
 - [Tạo migrations](#generating-migrations)
 - [Cấu trúc migration](#migration-structure)
 - [Thực thi migrations](#running-migrations)
-    - [Rollback Migrations](#rolling-back-migrations)
+- [Rollback Migrations](#rolling-back-migrations)
 - [Cách viết migrations](#writing-migrations)
     - [Tạo tables](#creating-tables)
     - [Thay đổi tên hay Drop tables](#renaming-and-dropping-tables)
