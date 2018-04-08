@@ -6,7 +6,7 @@
     - [Tạo một layout](#t%E1%BA%A1o-m%E1%BB%99t-layout)
     - [Mở rộng layout](#m%E1%BB%9F-r%E1%BB%99ng-layout)
   - [Components & Slots](#components-slots)
-  - [Hiển thị data](#hi%E1%BB%83n-th%E1%BB%8B-data)
+  - [Hiển thị dữ liệu](#hi%E1%BB%83n-th%E1%BB%8B-d%E1%BB%AF-li%E1%BB%87u)
     - [Hiện dữ liệu chưa Unescaped](#hi%E1%BB%87n-d%E1%BB%AF-li%E1%BB%87u-ch%C6%B0a-unescaped)
     - [Hiển thị dữ liệu nếu tồn tại](#hi%E1%BB%83n-th%E1%BB%8B-d%E1%BB%AF-li%E1%BB%87u-n%E1%BA%BFu-t%E1%BB%93n-t%E1%BA%A1i)
     - [Hiện thị Json](#hi%E1%BB%87n-th%E1%BB%8B-json)
@@ -100,9 +100,9 @@ Route::get('blade', function () {
 
 ## Components & Slots
 
-## Hiển thị data
+## Hiển thị dữ liệu
 
-Bạn có thể hiển thị data truyền vào trong Blade views bằng cách đặt biến vào trong cặp **dấu ngoặc nhọn**. Ví dụ, với route dưới đây:
+Bạn có thể hiển thị dữ liệu truyền vào trong Blade views bằng cách đặt biến vào trong cặp **dấu ngoặc nhọn**. Ví dụ, với route dưới đây:
 
 ```php
 Route::get('greeting', function () {
