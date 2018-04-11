@@ -4,9 +4,6 @@
   - [Truy cập vào Request](#truy-c%E1%BA%ADp-v%C3%A0o-request)
     - [Dependency Injection & Route Parameters](#dependency-injection-route-parameters)
       - [Truy cập vào Request qua Route Closures](#truy-c%E1%BA%ADp-v%C3%A0o-request-qua-route-closures)
-    - [Thông tin Request cơ bản](#th%C3%B4ng-tin-request-c%C6%A1-b%E1%BA%A3n)
-      - [Lấy Request URI](#l%E1%BA%A5y-request-uri)
-      - [Lấy tên hàm được gọi của Request](#l%E1%BA%A5y-t%C3%AAn-h%C3%A0m-%C4%91%C6%B0%E1%BB%A3c-g%E1%BB%8Di-c%E1%BB%A7a-request)
     - [Đường dẫn Request & Phương thức](#%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request-ph%C6%B0%C6%A1ng-th%E1%BB%A9c)
       - [Nhận đường dẫn Request](#nh%E1%BA%ADn-%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request)
       - [Nhận Request URL](#nh%E1%BA%ADn-request-url)
@@ -69,13 +66,13 @@ class UserController extends Controller
 
 ### Dependency Injection & Route Parameters
 
-Nếu như hàm của controller cũng cần input từ route parameter, đơn giản chỉ cần ghi danh sách các đối số vào sau các dependencies. Ví dụ, nếu route được khai báo như sau:
+Nếu như hàm của controller cũng cần đầu vào từ các tham số của route, đơn giản chỉ cần ghi danh sách các đối số vào sau các dependencies. Ví dụ, nếu route được khai báo như sau:
 
 ```PHP
 Route::put('user/{id}', 'UserController@update');
 ```
 
-Bạn vẫn có thể type-hint `Illuminate\Http\Request` và truy cập vào route parameter `id` bằng cách khai báo trong controller như sau:
+Bạn vẫn có thể type-hint `Illuminate\Http\Request` và truy cập vào tham số `id` của route bằng cách khai báo trong controller như sau:
 
 ```PHP
 <?php
@@ -102,7 +99,7 @@ class UserController extends Controller
 
 #### Truy cập vào Request qua Route Closures
 
-Bạn cũng có thể type-hint class Illuminate\Http\Request trong route Closure. Service sẽ tự động inject các request Closure khi nó sẽ được thực thi:
+Bạn cũng có thể type-hint class ``Illuminate\Http\Request`` trong route Closure. Service sẽ tự động inject các request Closure khi nó sẽ được thực thi:
 
 ```PHP
 use Illuminate\Http\Request;
@@ -112,57 +109,19 @@ Route::get('/', function (Request $request) {
 });
 ```
 
-### Thông tin Request cơ bản
-
-Đối tượng `Illuminate\Http\Request` cung cấp một số phương thức để kiểm tra HTTP request và kế thừa từ class cơ sở là `Symfony\Component\HttpFoundation\Request`. Sau đây là một vài hàm hữu dùng của class:
-
-#### Lấy Request URI
-
-Hàm `path` trả về URI của request. Vì vậy, nếu request đến ở mục tiêu là `http://domain.com/foo/bar`, hàm `path` sẽ trả về `foo/bar`:
-
-    $uri = $request->path();
-
-Hàm `is` cho phép bạn xác nhận URI của request đến có khớp với một pattern nào đó không. Bạn có thể sử dụng kí tự `*` khi sử dụng hàm này:
-
-    if ($request->is('admin/*')) {
-        //
-    }
-
-Để lấy URL đầy đủ, không chỉ là đường dẫn, bạn có thể sử dụng `url` hoặc `fullUrl`:
-
-    // Without Query String...
-    $url = $request->url();
-
-    // With Query String...
-    $url = $request->fullUrl();
-
-Bạn cũng có thể lấy URL đầy đủ và thêm vào các query parameters. Ví dụ, nếu request có mục tiêu là `http://domain.com/foo`, thì hàm sau sẽ trả về `http://domain.com/foo?bar=baz`:
-
-    $url = $request->fullUrlWithQuery(['bar' => 'baz']);
-
-#### Lấy tên hàm được gọi của Request
-
-Hàm `method` sẽ trả về hành động HTTP của request. Bạn cũng có thể sử dụng `isMethod` để xác nhận hành động của HTTP request có khớp một chuỗi hay không:
-
-    $method = $request->method();
-
-    if ($request->isMethod('post')) {
-        //
-    }
-
 ### Đường dẫn Request & Phương thức
 
 Đối tượng ``Illuminate\Http\Request`` cung cập một số phương thức để kiểm tra HTTP request cho ứng dụng và kế thừa class ``Symfony\Component\HttpFoundation\Request`` . Chúng ta sẽ thảo luận một số phương thức quan trọng dưới đây.
 
 #### Nhận đường dẫn Request
 
-Phương thức path trả về thông tin đường dẫn của request. Vì vậy, Nếu request gửi đến là  http://domain.com/foo/bar, phương thức path sẽ trả về foo/bar:
+Phương thức path trả về thông tin đường dẫn của request. Vì vậy, Nếu request gửi đến là  `http://domain.com/foo/bar`, phương thức path sẽ trả về `foo/bar`:
 
 ```PHP
 $uri = $request->path();
 ```
 
-Phương thức ``is`` sẽ cho phép bạn xác nhận những request gửi đến có đường dẫn khới với pattern hay không. Bạn có thể sử dụng ký tự ``*`` khi sử dụng phương thức này:
+Phương thức ``is`` sẽ cho phép bạn xác nhận những request gửi đến có đường dẫn khớp với pattern hay không. Bạn có thể sử dụng ký tự ``*`` khi sử dụng phương thức này:
 
 ```PHP
 if ($request->is('admin/*')) {
@@ -172,7 +131,7 @@ if ($request->is('admin/*')) {
 
 #### Nhận Request URL
 
-Để nhận đường dẫn đầy đủ URL từ request gửi đến bạn có thể sử dụng phương thức url or  fullUrl. Phương thức url sẽ trả về URL không có string query, trong khi phương thức fullUrl bao gồm cả string query:
+Để nhận đường dẫn đầy đủ URL từ request gửi đến bạn có thể sử dụng phương thức ``url`` or  ``fullUrl``. Phương thức ``url`` sẽ trả về URL không có string query, trong khi phương thức ``fullUrl`` bao gồm cả string query:
 
 ```PHP
 // Without Query String...
@@ -184,7 +143,7 @@ $url = $request->fullUrl();
 
 #### Nhận phương thức Request
 
-Phương thức method sẽ trả về phương thức HTTP tương ứng với request. Bạn có thể sử dụng phương thức isMethod để xác thực phương thức HTTP khớp với string:
+Phương thức ``method`` sẽ trả về phương thức HTTP tương ứng với request. Bạn có thể sử dụng phương thức ``isMethod`` để xác thực phương thức HTTP khớp với string:
 
 ```PHP
 $method = $request->method();
@@ -340,33 +299,43 @@ Laravel cho phép bạn giữ giá trị input từ một request sang request t
 
 #### Flash input tới session
 
-Hàm `flash` trong `Illuminate\Http\Request` sẽ flash input hiện tại vào trong [session](/docs/{{version}}/session) nên nó có thể sử dụng trong request tiếp theo của user tới ứng dụng:
+Hàm `flash` trong `Illuminate\Http\Request` sẽ flash input hiện tại vào trong [session](session.md) nên nó có thể sử dụng trong request tiếp theo của user tới ứng dụng:
 
-    $request->flash();
+```php
+$request->flash();
+```
 
 Bạn cũng có thể sử dụng `flashOnly` và `flashExcept` để flash một tập nhỏ của dữ liệu request vào trong session:
 
-    $request->flashOnly(['username', 'email']);
+```php
+$request->flashOnly(['username', 'email']);
 
-    $request->flashExcept('password');
+$request->flashExcept('password');
+```
 
 #### Flash input vào trong session rồi chuyển trang
 
 Vì bạn thường muốn flash input cùng với chuyển trang vào trang trước đó, bạn có thể dễ dàng tạo móc nối input vào trong một redirect sử dụng hàm `withInput`:
 
-    return redirect('form')->withInput();
+```php
+return redirect('form')->withInput();
 
-    return redirect('form')->withInput($request->except('password'));
+return redirect('form')->withInput$request->except('password'));
+```
 
 #### Lấy dữ liệu cũ
 
-Để lấy dữ liệu đã flash từ request trước đó, sử dụng hàm `old` của `Request`. Hàm `old` cung cấp một helper tiện ích cho việc lấy dữ liệu đã flash ra khỏi [session](/docs/{{version}}/session):
+Để lấy dữ liệu đã flash từ request trước đó, sử dụng hàm `old` của `Request`. Hàm `old` cung cấp một helper tiện ích cho việc lấy dữ liệu đã flash ra khỏi [session](session.md):
 
-    $username = $request->old('username');
+```php
+$username = $request->old('username');
+```
 
-Laravel cũng cung cấp một helper toàn cục `old`. Nếu như bạn muốn hiển thị giá trị input cũ bên trong [Blade template](/docs/{{version}}/blade), thì sử dụng helper `old` sẽ tiện hơn. Nếu không có input cũ nào tìm thấy thì giá trị `null` sẽ được trả về:
+Laravel cũng cung cấp một helper toàn cục `old`. Nếu như bạn muốn hiển thị giá trị input cũ bên trong [Blade template](blade.md), thì sử dụng helper `old` sẽ tiện hơn. Nếu không có input cũ nào tìm thấy thì giá trị `null` sẽ được trả về:
 
-    <input type="text" name="username" value="{{ old('username') }}">
+```php
+<input type="text" name="username" value="{{ old('username') }}">
+```
 
 ### Cookies
 
@@ -374,21 +343,27 @@ Laravel cũng cung cấp một helper toàn cục `old`. Nếu như bạn muốn
 
 Tất cả các cookies tạo bởi Laravel đều được mã hoá và kí với một mã xác thực, nghĩa là chúng sẽ bị coi là không hợp lệ nếu chúng bị thay đổi phía client. Để lấy cookie từ request, bạn có thể sử dụng hàm `cookie` từ `Illuminate\Http\Request`:
 
-    $value = $request->cookie('name');
+```php
+$value = $request->cookie('name');
+```
 
 #### Gắn một cookie mới vào Response
 
 Laravel cung cấp hàm `cookie` helper phục vụ như một factory đơn giản để tạo ra một đối tượng từ class `Symfony\Component\HttpFoundation\Cookie`. Những cookies này có thể được gắn với một đối tượng `Illuminate\Http\Response` sử dụng hàm `withCookie`:
 
-    $response = new Illuminate\Http\Response('Hello World');
+```php
+$response = new Illuminate\Http\Response('Hello World');
 
-    $response->withCookie('name', 'value', $minutes);
+$response->withCookie('name', 'value', $minutes);
 
-    return $response;
+return $response;
+```
 
 Để tạo một cookie tồn tại lâu (long-lived), tồn tại trong vòng 5 năm, bạn có thể sử dụng hàm `forever` trong factory bằng cách gọi hàm `cookie` helper không có tham số nào, và rồi gọi móc nối với `forever` để tạo:
 
-    $response->withCookie(cookie()->forever('name', 'value'));
+```php
+$response->withCookie(cookie()->forever('name', 'value'));
+```
 
 ### Tạo Cookie Instances
 

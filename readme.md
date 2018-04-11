@@ -77,7 +77,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 
 - **Database**
   - [Getting Started](./docs/database.md)
-  - Query Builder
+  - [Query Builder](./docs/queries.md)
   - [Pagination](./docs/pagination.md)
   - [Migrations](./docs/migrations.md)
   - [Seeding](./docs/seeding.md)
@@ -116,9 +116,7 @@ Do đó, với các thuật ngữ mà bạn không hiểu, bạn có thể tra c
 
 Bản dịnh hiện giờ là lấy từ [trang](https://github.com/petehouston/laravel-docs-vn) dịch từ vs 5.2
 
-Hiện tại documentation này đang dịch dựa trên bản [Laravel 5.2](https://github.com/laravel/docs/tree/5.2). Vì thế các bạn muốn đóng góp hãy sử dụng version này nhé.
-
-** Bắt đầu thêm dữ liệu từ phiên bản 5.6**
+>** Bắt đầu thêm dữ liệu từ phiên bản 5.6**
 
 ## Chú ý
 

@@ -1,14 +1,14 @@
 # Views
 
 - [Views](#views)
-    - [Tạo Views](#t%E1%BA%A1o-views)
-        - [Xác định một view tồn tại](#x%C3%A1c-%C4%91%E1%BB%8Bnh-m%E1%BB%99t-view-t%E1%BB%93n-t%E1%BA%A1i)
-        - [Creating The First Available View](#creating-the-first-available-view)
-    - [Truyền dữ liệu vào Views](#truy%E1%BB%81n-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-views)
-        - [Chia sẻ dữ liệu vào tất cả các Views](#chia-s%E1%BA%BB-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-t%E1%BA%A5t-c%E1%BA%A3-c%C3%A1c-views)
-    - [View Composers](#view-composers)
-        - [Đính kèm Composer vào nhiều Views](#%C4%91%C3%ADnh-k%C3%A8m-composer-v%C3%A0o-nhi%E1%BB%81u-views)
-        - [View Creators](#view-creators)
+  - [Tạo Views](#t%E1%BA%A1o-views)
+    - [Xác định một view tồn tại](#x%C3%A1c-%C4%91%E1%BB%8Bnh-m%E1%BB%99t-view-t%E1%BB%93n-t%E1%BA%A1i)
+    - [Creating The First Available View](#creating-the-first-available-view)
+  - [Truyền dữ liệu vào Views](#truy%E1%BB%81n-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-views)
+    - [Chia sẻ dữ liệu vào tất cả các Views](#chia-s%E1%BA%BB-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-t%E1%BA%A5t-c%E1%BA%A3-c%C3%A1c-views)
+  - [View Composers](#view-composers)
+    - [Đính kèm Composer vào nhiều Views](#%C4%91%C3%ADnh-k%C3%A8m-composer-v%C3%A0o-nhi%E1%BB%81u-views)
+    - [View Creators](#view-creators)
 
 ## Tạo Views
 
@@ -212,7 +212,7 @@ class ProfileComposer
 
 Như vậy trước khi view đó được rendered, phương thức `compose` sẽ gọi `Illuminate\View\View` qua `$view`. Bạn có thể dụng phương thức `with` để ràng buộc dữ liệu đến view.
 
-> **Chú ý:**  Tất các các view composers được xử lý thông qua [service container](/docs/{{version}}/container), vì vậy bạn có thể thêm các phụ thuộc vào bên trong phương thức khởi tạo contructor của view composer.
+> **Chú ý:**  Tất các các view composers được xử lý thông qua [service container](container.md), vì vậy bạn có thể thêm các phụ thuộc vào bên trong phương thức khởi tạo contructor của view composer.
 
 ### Đính kèm Composer vào nhiều Views
 

@@ -245,44 +245,59 @@ Schema::table('users', function ($table) {
 
 Schema builder về cơ bản có chứa một danh sách các kiểu column mà bạn có thể sử dụng để xây dựng cấu trúc table:
 
-| Hàm                                        | Mô tả                                                                     |
-| ------------------------------------------ | ------------------------------------------------------------------------- |
-| `$table->bigIncrements('id');`             | Tăng ID (primary key) tương đương với "UNSIGNED BIG INTEGER".             |
-| `$table->bigInteger('votes');`             | tương đương với BIGINT.                                                   |
-| `$table->binary('data');`                  | tương đương với BLOB.                                                     |
-| `$table->boolean('confirmed');`            | tương đương với BOOLEAN.                                                  |
-| `$table->char('name', 4);`                 | tương đương với CHAR và có độ dài thiết lập trước.                        |
-| `$table->date('created_at');`              | tương đương với DATE.                                                     |
-| `$table->dateTime('created_at');`          | tương đương với DATETIME.                                                 |
-| `$table->dateTimeTz('created_at');`        | tương đương với DATETIME (cùng timezone).                                 |
-| `$table->decimal('amount', 5, 2);`         | tương đương với DECIMAL và phần thập phân.                                |
-| `$table->double('column', 15, 8);`         | tương đương với DOUBLE có độ dài là 15 chữ số và 8 chữ số phần thập phân. |
-| `$table->enum('choices', ['foo', 'bar']);` | tương đương với ENUM.                                                     |
-| `$table->float('amount');`                 | tương đương với FLOAT.                                                    |
-| `$table->increments('id');`                | Tăng ID (primary key) tương đương với "UNSIGNED INTEGER".                 |
-| `$table->integer('votes');`                | tương đương với INTEGER.                                                  |
-| `$table->ipAddress('visitor');`            | tương đương với IP address.                                               |
-| `$table->json('options');`                 | tương đương với JSON.                                                     |
-| `$table->jsonb('options');`                | tương đương với JSONB.                                                    |
-| `$table->longText('description');`         | tương đương với LONGTEXT.                                                 |
-| `$table->macAddress('device');`            | tương đương với MAC address.                                              |
-| `$table->mediumInteger('numbers');`        | tương đương với MEDIUMINT.                                                |
-| `$table->mediumText('description');`       | tương đương với MEDIUMTEXT.                                               |
-| `$table->morphs('taggable');`              | thêm INTEGER `taggable_id` và STRING `taggable_type`.                     |
-| `$table->nullableTimestamps();`            | giống với `timestamps()`, ngoại trừ việc cho phép sử dụng NULLs.          |
-| `$table->rememberToken();`                 | thêm `remember_token` như VARCHAR(100) NULL.                              |
-| `$table->smallInteger('votes');`           | tương đương với SMALLINT.                                                 |
-| `$table->softDeletes();`                   | thêm `deleted_at` column để soft deletes.                                 |
-| `$table->string('email');`                 | tương đương với VARCHAR.                                                  |
-| `$table->string('name', 100);`             | tương đương với VARCHAR có độ dài.                                        |
-| `$table->text('description');`             | tương đương với TEXT.                                                     |
-| `$table->time('sunrise');`                 | tương đương với TIME.                                                     |
-| `$table->timeTz('sunrise');`               | tương đương với TIME (với timezone).                                      |
-| `$table->tinyInteger('numbers');`          | tương đương với TINYINT.                                                  |
-| `$table->timestamp('added_on');`           | tương đương với TIMESTAMP.                                                |
-| `$table->timestampTz('added_on');`         | tương đương với TIMESTAMP.                                                |
-| `$table->timestamps();`                    | thêm vào hai column `created_at` và `updated_at`.                         |
-| `$table->uuid('id');`                      | tương đương với UUID.                                                     |
+| Hàm                                        | Mô tả                                                                                          |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `$table->bigIncrements('id');`             | Tăng ID (primary key) tương đương với "UNSIGNED BIG INTEGER".                                  |
+| `$table->bigInteger('votes');`             | tương đương với BIGINT.                                                                        |
+| `$table->binary('data');`                  | tương đương với BLOB.                                                                          |
+| `$table->boolean('confirmed');`            | tương đương với BOOLEAN.                                                                       |
+| `$table->char('name', 4);`                 | tương đương với CHAR và có độ dài thiết lập trước.                                             |
+| `$table->date('created_at');`              | tương đương với DATE.                                                                          |
+| `$table->dateTime('created_at');`          | tương đương với DATETIME.                                                                      |
+| `$table->dateTimeTz('created_at');`        | tương đương với DATETIME (cùng timezone).                                                      |
+| `$table->decimal('amount', 5, 2);`         | tương đương với DECIMAL và phần thập phân.                                                     |
+| `$table->double('column', 15, 8);`         | tương đương với DOUBLE có độ dài là 15 chữ số và 8 chữ số phần thập phân.                      |
+| `$table->enum('choices', ['foo', 'bar']);` | tương đương với ENUM.                                                                          |
+| `$table->float('amount');`                 | tương đương với FLOAT.                                                                         |
+| `$table->increments('id');`                | Tăng ID (primary key) tương đương với "UNSIGNED INTEGER".                                      |
+| `$table->integer('votes');`                | tương đương với INTEGER.                                                                       |
+| `$table->ipAddress('visitor');`            | tương đương với IP address.                                                                    |
+| `$table->json('options');`                 | tương đương với JSON.                                                                          |
+| `$table->jsonb('options');`                | tương đương với JSONB.                                                                         |
+| `$table->longText('description');`         | tương đương với LONGTEXT.                                                                      |
+| `$table->macAddress('device');`            | tương đương với MAC address.                                                                   |
+| `$table->mediumInteger('numbers');`        | tương đương với MEDIUMINT.                                                                     |
+| `$table->mediumText('description');`       | tương đương với MEDIUMTEXT.                                                                    |
+| `$table->morphs('taggable');`              | thêm INTEGER `taggable_id` và STRING `taggable_type`.                                          |
+| `$table->multiLineString('positions');`    | MULTILINESTRING equivalent column.                                                             |
+| `$table->multiPoint('positions');`         | MULTIPOINT equivalent column.                                                                  |
+| `$table->multiPolygon('positions');`       | MULTIPOLYGON equivalent column.                                                                |
+| `$table->nullableTimestamps();`            | giống với `timestamps()`, ngoại trừ việc cho phép sử dụng NULLs.                               |
+| `$table->point('position');`               | POINT equivalent column.                                                                       |
+| `$table->polygon('positions');`            | POLYGON equivalent column.                                                                     |
+| `$table->rememberToken();`                 | thêm `remember_token` như VARCHAR(100) NULL.                                                   |
+| `$table->smallInteger('votes');`           | tương đương với SMALLINT.                                                                      |
+| `$table->softDeletes();`                   | thêm `deleted_at` column để soft deletes.                                                      |
+| `$table->softDeletesTz();`                 | Adds a nullable deleted_at TIMESTAMP (with timezone) equivalent column for soft deletes.       |
+| `$table->string('email');`                 | tương đương với VARCHAR.                                                                       |
+| `$table->string('name', 100);`             | tương đương với VARCHAR có độ dài.                                                             |
+| `$table->text('description');`             | tương đương với TEXT.                                                                          |
+| `$table->time('sunrise');`                 | tương đương với TIME.                                                                          |
+| `$table->timeTz('sunrise');`               | tương đương với TIME (với timezone).                                                           |
+| `$table->tinyInteger('numbers');`          | tương đương với TINYINT.                                                                       |
+| `$table->timestamp('added_on');`           | tương đương với TIMESTAMP.                                                                     |
+| `$table->timestampTz('added_on');`         | tương đương với TIMESTAMP.                                                                     |
+| `$table->timestamps();`                    | thêm vào hai column `created_at` và `updated_at`.                                              |
+| `$table->tinyIncrements('id');`            | Auto-incrementing UNSIGNED TINYINT (primary key) equivalent column.                            |
+| `$table->tinyInteger('votes');`            | TINYINT equivalent column.                                                                     |
+| `$table->unsignedBigInteger('votes');`     | UNSIGNED BIGINT equivalent column.                                                             |
+| `$table->unsignedDecimal('amount', 8, 2);` | UNSIGNED DECIMAL equivalent column with a precision (total digits) and scale (decimal digits). |
+| `$table->unsignedInteger('votes');`        | UNSIGNED INTEGER equivalent column.                                                            |
+| `$table->unsignedMediumInteger('votes');`  | UNSIGNED MEDIUMINT equivalent column.                                                          |
+| `$table->unsignedSmallInteger('votes');`   | UNSIGNED SMALLINT equivalent column.                                                           |
+| `$table->unsignedTinyInteger('votes');`    | UNSIGNED TINYINT equivalent column.                                                            |
+| `$table->uuid('id');`                      | UUID equivalent column.                                                                        |
+| `$table->year('birth_year');`              | YEAR equivalent column.                                                                        |
 
 #### Column Modifiers
 
@@ -368,10 +383,10 @@ Schema::table('users', function ($table) {
 
 | Chỉ thị                      | Miêu tả                                   |
 | ---------------------------- | ----------------------------------------- |
-| $table->dropRememberToken(); | Xóa cột remember_token.                    |
-| $table->dropSoftDeletes();   | Xóa cột deleted_at.                        |
+| $table->dropRememberToken(); | Xóa cột remember_token.                   |
+| $table->dropSoftDeletes();   | Xóa cột deleted_at.                       |
 | $table->dropSoftDeletesTz(); | Bí danh của phương pháp.dropSoftDeletes() |
-| $table->dropTimestamps();    | Xóa cột created_at và cột updated_at.           |
+| $table->dropTimestamps();    | Xóa cột created_at và cột updated_at.     |
 | $table->dropTimestampsTz();  | Bí danh của phương pháp.dropTimestamps()  |
 
 ## Indexes
