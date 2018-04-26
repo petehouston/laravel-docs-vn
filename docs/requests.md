@@ -1,38 +1,29 @@
 # HTTP Requests
 
 - [HTTP Requests](#http-requests)
-  - [Truy cập vào Request](#truy-c%E1%BA%ADp-v%C3%A0o-request)
+  - [Truy cập vào Request](#truy-cp-vao-request)
     - [Dependency Injection & Route Parameters](#dependency-injection-route-parameters)
-      - [Truy cập vào Request qua Route Closures](#truy-c%E1%BA%ADp-v%C3%A0o-request-qua-route-closures)
-    - [Đường dẫn Request & Phương thức](#%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request-ph%C6%B0%C6%A1ng-th%E1%BB%A9c)
-      - [Nhận đường dẫn Request](#nh%E1%BA%ADn-%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-request)
-      - [Nhận Request URL](#nh%E1%BA%ADn-request-url)
-      - [Nhận phương thức Request](#nh%E1%BA%ADn-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-request)
+    - [Đường dẫn Request & Phương thức](#ng-dn-request-phng-thc)
   - [PSR-7 Requests](#psr-7-requests)
   - [Input Trimming & Normalization](#input-trimming-normalization)
-  - [Nhận input](#nh%E1%BA%ADn-input)
-    - [Nhận toàn bộ giá trị input](#nh%E1%BA%ADn-to%C3%A0n-b%E1%BB%99-gi%C3%A1-tr%E1%BB%8B-input)
-    - [Nhận giá trị input](#nh%E1%BA%ADn-gi%C3%A1-tr%E1%BB%8B-input)
-    - [Nhận dữ liệu từ câu truy vấn](#nh%E1%BA%ADn-d%E1%BB%AF-li%E1%BB%87u-t%E1%BB%AB-c%C3%A2u-truy-v%E1%BA%A5n)
-    - [Nhận dữ liệu với Thuộc tính động](#nh%E1%BA%ADn-d%E1%BB%AF-li%E1%BB%87u-v%E1%BB%9Bi-thu%E1%BB%99c-t%C3%ADnh-%C4%91%E1%BB%99ng)
-    - [Nhận giá trị input từ JSON](#nh%E1%BA%ADn-gi%C3%A1-tr%E1%BB%8B-input-t%E1%BB%AB-json)
-    - [Nhận một phần của dữ liệu input](#nh%E1%BA%ADn-m%E1%BB%99t-ph%E1%BA%A7n-c%E1%BB%A7a-d%E1%BB%AF-li%E1%BB%87u-input)
-    - [Kiểm tra một giá trị input có tồn tại](#ki%E1%BB%83m-tra-m%E1%BB%99t-gi%C3%A1-tr%E1%BB%8B-input-c%C3%B3-t%E1%BB%93n-t%E1%BA%A1i)
-    - [Input cũ](#input-c%C5%A9)
-      - [Flash input tới session](#flash-input-t%E1%BB%9Bi-session)
-      - [Flash input vào trong session rồi chuyển trang](#flash-input-v%C3%A0o-trong-session-r%E1%BB%93i-chuy%E1%BB%83n-trang)
-      - [Lấy dữ liệu cũ](#l%E1%BA%A5y-d%E1%BB%AF-li%E1%BB%87u-c%C5%A9)
+  - [Nhận input](#nhn-input)
+    - [Nhận toàn bộ giá trị input](#nhn-toan-b-gia-tr-input)
+    - [Nhận giá trị input](#nhn-gia-tr-input)
+    - [Nhận dữ liệu từ câu truy vấn](#nhn-d-liu-t-cau-truy-vn)
+    - [Nhận dữ liệu với Thuộc tính động](#nhn-d-liu-vi-thuc-tinh-ng)
+    - [Nhận giá trị input từ JSON](#nhn-gia-tr-input-t-json)
+    - [Nhận một phần của dữ liệu input](#nhn-mt-phn-ca-d-liu-input)
+    - [Kiểm tra một giá trị input có tồn tại](#kim-tra-mt-gia-tr-input-co-tn-ti)
+    - [Input cũ](#input-c)
     - [Cookies](#cookies)
-      - [Lấy cookies từ Request](#l%E1%BA%A5y-cookies-t%E1%BB%AB-request)
-      - [Gắn một cookie mới vào Response](#g%E1%BA%AFn-m%E1%BB%99t-cookie-m%E1%BB%9Bi-v%C3%A0o-response)
-    - [Tạo Cookie Instances](#t%E1%BA%A1o-cookie-instances)
+    - [Tạo Cookie Instances](#to-cookie-instances)
   - [Files](#files)
-    - [Lấy file được upload](#l%E1%BA%A5y-file-%C4%91%C6%B0%E1%BB%A3c-upload)
-    - [Kiểm tra upload thành công](#ki%E1%BB%83m-tra-upload-th%C3%A0nh-c%C3%B4ng)
-    - [Đường dẫn File & Extensions](#%C4%91%C6%B0%E1%BB%9Dng-d%E1%BA%ABn-file-extensions)
-    - [Phương thức khác của File](#ph%C6%B0%C6%A1ng-th%E1%BB%A9c-kh%C3%A1c-c%E1%BB%A7a-file)
-    - [Chuyển vị trí file upload](#chuy%E1%BB%83n-v%E1%BB%8B-tr%C3%AD-file-upload)
-    - [Các phương thức khác với file](#c%C3%A1c-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-kh%C3%A1c-v%E1%BB%9Bi-file)
+    - [Lấy file được upload](#ly-file-c-upload)
+    - [Kiểm tra upload thành công](#kim-tra-upload-thanh-cong)
+    - [Đường dẫn File & Extensions](#ng-dn-file-extensions)
+    - [Phương thức khác của File](#phng-thc-khac-ca-file)
+    - [Chuyển vị trí file upload](#chuyn-v-tri-file-upload)
+    - [Các phương thức khác với file](#cac-phng-thc-khac-vi-file)
   - [Configuring Trusted Proxies](#configuring-trusted-proxies)
     - [Trusting All Proxies](#trusting-all-proxies)
 
@@ -177,11 +168,9 @@ Route::get('/', function (ServerRequestInterface $request) {
 
 ## Input Trimming & Normalization
 
-By default, Laravel includes the ``TrimStrings`` and ``ConvertEmptyStringsToNull`` middleware in your application's global middleware stack. These middleware are listed in the stack by the  ``App\Http\Kernel`` class. These middleware will automatically trim all incoming string fields on the request, as well as convert any empty string fields to ``null``. This allows you to not have to worry about these normalization concerns in your routes and controllers.
+Theo mặc định, laravel bao gồm ``TrimStrings`` và ``ConvertEmptyStringsToNull`` ở trong ngăn xếp trung gian toàn cục của ứng dụng của bạn. Những phần mềm trung gian này được liệt kê trong ngăn xếp của lớp ``App\Http\Kernel``. Các phần mềm trung gian này sẽ tự động cắt tất cả các trường chuỗi đến theo yêu cầu, cũng như chuyển đổi bất kỳ trường chuỗi rỗng nào thành ``null`` . Điều này cho phép bạn không phải lo lắng về những mối quan tâm bình thường hóa trong các tuyến đường và bộ điều khiển của bạn.
 
-If you would like to disable this behavior, you may remove the two middleware from your application's middleware stack by removing them from the ``$middleware`` property of your  ``App\Http\Kernel`` class.
-
-Theo mặc định, Laravel bao gồm các phần mềm trung gian ``trimstrings`` và ``ConvertEmptyStringsToNULL`` trong kho phần mềm trung gian toàn cục của phần mềm của bạn.
+Nếu bạn muốn vô hiệu hóa hành vi này, bạn có thể xóa hai phần mềm trung gian khỏi ngăn xếp phần mềm trung gian của ứng dụng bằng cách xóa chúng khỏi thuộc tính ``$middleware``của lớp ``App\Http\Kernel`` của bạn .
 
 ## Nhận input
 
@@ -407,7 +396,7 @@ if ($request->file('photo')->isValid()) {
 
 ### Đường dẫn File & Extensions
 
-Class UploadedFile ngoài ra còn chưa phương thức lấy đường dẫn đầy đủ và extension của file. Phương thức extension sẽ cho phép đoán extension trên dựa nội dung của file. Extension này có thể khác với extension được cung cấp bởi client:
+Class ``UploadedFile`` ngoài ra còn chứa phương thức lấy đường dẫn đầy đủ và extension của file. Phương thức extension sẽ cho phép đoán extension trên dựa nội dung của file. Extension này có thể khác với extension được cung cấp bởi client:
 
 ```PHP
 $path = $request->photo->path();
@@ -443,7 +432,6 @@ $path = $request->photo->storeAs('images', 'filename.jpg', 's3');
 
 ### Các phương thức khác với file
 
-There are a variety of other methods available on `UploadedFile` instances. Check out the [API documentation for the class](http://api.symfony.com/3.0/Symfony/Component/HttpFoundation/File/UploadedFile.html) for more information regarding these methods.
 Có nhiều hàm khác hỗ trợ cho việc xử lý file trong `UploadedFile`. Hãy tham khảo [tài liệu](http://api.symfony.com/3.0/Symfony/Component/HttpFoundation/File/UploadedFile.html) để biết thêm thông tin về các hàm đó.
 
 ## Configuring Trusted Proxies

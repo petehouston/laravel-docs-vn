@@ -1,22 +1,20 @@
 # HTTP Controllers
 
 - [HTTP Controllers](#http-controllers)
-  - [Giới thiệu](#gi%E1%BB%9Bi-thi%E1%BB%87u)
-  - [Controllers cơ bản](#controllers-c%C6%A1-b%E1%BA%A3n)
-    - [Định nghĩa COntrollers](#%C4%91%E1%BB%8Bnh-ngh%C4%A9a-controllers)
+  - [Giới thiệu](#gii-thiu)
+  - [Controllers cơ bản](#controllers-c-bn)
+    - [Định nghĩa COntrollers](#nh-ngha-controllers)
     - [Controllers & Namespaces](#controllers-namespaces)
     - [Single Action Controllers](#single-action-controllers)
     - [Naming Controller Routes](#naming-controller-routes)
   - [Controller Middleware](#controller-middleware)
   - [Resource Controllers](#resource-controllers)
-    - [Những hành động được xử lý bởi Resource Controller](#nh%E1%BB%AFng-h%C3%A0nh-%C4%91%E1%BB%99ng-%C4%91%C6%B0%E1%BB%A3c-x%E1%BB%AD-l%C3%BD-b%E1%BB%9Fi-resource-controller)
-      - [Specifying The Resource Model](#specifying-the-resource-model)
-      - [Spoofing Form Methods](#spoofing-form-methods)
-    - [Định tuyến tài nguyên thành phần](#%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-t%C3%A0i-nguy%C3%AAn-th%C3%A0nh-ph%E1%BA%A7n)
-      - [API Resource Routes](#api-resource-routes)
-    - [Đặt tên các định tuyến tài nguyên](#%C4%91%E1%BA%B7t-t%C3%AAn-c%C3%A1c-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-t%C3%A0i-nguy%C3%AAn)
-    - [Đặt tên tham số của định tuyến tài nguyên](#%C4%91%E1%BA%B7t-t%C3%AAn-tham-s%E1%BB%91-c%E1%BB%A7a-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-t%C3%A0i-nguy%C3%AAn)
-    - [Bổ sung resource controller](#b%E1%BB%95-sung-resource-controller)
+    - [Những hành động được xử lý bởi Resource Controller](#nhng-hanh-ng-c-x-l-bi-resource-controller)
+    - [Định tuyến tài nguyên thành phần](#nh-tuyn-tai-nguyen-thanh-phn)
+    - [Đặt tên các định tuyến tài nguyên](#t-ten-cac-nh-tuyn-tai-nguyen)
+    - [Đặt tên tham số của định tuyến tài nguyên](#t-ten-tham-s-ca-nh-tuyn-tai-nguyen)
+    - [Localizing Resource URIs](#localizing-resource-uris)
+    - [Bổ sung resource controller](#b-sung-resource-controller)
   - [Dependency Injection & Controllers](#dependency-injection-controllers)
     - [Constructor Injection](#constructor-injection)
     - [Method Injection](#method-injection)
@@ -30,7 +28,7 @@ Thay vì định nghĩa tất cả logic xử lý request của bạn ở file `
 
 ### Định nghĩa COntrollers
 
-Dưới đây là một ví dụ về lớp Controller cơ bản. Tất cả các Controller nên là class mở rộng của base Controller đi kèm trong bản cài đặt mặc định của Laravel:
+Dưới đây là một ví dụ về lớp Controller cơ bản. Tất cả các Controller nên là class mở rộng của base Controller đi kèm trong bản cài đặt mặc định của Laravel.Class base controller cung cấp một vài phương thức như middleware có thể sử dụng để gắn middleware vào controller:
 
 ```PHP
 <?php
@@ -63,9 +61,11 @@ Route::get('user/{id}', 'UserController@showProfile');
 
 Bây giờ, khi mà một request khớp với URI của định tuyến đã được xác định, thì method `showProfile` của lớp `UserController` sẽ được thực thi. Tất nhiên, tham số của định tuyến cũng sẽ được truyền đến method.
 
+>Controllers không yêu cầu kế thừa từ base class. Tuy nhiên, bạn sẽ không có quyền truy cập vào các tính năng tiện lợi như phương thức middleware, validate, và dispatch.
+
 ### Controllers & Namespaces
 
-Có điều rất quan trọng cần lưu ý rằng chúng ta không cần phải ghi rõ không gian tên đầy đủ của controller khi định nghĩa định tuyến cho controller. Chúng ta chỉ cần định nghĩa phần tên lớp mà theo sau không gian tên "root" `App\Http\Controllers`. Mặc định, `RouteServiceProvider` sẽ tải file `route.php` trong nhóm định tuyến chứa không gian tên gốc controller.
+Có điều rất quan trọng cần lưu ý rằng chúng ta không cần phải ghi rõ không gian tên đầy đủ của controller khi định nghĩa định tuyến cho controller. Kể từ khi ``RouteServiceProvider`` tải file route bên trong nhóm route có chứa namespace, chúng ta chỉ cần chỉ định tên class sau  ``App\Http\Controllers`` namespace.
 
 Nếu bạn muốn gộp hoặc sắp xếp các controller của bạn sử dụng không gian tên của PHP sâu hơn trong thư mục `App\Http\Controllers`, thì đơn giản chỉ cần định nghĩa tên lớp tương đối so với không gian tên gốc `App\Http\Controllers`. Do dó, nếu tên lớp controller đầy đủ của bạn là `App\Http\Controllers\Photos\AdminController`, thì bạn chỉ đăng ký route như sau:
 
@@ -110,21 +110,22 @@ Route::get('user/{id}', 'ShowProfile');
 
 Giống như định tuyến đóng kín (closure), bạn có thể đặt tên cho định tuyến controller:
 
-    Route::get('foo', ['uses' => 'FooController@method', 'as' => 'name']);
+```php
+Route::get('foo', ['uses' => 'FooController@method', 'as' => 'name']);
+```
 
 Bạn cũng có thể dùng phương thức trợ giúp `route` để sinh ra URL cho một định tuyến controller đã được đặt tên:
 
-    $url = route('name');
+```php
+$url = route('name');
+```
 
 ## Controller Middleware
 
-[Middleware](/docs/{{version}}/middleware) có thể được gán cho định tuyến của controller như sau:
+[Middleware](middleware.md) có thể được gán cho định tuyến của controller như sau:
 
 ```PHP
-Route::get('profile', [
-        'middleware' => 'auth',
-        'uses' => 'UserController@showProfile'
-    ]);
+Route::get('profile', 'UserController@show')->middleware('auth');
 ```
 
 Tuy nhiên, sẽ là tiện lợi hơn nếu như định nghĩa middleware từ trong hàm contructor của controller. Sử dụng method `middleware` từ trong controller của bạn, bạn có thể dễ dàng gán middleware cho controller. Bạn thậm chí có thể hạn chế middleware cho một vài method cụ thể trong lớp controller:
@@ -133,23 +134,17 @@ Tuy nhiên, sẽ là tiện lợi hơn nếu như định nghĩa middleware từ
 class UserController extends Controller
 {
     /**
-      * Instantiate a new UserController instance.
-      *
-      * @return void
-      */
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
 
-        $this->middleware('log', ['only' => [
-            'fooAction',
-            'barAction',
-        ]]);
+        $this->middleware('log')->only('index');
 
-        $this->middleware('subscribed', ['except' => [
-            'fooAction',
-            'barAction',
-        ]]);
+        $this->middleware('subscribed')->except('store');
     }
 }
 ```
@@ -163,6 +158,8 @@ $this->middleware(function ($request, $next) {
     return $next($request);
 });
 ```
+
+>Bạn có thể gán middleware cho một tập con các action của controller; tuy nhiên, tập con action có thể to ra khi controller của bạn nhiều action. Vì thế, nên cân nhắc việc chia thành nhiều controller nhỏ hơn.
 
 ## Resource Controllers
 
@@ -235,7 +232,7 @@ Route::resource('photo', 'PhotoController', ['except' => [
 
 #### API Resource Routes
 
-Khi tuyên bố các tuyến đường tài nguyên sẽ được tiêu thụ bởi các API, bạn thường sẽ muốn loại trừ các tuyến đường dẫn các mẫu HTML như createvà edit. Để thuận tiện, bạn có thể sử dụng phương thức ``apiResourcephương`` để tự động loại trừ hai tuyến đường:
+Khi tuyên bố các tuyến đường tài nguyên sẽ được tiêu thụ bởi các API, bạn thường sẽ muốn loại trừ các tuyến đường dẫn các mẫu HTML như create và edit. Để thuận tiện, bạn có thể sử dụng phương thức ``apiResourcephương`` để tự động loại trừ hai tuyến đường:
 
 ```PHP
 Route::apiResource('photos', 'PhotoController');
@@ -282,6 +279,35 @@ Route::resource('user', 'AdminUserController', ['parameters' => [
 /user/{admin_user}
 ```
 
+### Localizing Resource URIs
+
+Theo mặc định, ``Route::resource`` sẽ tạo ra  URI tài nguyên bằng cách sử dụng các động từ tiếng Anh. Nếu bạn muốn đặt theo cách từ ở địa phương bạn, bạn có thể sử dụng phương thức ``Route::resourceVerbs``. Điều này có thể làm trong phương thức ``boot`` hoặc ``AppServiceProvider``
+
+```php
+use Illuminate\Support\Facades\Route;
+
+/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    Route::resourceVerbs([
+        'create' => 'crear',
+        'edit' => 'editar',
+    ]);
+}
+```
+
+Khi các động từ đã được chỉnh lại, các route resoure đã được tạo ra như ``Route::resource('fotos', 'PhotoController')`` sẽ tạo ra các URL sau:
+
+```php
+/fotos/crear
+
+/fotos/{foto}/editar
+```
+
 ### Bổ sung resource controller
 
 Nếu cần phải thêm những định tuyến bổ sung cho một resource controller ngoài những định tuyến tài nguyên mặc định, thì bạn nên định nghĩa những định tuyến đó trước khi gọi `Route::resource`; nếu không thì những định tuyến đã được định nghĩa bởi method `resource` sẽ có thể vô tình bị ưu tiên hơn những định tuyến bổ sung của bạn.
@@ -291,6 +317,8 @@ Route::get('photos/popular', 'PhotoController@method');
 
 Route::resource('photos', 'PhotoController');
 ```
+
+>Bạn nên tập trung vào controllers. Nếu bạn thấy mình thường xuyên thêm các route bên ngoài của các resource route thì hãy cân nhắc chia nhỏ controller hơn.
 
 ## Dependency Injection & Controllers
 

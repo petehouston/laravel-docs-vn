@@ -1,40 +1,37 @@
 # Routing
 
 - [Routing](#routing)
-  - [Routing cơ bản](#routing-c%C6%A1-b%E1%BA%A3n)
-    - [Tệp tin routes mặc định](#t%E1%BB%87p-tin-routes-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh)
-    - [Các phương thức router có sẵn](#c%C3%A1c-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-router-c%C3%B3-s%E1%BA%B5n)
-    - [Bảo mật CSRF](#b%E1%BA%A3o-m%E1%BA%ADt-csrf)
-    - [Routes chuyển hướng](#routes-chuy%E1%BB%83n-h%C6%B0%E1%BB%9Bng)
-    - [Routes hiển thị](#routes-hi%E1%BB%83n-th%E1%BB%8B)
-  - [Các tham số route](#c%C3%A1c-tham-s%E1%BB%91-route)
-    - [Tham số bắt buộc](#tham-s%E1%BB%91-b%E1%BA%AFt-bu%E1%BB%99c)
-    - [Tham số tùy chọn](#tham-s%E1%BB%91-t%C3%B9y-ch%E1%BB%8Dn)
-    - [Hạn chế với biểu thức chính quy](#h%E1%BA%A1n-ch%E1%BA%BF-v%E1%BB%9Bi-bi%E1%BB%83u-th%E1%BB%A9c-ch%C3%ADnh-quy)
-    - [Hạn chế toàn cục](#h%E1%BA%A1n-ch%E1%BA%BF-to%C3%A0n-c%E1%BB%A5c)
-  - [Tên của router](#t%C3%AAn-c%E1%BB%A7a-router)
-    - [Tạo URL từ route đã đặt tên](#t%E1%BA%A1o-url-t%E1%BB%AB-route-%C4%91%C3%A3-%C4%91%E1%BA%B7t-t%C3%AAn)
-    - [Xác định route hiện tại](#x%C3%A1c-%C4%91%E1%BB%8Bnh-route-hi%E1%BB%87n-t%E1%BA%A1i)
-  - [Nhóm router](#nh%C3%B3m-router)
+  - [Routing cơ bản](#routing-c-bn)
+    - [Tệp tin routes mặc định](#tp-tin-routes-mc-nh)
+    - [Các phương thức router có sẵn](#cac-phng-thc-router-co-sn)
+    - [Bảo mật CSRF](#bo-mt-csrf)
+    - [Routes chuyển hướng](#routes-chuyn-hng)
+    - [Routes hiển thị](#routes-hin-th)
+  - [Các tham số route](#cac-tham-s-route)
+    - [Tham số bắt buộc](#tham-s-bt-buc)
+    - [Tham số tùy chọn](#tham-s-toy-chn)
+    - [Hạn chế với biểu thức chính quy](#hn-ch-vi-biu-thc-chinh-quy)
+  - [Tên của router](#ten-ca-router)
+    - [Tạo URL từ route đã đặt tên](#to-url-t-route-a-t-ten)
+    - [Xác định route hiện tại](#xac-nh-route-hin-ti)
+  - [Nhóm router](#nhom-router)
     - [Middleware](#middleware)
     - [namespaces](#namespaces)
-    - [router tên miền phụ](#router-t%C3%AAn-mi%E1%BB%81n-ph%E1%BB%A5)
-    - [Các tiền tố router](#c%C3%A1c-ti%E1%BB%81n-t%E1%BB%91-router)
+    - [router tên miền phụ](#router-ten-min-ph)
+    - [Các tiền tố router](#cac-tin-t-router)
     - [Route name prefixes](#route-name-prefixes)
   - [Route models binding](#route-models-binding)
-    - [Ràng buộc ngầm định](#r%C3%A0ng-bu%E1%BB%99c-ng%E1%BA%A7m-%C4%91%E1%BB%8Bnh)
-    - [Tùy biến tên khóa](#t%C3%B9y-bi%E1%BA%BFn-t%C3%AAn-kh%C3%B3a)
-    - [Ràng buộc tường minh](#r%C3%A0ng-bu%E1%BB%99c-t%C6%B0%E1%BB%9Dng-minh)
-      - [Tùy chỉnh theo revolution logic](#t%C3%B9y-ch%E1%BB%89nh-theo-revolution-logic)
+    - [Ràng buộc ngầm định](#rang-buc-ngm-nh)
+    - [Tùy biến tên khóa](#toy-bin-ten-khoa)
+    - [Ràng buộc tường minh](#rang-buc-tng-minh)
   - [Rate Limiting](#rate-limiting)
     - [Dynamic Rate Limiting](#dynamic-rate-limiting)
   - [Form Method Spoofing](#form-method-spoofing)
-  - [Truy cập router hiện tại](#truy-c%E1%BA%ADp-router-hi%E1%BB%87n-t%E1%BA%A1i)
+  - [Truy cập router hiện tại](#truy-cp-router-hin-ti)
 
 ## Routing cơ bản
 
-Tất cả các router Laravel được định nghĩa tại tập tin của router của bạn, được đặt trong thư mục `routes`, nó sẽ được Framework tự động tải.
-Hầu hết các route của laravel cơ cản là nhận một URI và một ``Closure``, nó cung cấp 1 cách rất đơn giản để định nghĩa một route:
+Hầu hết các route của laravel nhận một URI và một ``Closure``, nó cung cấp 1 cách rất đơn giản để định nghĩa một route:
 
 ```PHP
 Route::get('foo', function () {
@@ -44,9 +41,13 @@ Route::get('foo', function () {
 
 ### Tệp tin routes mặc định
 
-Tất cả các route được định nghĩa ở trong file route, ở trong thư mục routes. Nó đó sẽ được tự động tải bởi framework. File ``routes/web.php`` định nghĩa route cho dao diện web của bạn. Đấy là routes được gán vào thuộc nhóm middleware web, nó cung cấp một số tính năng như session và bảo mật CSRF. File ``routes/api.php`` được gán vào nhóm middleware ``api``.
+Tất cả các route được định nghĩa ở trong file `route`, ở trong thư mục `routes`. Nó đó sẽ được tự động tải bởi framework.
+File ``routes/web.php`` định nghĩa route cho giao diện web của bạn. Đấy là routes được gán vào thuộc nhóm middleware ``web``, nó cung cấp một số tính năng như session và bảo mật CSRF.
+File ``routes/api.php`` định nghĩa cho route không rõ ràng và được gán vào nhóm middleware ``api``.
 
-Hầu hết các ứng dụng, bạn sẽ bắt đầu định nghĩa route trong file ``routes/web.php``. Các route đã được định nghĩa trong ``routes/web.php`` có thể truy cập từ URL của router cụ thể từ trình duyệt web. Ví dụ: bạn có thể truy cập router sau bằng cách điều hướng đến trong trình duyệt của bạn
+Hầu hết các ứng dụng, bạn sẽ bắt đầu định nghĩa route trong file ``routes/web.php``. Các route đã được định nghĩa trong ``routes/web.php`` có thể truy cập từ URL của route cụ thể từ trình duyệt web.
+
+Ví dụ: bạn có thể truy cập router sau bằng cách điều hướng đến trong trình duyệt của bạn
 ``phttp://your-app.test/user``
 
 ```PHP
@@ -64,9 +65,18 @@ Router cho phép bạn đăng ký routes đáp ứng nhiều phương thức HTT
 - Route::match kết hợp nhiều phương phức như POST,GET,PUT,..
 - Route::any nhận tất cả các phương thức.
 - Route::group tạo ra các nhóm route.
-- Route::controller gọi đến controller tương ứng mà chúng ta tự định.
+- Route::controller gọi đến controller tương ứng mà chúng ta tự định nghĩa.
 
-Đôi khi bạn có thể phải đăng ký nhiều router mà đáp ứng nhiều phương thức HTTP. Bạn có thể làm như vậy bằng cách sử dụng các phương thức `match`. Hoặc, bạn thậm chí có thể đăng ký một router mà đáp ứng tất cả các phương thức HTTP bằng cách sử dụng phương thức `any`:
+```php
+Route::get($uri, $callback);
+Route::post($uri, $callback);
+Route::put($uri, $callback);
+Route::patch($uri, $callback);
+Route::delete($uri, $callback);
+Route::options($uri, $callback);
+```
+
+Đôi khi bạn có thể phải đăng ký nhiều router để đáp ứng nhiều phương thức HTTP. Bạn có thể làm như vậy bằng cách sử dụng các phương thức `match`. Hoặc, bạn thậm chí có thể đăng ký một router mà đáp ứng tất cả các phương thức HTTP bằng cách sử dụng phương thức `any`:
 
 ```PHP
 Route::match(['get', 'post'], '/', function () {
@@ -81,11 +91,11 @@ Route::any('foo', function () {
 
 ### Bảo mật CSRF
 
-Tất cả các HTML form có method là POST, PUT, hoặc DELETE đều chỉ đến routes được định nghĩa trong middlware web thì cần được thêm trường CSRF token. Nếu không thì request sẽ bị từ trối. Bạn có thể đọc thêm về bảo mật CSRF tại Tài liệu CSRF:
+Tất cả các HTML form gọi đến các route ``POST``, ``PUT``, hoặc ``DELETE`` được định nghĩa trong file route ``web`` thì cần được thêm trường CSRF token. Nếu không thì request sẽ bị từ trối. Bạn có thể đọc thêm về bảo mật CSRF tại [Tài liệu CSRF](csrfprotection.md):
 
 ```php
 <form method="POST" action="/profile">
-
+  @csrf
     ...
 </form>
 ```
@@ -112,7 +122,7 @@ Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 
 ### Tham số bắt buộc
 
-Tất nhiên, đôi khi bạn sẽ cần phải nắm bắt các phân đoạn trong URIs trong router của bạn. Ví dụ: bạn cần lấy được ID của người dùng từ các URL. Bạn có thể làm như vậy bằng cách định nghĩa các tham số như sau:
+Tất nhiên, đôi khi bạn sẽ cần phải lấy ra vài đoạn của URIs trong router của bạn. Ví dụ: bạn cần lấy được ID của người dùng từ các URL. Bạn có thể làm như vậy bằng cách định nghĩa tham số như sau:
 
 ```PHP
 Route::get('user/{id}', function ($id) {
@@ -120,7 +130,7 @@ Route::get('user/{id}', function ($id) {
 });
 ```
 
-Bạn có thể định nghĩa nhiều tham số theo yêu cầu:
+Bạn có thể định nghĩa nhiều tham số theo ý muốn:
 
 ```PHP
 Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
@@ -128,7 +138,8 @@ Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
 });
 ```
 
-Các tham số router luôn được bao bọc bởi cặp dấu ngoặc nhon "{}". Các tham số này sẽ đi vào Closure của router, khi các router này được thực thi.
+Các tham số router luôn được bao bọc bởi cặp dấu ngoặc nhon "{}" và chỉ nên dùng kí tự chữ cái để đặt tên biến .
+Các tham số này sẽ đi vào Closure của router theo thứ tự của chúng, tên của tham số trong các hàm không liên quan
 
 > **Chú ý:** Các tham số không được chứa ký tự `-`. Sử dụng dấu gạch dưới `_` để thay thế.
 
@@ -145,6 +156,8 @@ Route::get('user/{name?}', function ($name = 'John') {
     return $name;
 });
 ```
+
+> Như các hàm của ngôn ngữ khác, tham số tùy chọn phải nằm ở cuối cùng.
 
 ### Hạn chế với biểu thức chính quy
 
@@ -167,7 +180,7 @@ Route::get('user/{id}/{name}', function ($id, $name) {
 ->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
 ```
 
-### Hạn chế toàn cục
+#### Hạn chế toàn cục
 
 Nếu bạn muốn giới hạn với mọi route, bạn có thể sử dụng phương thức ``pattern``. Bạn nên định nghĩa phương thức này trong phương thức ``boot`` ở file ``RouteServiceProvider.php``:
 
@@ -235,7 +248,7 @@ $url = route('profile', ['id' => 1]);
 ### Xác định route hiện tại
 
 Nếu bạn muốn kiểm tra route hiện tại đã được đặt tên hay chưa, bạn có thể sử dụng phương thức ``name`` ngay trên Instance(thực thể) của route đó.
-Ví dụ, bạn có thể kiểm tra tên route hiện tại ở ``route middleware``:
+Ví dụ, bạn có thể kiểm tra tên route hiện tại ở route middleware:
 
 ```PHP
 /**
@@ -261,7 +274,7 @@ Nhóm router cho phép bạn chia sẻ các thuộc tính như middleware hay na
 
 ### Middleware
 
-Để gán middleware cho một nhóm, bạn có thể sử dụng khóa `middleware` trong mảng thuộc tính. Middleware sẽ được thực hiện theo thứ tự bạn định nghĩa mảng này:
+Để gán middleware cho một nhóm, bạn sử dụng phương thức `middleware` trước khi định nghĩa nhóm. Middleware sẽ được thực hiện theo thứ tự bạn định nghĩa mảng này:
 
 ```PHP
 Route::middleware(['first', 'second'])->group(function () {
@@ -329,7 +342,7 @@ Khi bạn chèn một model ID vào route hoặc controller, bạn sẽ thườn
 
 ### Ràng buộc ngầm định
 
-Laravel sẽ tự động giải quyết gợi ý Eloquent Model được xác định bên trong router hoặc bộ điều khiển có tên biến phù hợp với tên một phân đoạn route. Ví dụ:
+Khi bạn inject một model ID vào route hoặc controller, bạn sẽ thường truy vấn để để nhận model tương ứng với ID đó.Laravel sẽ tự động giải quyết gợi ý Eloquent Model được xác định bên trong router hoặc bộ điều khiển có tên biến phù hợp với tên một phân đoạn route. Ví dụ:
 
 ```PHP
 Route::get('api/users/{user}', function (App\User $user) {

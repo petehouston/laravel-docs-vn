@@ -1,16 +1,14 @@
 # Views
 
 - [Views](#views)
-  - [Tạo Views](#t%E1%BA%A1o-views)
-    - [Xác định một view tồn tại](#x%C3%A1c-%C4%91%E1%BB%8Bnh-m%E1%BB%99t-view-t%E1%BB%93n-t%E1%BA%A1i)
-    - [Creating The First Available View](#creating-the-first-available-view)
-  - [Truyền dữ liệu vào Views](#truy%E1%BB%81n-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-views)
-    - [Chia sẻ dữ liệu vào tất cả các Views](#chia-s%E1%BA%BB-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0o-t%E1%BA%A5t-c%E1%BA%A3-c%C3%A1c-views)
+  - [Tạo Views](#to-views)
+  - [Truyền dữ liệu vào Views](#truyn-d-liu-vao-views)
+    - [Chia sẻ dữ liệu vào tất cả các Views](#chia-s-d-liu-vao-tt-c-cac-views)
   - [View Composers](#view-composers)
-    - [Đính kèm Composer vào nhiều Views](#%C4%91%C3%ADnh-k%C3%A8m-composer-v%C3%A0o-nhi%E1%BB%81u-views)
-    - [View Creators](#view-creators)
 
 ## Tạo Views
+
+>Tìm kiếm thông tìn về tạo bản mẫu Blade ? xem ở mục [Blade](blade.md)
 
 Views chứa nội dung HTML phục vụ cho ứng dụng của bạn và tách ra riêng biệt từ bộ điều kiển controller / application. Các views được chứa tại thư mục `resources/views`.
 
@@ -42,7 +40,7 @@ Tất nhiên, các views có thể chứa trong các thư mục con ở trong th
 return view('admin.profile', $data);
 ```
 
-### Xác định một view tồn tại
+#### Xác định một view tồn tại
 
 Nếu bạn muốn xác đinh một view có tồn tại hay không, bạn có thể sử dụng phương thức `exists` được gọi từ `view` không có tham số. Với phương thức này sẽ trả về `true` nếu view này tồn tại:
 
@@ -56,7 +54,7 @@ if (View::exists('emails.customer')) {
 
 Khi hàm `view` được gọi và không có tham số, thì nó chính là thể hiện của `Illuminate\Contracts\View\Factory`, điều này cho phép ta truy cập tất cả các phương thức của đối tượng factory.
 
-### Creating The First Available View
+#### Creating The First Available View
 
 Sử dụng phương thức ``first``, bạn có thể tạo ra view đầu tiện mà tồn tại trong các mảng view cho sẵn . Điều này hữu ích nếu ứng dụng hoặc gói của bạn cho phép tùy chỉnh hoặc ghi đè các chế độ xem:
 
@@ -80,7 +78,9 @@ Như ở ví dụ trước, bạn có thể truyền vào một mảng giá tr�
 return view('greetings', ['name' => 'Victoria']);
 ```
 
-Khi truyền dữ liệu bằng cách này, `$data` sẽ thành một mảng có khóa/giá trị tương ứng. Bên trong view, bạn có thể sử dụng các giá trị bằng cách gọi biến với tên là khóa của mảng, ví dụ như `<?php echo $key; ?>`. Một các khác có thể truyền dữ liệu vào view `view`, bạn sử dụng phương thức `with` để truyền dữ liệu đến view:
+Khi truyền dữ liệu bằng cách này, `$data` sẽ thành một mảng có khóa/giá trị tương ứng. Bên trong view, bạn có thể sử dụng các giá trị bằng cách gọi biến với tên là khóa của mảng, ví dụ như `<?php echo $key; ?>`. 
+
+Một các khác có thể truyền dữ liệu vào view `view`, bạn sử dụng phương thức `with` để truyền dữ liệu đến view:
 
 ```PHP
 return view('greeting')->with('name', 'Victoria');
@@ -214,9 +214,9 @@ Như vậy trước khi view đó được rendered, phương thức `compose` s
 
 > **Chú ý:**  Tất các các view composers được xử lý thông qua [service container](container.md), vì vậy bạn có thể thêm các phụ thuộc vào bên trong phương thức khởi tạo contructor của view composer.
 
-### Đính kèm Composer vào nhiều Views
+#### Đính kèm Composer vào nhiều Views
 
-Bạn có thể đính kèm nhiều view vào view composer bằng cách truyền vào một mảng chứa tất cả cá view vào thương thức `composer`:
+Bạn có thể đính kèm nhiều view vào view composer bằng cách truyền vào một mảng chứa tất cả các view vào thương thức `composer`:
 
 ```PHP
 view()->composer(
@@ -233,7 +233,7 @@ view()->composer('*', function ($view) {
     });
 ```
 
-### View Creators
+#### View Creators
 
 View **creators** rất giống với view composers; Tuy nhiên, nó sẽ tác động ngay lập tức vào các view thay vì chờ các view cho tới khi chúng được rendered. Để đăng ký một view creator, sử dụng phương thức `creator`:
 

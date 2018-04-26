@@ -40,8 +40,8 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
   - [Requests](./docs/requests.md)
   - [Responses](./docs/responses.md)
   - [Views](./docs/views.md)
-  - URL Generation
-  - Session
+  - [URL Generation](./docs/urlgeneration.md)
+  - [Session](./docs/session.md)
   - Validation
   - [Errors & Logging](./docs/errors.md)
   - Logging
@@ -55,7 +55,7 @@ Mục lục này tương ứng với [mục lục trên trang chủ](https://lar
 - **Services**
   - Authentication
   - API Authentication
-  - Authorization
+  - [Authorization](authorization.md)
   - [Encryption](./docs/encryption.md)
   - [Hashing](./docs/hashing.md)
   - Password Reset
