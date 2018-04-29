@@ -847,7 +847,7 @@ Giá trị phải là timezone identifier hợp lệ với hàm timezone_identif
 
 Giá trị phải là unique trong bảng cơ sở dữ liệu. Nếu tên  column không được chỉ định, trường name sẽ được sử dụng.
 
-##### Specifying A Custom Column Name:
+##### Specifying A Custom Column Name
 
 ```php
 'email' => 'unique:users,email_address'
