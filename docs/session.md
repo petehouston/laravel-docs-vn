@@ -1,5 +1,20 @@
 # Session
 
+- [Session](#session)
+  - [Giới thiệu](#gii-thiu)
+    - [Cấu hình](#cu-hinh)
+    - [Điều kiện tiên quyểt của Driver](#iu-kin-tien-quyt-ca-driver)
+    - [Những cân nhắc sử dụng Session](#nhng-can-nhc-s-dng-session)
+  - [Các dùng cơ bản](#cac-dong-c-bn)
+    - [Nhận dữ liệu](#nhn-d-liu)
+    - [Lưu dữ liệu](#lu-d-liu)
+    - [Flash Data](#flash-data)
+    - [Xóa bỏ khỏi bộ nhớ Session](#xoa-b-khi-b-nh-session)
+    - [Khởi tạo Session ID](#khi-to-session-id)
+  - [Thêm một Session Drivers riêng](#them-mt-session-drivers-rieng)
+    - [Implementing The Driver](#implementing-the-driver)
+    - [Đăng ký The Driver](#ng-k-the-driver)
+
 ## Giới thiệu
 
 Hệ thống HTTP không có chỗ lưu trữ, thế nên sessions cung cấp cho ta một cách để lưu trữ thông tin các yêu cầu từ người sử dụng. Laravel cung cấp đầy đủ hệ thống thống nhất thông qua API để hỗ trợ việc này. Hỗ trợ các back-ends nổi tiếng như [Memcached](http://memcached.org), [Redis](http://redis.io), và cơ sở dữ liệu đã được bao gồm sẵn trong gói.
@@ -190,7 +205,7 @@ $request->session()->reflash();
 $request->session()->keep(['username', 'email']);
 ```
 
-#### Xóa bỏ khỏi bộ nhớ Session
+### Xóa bỏ khỏi bộ nhớ Session
 
 Phương thức `forget` sẽ xóa dữ liệu trong session. Mặc khác nếu bạn muốn xóa toàn bộ Session, bạn chỉ cần dùng phương thức `flush`:
 
@@ -200,7 +215,7 @@ $request->session()->forget('key');
 $request->session()->flush();
 ```
 
-#### Khởi tạo Session ID
+### Khởi tạo Session ID
 
 Khởi tạo the session ID thường gặp khi ngăn một mã độc từ người dùng khai thác một session fixation tấn công ứng dụng của bạn.
 
